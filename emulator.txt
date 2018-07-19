@@ -1,0 +1,4 @@
+D:\Android\Sdk\Tools\emulator -avd lolipop -no-snapshot
+
+Test localhost IP
+http://10.0.2.2:3010
