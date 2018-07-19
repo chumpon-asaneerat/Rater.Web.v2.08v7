@@ -1,0 +1,70 @@
+My Choice Rater v2.0:
+    Update on [2018-07-19]:
+        Database Create Scripts:
+            Tables and Views:
+                ☐ (TABLE).
+                ☐ (TABLE).
+                ☐ (TABLE).
+                ☐ (TABLE).
+            Stored Procedures and Functions:
+                ☐ (FN).
+                ☐ (FN).
+                ☐ (FN).
+                ☐ (SP).
+                ☐ (SP).
+                ☐ (SP).
+                ☐ (SP).
+            Init Stored Procedures:
+                ☐ InitErrorMessages (SP).
+        Clients:
+            Core Libraries:
+                rater-client.js:
+                    ☐ 
+                tags.js:
+                    ☐ 
+    Update on [2018-07-20]:
+        Database Create Scripts:
+            Tables and Views:
+                ☐ (TABLE).
+                ☐ (TABLE).
+                ☐ (TABLE).
+                ☐ (TABLE).
+            Stored Procedures and Functions:
+                ☐ (FN).
+                ☐ (FN).
+                ☐ (FN).
+                ☐ (SP).
+                ☐ (SP).
+                ☐ (SP).
+                ☐ (SP).
+            Init Stored Procedures:
+                ☐ InitErrorMessages (SP).
+        Clients:
+            Core Libraries:
+                rater-client.js:
+                    ☐ 
+                tags.js:
+                    ☐ 
+    Update on [2018-07-10]:
+        Database Create Scripts:
+            Tables and Views:
+                ☐ (TABLE).
+                ☐ (TABLE).
+                ☐ (TABLE).
+                ☐ (TABLE).
+            Stored Procedures and Functions:
+                ☐ (FN).
+                ☐ (FN).
+                ☐ (FN).
+                ☐ (SP).
+                ☐ (SP).
+                ☐ (SP).
+                ☐ (SP).
+            Init Stored Procedures:
+                ☐ InitErrorMessages (SP).
+        Clients:
+            Core Libraries:
+                rater-client.js:
+                    ☐ 
+                tags.js:
+                    ☐ 

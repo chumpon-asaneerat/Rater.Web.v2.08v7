@@ -1,0 +1,1962 @@
+My Choice Rater v2.0:
+    Update on [2018-04-26]:
+        Database Create Scripts:
+            Tables and Views:
+                ✔ dboView (VIEW). @done (4/21/2018, 12:56:39 PM)
+                ✔ ErrorMessage (TABLE). @done (4/21/2018, 12:56:40 PM)
+                ✔ Language (TABLE). @done (4/21/2018, 12:56:40 PM)
+                ✔ LanguageView (VIEW). @done (4/21/2018, 12:56:41 PM)
+                ✔ MasterPK (TABLE). @done (4/21/2018, 12:56:42 PM)
+                ✔ PeriodUnit (TABLE). @done (4/21/2018, 12:56:43 PM)
+                ✔ PeriodUnitML (TABLE). @done (4/21/2018, 12:56:44 PM)
+                ✔ PeriodUnitView (VIEW). @done (4/21/2018, 12:56:44 PM)
+                ✔ PeriodUnitMLView (VIEW). @done (4/21/2018, 12:56:45 PM)
+                ✔ LimitUnit (TABLE). @done (4/22/2018, 9:35:59 PM)
+                ✔ LimitUnitML (TABLE). @done (4/22/2018, 9:35:59 PM)
+                ✔ LimitUnitView (VIEW). @done (4/22/2018, 9:36:00 PM)
+                ✔ LimitUnitMLView (VIEW). @done (4/22/2018, 9:36:00 PM)
+                ✔ MemberType (TABLE). @done (4/22/2018, 9:42:35 PM)
+                ✔ MemberTypeML (TABLE). @done (4/22/2018, 9:42:36 PM)
+                ✔ MemberTypeView (VIEW). @done (4/22/2018, 9:45:20 PM)
+                ✔ MemberTypeMLView (VIEW). @done (4/22/2018, 9:45:20 PM)
+                ✔ UserInfo (TABLE). @done (4/22/2018, 9:49:33 PM)
+                ✔ UserInfoML (TABLE). @done (4/22/2018, 9:49:34 PM)
+                ✔ UserInfoView (VIEW). @done (4/22/2018, 9:51:06 PM)
+                ✔ UserInfoMLView (VIEW). @done (4/22/2018, 9:51:06 PM)
+                ✔ LicenseType (TABLE). @done (4/22/2018, 9:57:03 PM)
+                ✔ LicenseTypeML (TABLE). @done (4/22/2018, 9:57:04 PM)
+                ✔ LicenseTypeView (VIEW). @done (4/22/2018, 9:57:05 PM)
+                ✔ LicenseTypeMLView (VIEW). @done (4/22/2018, 9:57:06 PM)
+                ✔ LicenseFeature (TABLE). @done (4/22/2018, 10:04:10 PM)
+                ✔ LicenseFeatureMLView (TABLE). @done (4/22/2018, 10:04:10 PM)                
+                ✔ CustomerPK (TABLE). @done (4/23/2018, 2:08:21 AM)                
+                ✔ Customer (TABLE). @done (4/23/2018, 2:06:30 AM)
+                ✔ CustomerML (TABLE). @done (4/23/2018, 2:06:31 AM)
+                ✔ CustomerView (VIEW). @done (4/23/2018, 2:06:32 AM)
+                ✔ CustomerMLView (VIEW). @done (4/23/2018, 2:06:33 AM)
+                ✔ Branch (TABLE). @done (4/23/2018, 2:11:22 AM)
+                ✔ BranchML (TABLE). @done (4/23/2018, 2:11:22 AM)
+                ✔ BranchView (VIEW). @done (4/23/2018, 2:11:23 AM)
+                ✔ BranchMLView (VIEW). @done (4/23/2018, 2:11:23 AM)
+                ✔ MemberInfo (TABLE). @done (4/23/2018, 2:14:13 AM)
+                ✔ MemberInfoML (TABLE). @done (4/23/2018, 2:14:14 AM)
+                ✔ MemberInfoView (VIEW). @done (4/23/2018, 2:14:14 AM)
+                ✔ MemberInfoMLView (VIEW). @done (4/23/2018, 2:14:15 AM)
+                ✔ Org (TABLE). @done (4/23/2018, 2:16:06 AM)
+                ✔ OrgML (TABLE). @done (4/23/2018, 2:16:07 AM)
+                ✔ OrgView (VIEW). @done (4/23/2018, 2:17:20 AM)
+                ✔ OrgMLView (VIEW). @done (4/23/2018, 2:17:21 AM)
+                ✔ QSet (TABLE). @done (4/23/2018, 4:29:34 AM)
+                ✔ QSetML (TABLE). @done (4/23/2018, 4:29:34 AM)
+                ✔ QSlide (TABLE). @done (4/23/2018, 4:30:22 AM)
+                ✔ QSlideML (TABLE). @done (4/23/2018, 4:31:23 AM)
+                ✔ QSlideItem (TABLE). @done (4/23/2018, 4:31:54 AM)
+                ✔ QSlideItemML (TABLE). @done (4/23/2018, 4:32:33 AM)
+                ✔ Vote (TABLE). @done (4/23/2018, 4:33:28 AM)
+                ✔ LogInView (View). @done (4/23/2018, 4:42:53 AM)
+            Stored Procedures and Functions:
+                ✔ IsSameDate (FN). @done (4/21/2018, 12:56:46 PM)
+                ✔ IsSameMonth (FN). @done (4/21/2018, 12:56:46 PM)
+                ✔ IsSameYear (FN). @done (4/21/2018, 12:56:47 PM)
+                ✔ IsNullOrEmpty (FN). @done (4/21/2018, 12:56:48 PM)
+                ✔ GetRandomHexCode (SP). @done (4/21/2018, 12:56:49 PM)
+                ✔ SaveErrorMsg (SP). @done (4/21/2018, 12:56:49 PM)
+                ✔ GetErrorMsg (SP). @done (4/21/2018, 12:56:50 PM)
+                ✔ GetErrorMsgs (SP). @done (4/21/2018, 12:56:52 PM)
+                ✔ SaveLanguage (SP). @done (4/21/2018, 12:56:53 PM)
+                ✔ DisableLanguage (SP). @done (4/21/2018, 12:56:53 PM)
+                ✔ EnableLanguage (SP). @done (4/21/2018, 12:56:55 PM)
+                ✔ GetLanguages (SP). @done (4/21/2018, 12:56:55 PM)
+                ✔ SetMasterPK (SP). @done (4/21/2018, 12:56:56 PM)
+                ✔ NextMasterPK (SP). @done (4/21/2018, 12:56:56 PM)
+                ✔ GetMasterPK (SP). @done (4/21/2018, 12:56:57 PM)
+                ✔ SavePeriodUnit (SP). @done (4/21/2018, 12:56:58 PM)
+                ✔ SavePeriodUnitML (SP). @done (4/21/2018, 12:56:58 PM)
+                ✔ GetPeriodUnits (SP). @done (4/22/2018, 10:09:35 PM)
+                ✔ SaveLimitUnit (SP). @done (4/22/2018, 10:37:22 PM)
+                ✔ SaveLimitUnitML (SP). @done (4/22/2018, 10:47:43 PM)
+                ✔ GetLimitUnits (SP). @done (4/22/2018, 10:57:14 PM)
+                ✔ GetMemberTypes (SP). @done (4/22/2018, 10:29:49 PM)
+                ✔ SaveUserInfo (SP). @done (4/22/2018, 11:12:38 PM)
+                ✔ SaveUserInfoML (SP). @done (4/22/2018, 11:12:39 PM)
+                ✔ GetUserInfos (SP). @done (4/22/2018, 11:12:39 PM)
+                ✔ SaveLicenseType (SP). @done (4/22/2018, 11:44:03 PM)
+                ✔ SaveLicenseTypeML (SP). @done (4/22/2018, 11:44:04 PM)
+                ✔ GetLicenseTypes (SP). @done (4/22/2018, 11:44:04 PM)
+                ✔ SaveLicenseFeature (SP). @done (4/23/2018, 12:40:37 AM)
+                ✔ GetLicenseFeatures (SP). @done (4/23/2018, 12:40:38 AM)
+                ✔ SetCustomerPK (SP). @done (4/23/2018, 2:44:15 AM)
+                ✔ NextCustomerPK (SP). @done (4/23/2018, 2:44:16 AM)
+                ✔ GetCustomerPK (SP). @done (4/23/2018, 2:44:17 AM)
+                ✔ SaveCustomer (SP). @done (4/23/2018, 3:00:42 AM)
+                ✔ SaveCustomerML (SP). @done (4/23/2018, 3:00:42 AM)
+                ✔ GetCustomers (SP). @done (4/23/2018, 3:00:43 AM)                
+                ✔ SaveBranch (SP). @done (4/23/2018, 3:28:32 AM)
+                ✔ SaveBranchML (SP). @done (4/23/2018, 3:28:32 AM)
+                ✔ GetBranchs (SP). @done (4/23/2018, 3:13:36 AM)
+                ✔ SaveMemberInfo (SP). @done (4/23/2018, 3:39:24 AM)
+                ✔ SaveMemberInfoML (SP). @done (4/23/2018, 3:58:59 AM)
+                ✔ GetMemberInfos (SP). @done (4/23/2018, 3:13:40 AM)
+                ✔ SaveOrg (SP). @done (4/23/2018, 4:05:16 AM)
+                ✔ SaveOrgML (SP). @done (4/23/2018, 4:12:28 AM)
+                ✔ GetOrgs (SP). @done (4/23/2018, 3:14:40 AM)
+                ✔ SaveVote (SP). @done (4/23/2018, 5:08:29 AM)
+                ✔ RegisterCustomer (SP). @done (4/27/2018, 2:00:10 AM)
+                ✔ SignIn (SP). @done (4/27/2018, 2:00:10 AM)
+            Init Stored Procedures:
+                ✔ InitErrorMessages (SP). @done (4/27/2018, 2:00:24 AM)
+                ✔ InitLanguages (SP). @done (4/21/2018, 12:57:01 PM)
+                ✔ InitMemberTypes (SP). @done (4/22/2018, 10:24:04 PM)
+                ✔ InitPeriodUnits (SP). @done (4/21/2018, 12:57:02 PM)
+                ✔ InitLimitUnits (SP). @done (4/22/2018, 10:55:09 PM)
+                ✔ InitLicenseTypes (SP). @done (4/23/2018, 1:49:46 AM)
+                ✔ InitLicenseFeatures (SP). @done (4/23/2018, 1:51:43 AM)
+                ✔ InitMasterPKs (SP). @done (4/23/2018, 1:56:55 AM)
+                ✔ InitDefaultUser (SP). @done (4/23/2018, 1:59:40 AM)
+                ✔ InitAll (SP). @done (4/27/2018, 2:00:17 AM)
+        Database Document Updated:
+            Error Code:
+                ✔ Update Error Code in Excel file. @done (4/27/2018, 2:00:26 AM)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-04-26 (generate db script). @done (4/21/2018, 1:09:35 PM)
+                    ✔ riot-tags (generate combine riot's tags js file). @done (4/21/2018, 1:09:36 PM)
+            Stored Procedure Definitions (json files) and Wrapper Code (rater-web-db.js):     
+                Utilities:
+                    GetRandomHexCode:
+                        ✔ definition file created. @done (4/24/2018, 12:53:21 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 12:53:22 AM)
+                Languages:
+                    DisableLanguage:
+                        ✔ definition file created. @done (4/24/2018, 12:53:23 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 12:53:24 AM)
+                    EnableLanguage:
+                        ✔ definition file created. @done (4/24/2018, 12:53:24 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 12:53:25 AM)
+                    GetLanguages:
+                        ✔ definition file created. @done (4/24/2018, 1:18:19 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:18:20 AM)
+                    SaveLanguage:
+                        ✔ definition file created. @done (4/24/2018, 1:18:20 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:18:21 AM)
+                MemberTypes:
+                    GetMemberTypes:
+                        ✔ definition file created. @done (4/24/2018, 1:54:43 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:37 AM)
+                UserInfos:
+                    SaveUserInfo:
+                        ✔ definition file created. @done (4/24/2018, 2:06:54 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:38 AM)
+                    SaveUserInfoML:
+                        ✔ definition file created. @done (4/24/2018, 2:07:22 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:40 AM)
+                    GetUserInfos:
+                        ✔ definition file created. @done (4/24/2018, 1:56:10 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:42 AM)
+                PeriodUnits:
+                    SavePeriodUnit:
+                        ✔ definition file created. @done (4/24/2018, 2:06:00 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:43 AM)
+                    SavePeriodUnitML:
+                        ✔ definition file created. @done (4/24/2018, 2:06:24 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:44 AM)
+                    GetPeriodUnits:
+                        ✔ definition file created. @done (4/24/2018, 1:55:05 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:45 AM)
+                LimitUnits:
+                    SaveLimitUnit:
+                        ✔ definition file created. @done (4/24/2018, 2:00:53 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:46 AM)
+                    SaveLimitUnitML:
+                        ✔ definition file created. @done (4/24/2018, 2:01:21 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:47 AM)
+                    GetLimitUnits:
+                        ✔ definition file created. @done (4/24/2018, 1:54:16 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:48 AM)
+                LicenseTypes:
+                    SaveLicenseType:
+                        ✔ definition file created. @done (4/24/2018, 2:00:09 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:50 AM)
+                    SaveLicenseTypeML:
+                        ✔ definition file created. @done (4/24/2018, 2:00:09 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:50 AM)
+                    GetLicenseTypes:
+                        ✔ definition file created. @done (4/24/2018, 1:53:14 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:51 AM)
+                LicenseFeatures:
+                    SaveLicenseFeature:
+                        ✔ definition file created. @done (4/24/2018, 1:57:51 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:53 AM)
+                    GetLicenseFeatures:
+                        ✔ definition file created. @done (4/24/2018, 1:52:20 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:53 AM)
+                Customers:
+                    SaveCustomer:
+                        ✔ definition file created. @done (4/24/2018, 2:02:15 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:55 AM)
+                    SaveCustomerML:
+                        ✔ definition file created. @done (4/24/2018, 2:03:01 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:55 AM)
+                    GetCustomers:
+                        ✔ definition file created. @done (4/24/2018, 1:52:55 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:56 AM)
+                Branchs:
+                    SaveBranch:
+                        ✔ definition file created. @done (4/24/2018, 1:56:47 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:58 AM)
+                    SaveBranchML:
+                        ✔ definition file created. @done (4/24/2018, 1:57:13 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:39:58 AM)
+                    GetBranchs:
+                        ✔ definition file created. @done (4/24/2018, 1:51:48 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:40:00 AM)
+                MemberInfos:
+                    SaveMemberInfo:
+                        ✔ definition file created. @done (4/24/2018, 2:03:58 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:40:01 AM)
+                    SaveMemberInfoML:
+                        ✔ definition file created. @done (4/24/2018, 2:04:27 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:40:02 AM)
+                    GetMemberInfos:
+                        ✔ definition file created. @done (4/24/2018, 1:53:43 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:40:03 AM)
+                Orgs:
+                    SaveOrg:
+                        ✔ definition file created. @done (4/24/2018, 2:05:06 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:40:04 AM)
+                    SaveOrgML:
+                        ✔ definition file created. @done (4/24/2018, 2:05:35 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:40:05 AM)
+                    GetOrgs:
+                        ✔ definition file created. @done (4/24/2018, 1:55:32 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:40:06 AM)
+                Votes:
+                    SaveVote:
+                        ✔ definition file created. @done (4/24/2018, 1:51:04 AM)
+                        ✔ wrapper code updated. @done (4/24/2018, 1:40:06 AM)
+                Register-SignIn:
+                    RegisterCustomer:
+                        ✔ definition file created. @done (4/27/2018, 2:00:45 AM)
+                        ✔ wrapper code updated. @done (4/27/2018, 2:00:46 AM)
+                    SignIn:
+                        ✔ definition file created. @done (4/27/2018, 2:00:43 AM)
+                        ✔ wrapper code updated. @done (4/27/2018, 2:00:44 AM)
+                    SignOut:
+                        ✔ wrapper code updated. @done (4/27/2018, 2:00:56 AM)
+            Unit Test Scripts for databse:
+                Utilities:
+                    GetRandomHexCode:
+                        ✔ Normal Case. @done (4/24/2018, 12:53:32 AM)
+                        ✔ Invalid Length. @done (4/24/2018, 12:53:33 AM)
+                Languages:
+                    DisableLanguage:
+                        ✔ Disable TH. @done (4/24/2018, 12:53:34 AM)
+                        ✔ Disable XX. @done (4/24/2018, 12:53:35 AM)
+                        ✔ Disable NULL. @done (4/24/2018, 12:53:35 AM)
+                    EnableLanguage:
+                        ✔ Enable TH. @done (4/24/2018, 12:53:36 AM)
+                        ✔ Enable XX. @done (4/24/2018, 12:53:37 AM)
+                        ✔ Enable NULL. @done (4/24/2018, 12:53:38 AM)
+                    GetLanguages:
+                        ✔ Gets all. @done (4/24/2018, 1:18:22 AM)
+                        ✔ Gets only enabled. @done (4/24/2018, 1:18:23 AM)
+                        ✔ Gets only disabled. @done (4/24/2018, 1:18:23 AM)
+                    SaveLanguage:
+                        ✔ Save (Normal). @done (4/24/2018, 1:18:27 AM)
+                        ✔ Save (NULL LangId). @done (4/24/2018, 1:29:20 AM)
+                        ✔ Save (NULL description). @done (4/24/2018, 1:29:21 AM)
+                        ✔ Save (Description duplicated). @done (4/24/2018, 1:29:21 AM)
+            Core Libraries:
+                Modules:
+                    ✔ app-paths.js added. @done (5/11/2018, 1:51:32 AM)
+                    ✔ app-middlewares.js added. @done (5/11/2018, 1:51:33 AM)
+                    ✔ app-routes.js added. @done (5/11/2018, 1:51:35 AM)
+                    ✔ nlib-core.js added. @done (5/11/2018, 1:51:36 AM)
+                    ✔ mssql-db.js added. @done (5/11/2018, 1:51:38 AM)
+                    ✔ rater-web-db.js added. @done (5/11/2018, 1:51:38 AM)
+                Views:
+                    ✔ Common view code structure (js files, css files, route setup code). @done (5/11/2018, 2:17:41 AM)
+                    ✔ Add view and route for default-home. @done (5/11/2018, 1:56:21 AM)
+                    ✔ Add view and route for default-register. @done (5/11/2018, 1:56:21 AM)
+                    ✔ Add view and route for default-signin. @done (5/11/2018, 1:56:22 AM)
+                    ✔ Add view and route for edl-admin-home. @done (5/11/2018, 1:56:22 AM)
+                    ✔ Add view and route for edl-admin-customer-home. @done (5/11/2018, 1:56:23 AM)
+                    ✔ Add view and route for edl-admin-customer-manage. @done (5/11/2018, 1:56:24 AM)
+                    ✔ Add view and route for edl-admin-customer-edit. @done (5/11/2018, 1:56:25 AM)
+                    ✔ Add view and route for edl-admin-staff-home. @done (5/11/2018, 1:56:25 AM)
+                    ✔ Add view and route for edl-admin-staff-manage. @done (5/11/2018, 1:56:26 AM)
+                    ✔ Add view and route for edl-admin-staff-edit. @done (5/11/2018, 1:56:26 AM)
+                    ✔ Add view and route for edl-supervisor-home. @done (5/11/2018, 1:56:27 AM)
+                    ✔ Add view and route for edl-supervisor-staff-home. @done (5/11/2018, 1:56:27 AM)
+                    ✔ Add view and route for edl-supervisor-staff-manage. @done (5/11/2018, 1:56:28 AM)
+                    ✔ Add view and route for edl-supervisor-staff-edit. @done (5/11/2018, 1:56:28 AM)
+                    ✔ Add view and route for edl-staff-home. @done (5/11/2018, 1:56:30 AM)
+                    ✔ Add view and route for edl-staff-edit. @done (5/11/2018, 1:56:31 AM)
+                    ✔ Add view and route for customer-admin-home. @done (5/11/2018, 1:56:38 AM)
+                    ✔ Add view and route for customer-admin-org-home @done (5/11/2018, 1:57:00 AM)
+                    ✔ Add view and route for customer-admin-org-manage. @done (5/11/2018, 1:57:08 AM)
+                    ✔ Add view and route for customer-admin-org-edit. @done (5/11/2018, 1:57:11 AM)
+                    ✔ Add view and route for customer-admin-question-home. @done (5/11/2018, 1:57:52 AM)
+                    ✔ Add view and route for customer-admin-question-manage. @done (5/11/2018, 1:57:53 AM)
+                    ✔ Add view and route for customer-admin-question-edit. @done (5/11/2018, 1:57:54 AM)
+                    ✔ Add view and route for customer-admin-report-home. @done (5/11/2018, 1:58:05 AM)
+                    ✔ Add view and route for customer-admin-report-row-vote. @done (5/11/2018, 1:58:20 AM)
+                    ✔ Add view and route for customer-admin-report-vote-summary. @done (5/11/2018, 1:58:29 AM)
+                    ✔ Add view and route for customer-admin-report.staff-perf. @done (5/11/2018, 1:58:42 AM)
+                    ✔ Add view and route for customer-admin-staff-home. @done (5/11/2018, 1:59:17 AM)
+                    ✔ Add view and route for customer-admin-staff-manage. @done (5/11/2018, 1:59:29 AM)
+                    ✔ Add view and route for customer-admin-staff-edit. @done (5/11/2018, 1:59:30 AM)
+                    ✔ Add view and route for customer-exclusive-home. @done (5/11/2018, 1:56:51 AM)
+                    ✔ Add view and route for customer-exclusive-report-home. @done (5/11/2018, 2:00:24 AM)
+                    ✔ Add view and route for customer-exclusive-report-row-vote. @done (5/11/2018, 2:00:24 AM)
+                    ✔ Add view and route for customer-exclusive-report-vote-summary. @done (5/11/2018, 2:00:25 AM)
+                    ✔ Add view and route for customer-exclusive-report.staff-perf. @done (5/11/2018, 2:00:25 AM)
+                    ✔ Add view and route for customer-exclusive-staff-home. @done (5/11/2018, 2:00:26 AM)
+                    ✔ Add view and route for customer-exclusive-staff-manage. @done (5/11/2018, 2:00:26 AM)
+                    ✔ Add view and route for customer-exclusive-staff-edit. @done (5/11/2018, 2:00:26 AM)
+                    ✔ Add view and route for customer-staff-home. @done (5/11/2018, 2:01:01 AM)
+                    ✔ Add view and route for customer-staff-staff-edit. @done (5/11/2018, 2:01:01 AM)
+                    ✔ Add view and route for customer-device-home. @done (5/11/2018, 2:01:32 AM)
+                    ✔ Add view and route for customer-question-home. @done (5/11/2018, 2:01:45 AM)
+                    ✔ Add view and route for errors. @done (5/11/2018, 2:03:12 AM)
+        Clients:
+            Third Parties:
+                animate-css 3.5.2:
+                    ✔ organize files. @done (5/11/2018, 1:41:54 AM)
+                    ✔ setup route. @done (5/11/2018, 1:41:54 AM)
+                bootstrap 3.3.7:
+                    ✔ organize files. @done (5/11/2018, 1:41:55 AM)
+                    ✔ setup route. @done (5/11/2018, 1:41:55 AM)
+                bootstrap 4.1.0:
+                    ✔ organize files. @done (5/11/2018, 1:41:57 AM)
+                    ✔ setup route. @done (5/11/2018, 1:41:58 AM)
+                clientjs 0.1.11:
+                    ✔ organize files. @done (5/11/2018, 1:41:59 AM)
+                    ✔ setup route. @done (5/11/2018, 1:41:59 AM)
+                datatables:
+                    ✔ organize files. @done (5/11/2018, 1:42:01 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:01 AM)
+                emoji-symbols 1.0.0:
+                    ✔ organize files. @done (5/11/2018, 1:42:02 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:02 AM)
+                flag-icon-css 2.8.0:
+                    ✔ organize files. @done (5/11/2018, 1:42:04 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:04 AM)
+                flag-icon-css 3.1.0:
+                    ✔ organize files. @done (5/11/2018, 1:42:05 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:05 AM)
+                font-awesome 4.6.3:
+                    ✔ organize files. @done (5/11/2018, 1:42:07 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:07 AM)
+                font-awesome 5.0.10:
+                    ✔ organize files. @done (5/11/2018, 1:42:10 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:10 AM)
+                handlebars 4.0.5:
+                    ✔ organize files. @done (5/11/2018, 1:42:11 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:11 AM)
+                highcharts 6.0.7:
+                    ✔ organize files. @done (5/11/2018, 1:42:12 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:13 AM)
+                howler 2.0.3:
+                    ✔ organize files. @done (5/11/2018, 1:42:14 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:15 AM)
+                jquery 3.1.0:
+                    ✔ organize files. @done (5/11/2018, 1:42:16 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:16 AM)
+                jquery-handlebars 1.3.7:
+                    ✔ organize files. @done (5/11/2018, 1:42:37 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:37 AM)
+                jquery-ui 1.12.1:
+                    ✔ organize files. @done (5/11/2018, 1:42:38 AM)
+                    ✔ setup route. @done (5/11/2018, 1:42:39 AM)
+                knockout 3.4.1:
+                    ✔ organize files. @done (5/11/2018, 1:43:06 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:06 AM)
+                momemt 2.22.0:
+                    ✔ organize files. @done (5/11/2018, 1:43:07 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:07 AM)
+                pacejs 1.0.0:
+                    ✔ organize files. @done (5/11/2018, 1:43:09 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:09 AM)
+                popperjs 1.14.3:
+                    ✔ organize files. @done (5/11/2018, 1:43:10 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:11 AM)
+                pouchdb 6.4.3:
+                    ✔ organize files. @done (5/11/2018, 1:43:14 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:14 AM)
+                riotjs 3.9.3:
+                    ✔ organize files. @done (5/11/2018, 1:43:37 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:38 AM)
+                tooltipjs 1.2.0:
+                    ✔ organize files. @done (5/11/2018, 1:43:39 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:39 AM)
+                wow 1.1.2:
+                    ✔ organize files. @done (5/11/2018, 1:43:42 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:42 AM)
+            Core Libraries:
+                ✔ Nlib.js added. @done (5/11/2018, 2:07:02 AM)
+                ✔ services.js added. @done (5/11/2018, 2:07:03 AM)
+                ✔ tags.js (setup riot auto compile tag files to single tags.js file). @done (5/11/2018, 2:07:04 AM)
+    Update on [2018-05-14]:
+        Database Create Scripts:
+            Tables and Views:
+                ✔ LocalLog (TABLE). @done (5/11/2018, 1:15:31 AM)
+                ✔ LicenseView (VIEW). @done (5/11/2018, 1:15:32 AM)
+            Stored Procedures and Functions:
+                ✔ BeginLog (SP). @done (5/11/2018, 1:15:18 AM)
+                ✔ Log (SP). @done (5/11/2018, 1:15:19 AM)
+                ✔ EndLog (SP). @done (5/11/2018, 1:15:19 AM)
+                ✔ GetLicenses (SP). @done (5/11/2018, 1:15:20 AM)
+                ✔ RegisterCustomer (SP) updated error message code. @done (5/11/2018, 1:15:21 AM)
+                ✔ SignIn (SP) updated error message code. @done (5/11/2018, 1:15:21 AM)
+                ✔ SaveVote (SP) updated remove branchId from parameter. @done (5/11/2018, 1:15:22 AM)
+                ✔ __GenerateSubOrgInClause (SP). @done (5/11/2018, 1:15:22 AM)
+                ✔ GenerateSubOrgInClause (SP). @done (5/11/2018, 1:15:23 AM)
+                ✔ __BuildTotalVoteCountQuery (SP). @done (5/11/2018, 1:15:25 AM)
+                ✔ GetVoteSummaries (SP). @done (5/11/2018, 1:15:26 AM)
+            Init Stored Procedures:
+                ✔ InitErrorMessages (SP) Add New Error Code. @done (5/11/2018, 1:16:30 AM)
+        Database Document Updated:
+            Error Code:
+                ✔ Update Error Code in Excel file. @done (4/27/2018, 2:00:26 AM)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-05-10 (generate db script). @done (4/21/2018, 1:09:35 PM)
+            Stored Procedure Definitions (json files) and Wrapper Code (rater-web-db.js):
+                Licenses:
+                    GetLicenses:
+                        ✔ definition file created. @done (5/11/2018, 1:19:41 AM)
+                        ✔ wrapper code updated. @done (5/11/2018, 1:19:42 AM)
+                Votes:
+                    SaveVote:
+                        ✔ definition file updated (remove branchId). @done (5/11/2018, 1:20:18 AM)
+                        ✔ wrapper code updated. @done (5/11/2018, 1:20:19 AM)
+            Core Libraries:
+                Modules:
+                    ✔ app-paths.js updated. Add  third party libraries. @done (5/11/2018, 1:51:25 AM)
+                    ✔ app-routes.js updated. Add routes for apis and views @done (5/11/2018, 1:51:26 AM)
+                    ✔ rater-web-db.js updated. Add stored procedures. @done (5/11/2018, 1:51:26 AM)
+                Views:
+                    ✔ Add view and route for dev-home. @done (5/11/2018, 2:02:52 AM)
+                    ✔ Change default-home view but seem a lot mess required to fixed. @done (5/11/2018, 2:14:23 AM)                    
+        Clients:
+            Third Parties:
+                chosen 1.8.5:
+                    ✔ organize files. @done (5/11/2018, 1:43:51 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:51 AM)
+                combo-tree-1.0.0:
+                    ✔ organize files. @done (5/11/2018, 1:43:52 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:52 AM)
+                creative 1.0.0:
+                    ✔ organize files. @done (5/11/2018, 1:43:53 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:53 AM)
+                hierarchy-view 1.0.0:
+                    ✔ organize files. @done (5/11/2018, 1:43:54 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:54 AM)
+                jquery-easing 1.4.1:
+                    ✔ organize files. @done (5/11/2018, 1:43:55 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:56 AM)
+                jquery-org-chart 2.1.1:
+                    ✔ organize files. @done (5/11/2018, 1:43:57 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:58 AM)
+                jquery-scrolltabs 2.0.0:
+                    ✔ organize files. @done (5/11/2018, 1:43:59 AM)
+                    ✔ setup route. @done (5/11/2018, 1:43:59 AM)
+                jstree 3.3.5:
+                    ✔ organize files. @done (5/11/2018, 1:44:00 AM)
+                    ✔ setup route. @done (5/11/2018, 1:44:00 AM)
+                magnific-popup 1.1.0:
+                    ✔ organize files. @done (5/11/2018, 1:44:01 AM)
+                    ✔ setup route. @done (5/11/2018, 1:44:02 AM)
+                orgchart 2.1.1:
+                    ✔ organize files. @done (5/11/2018, 1:44:02 AM)
+                    ✔ setup route. @done (5/11/2018, 1:44:03 AM)
+                pushy 1.1.2:
+                    ✔ organize files. @done (5/11/2018, 1:44:03 AM)
+                    ✔ setup route. @done (5/11/2018, 1:44:04 AM)
+                scrollreveal 3.4.0:
+                    ✔ organize files. @done (5/11/2018, 1:44:05 AM)
+                    ✔ setup route. @done (5/11/2018, 1:44:06 AM)
+                select2 4.0.6:
+                    ✔ organize files. @done (5/11/2018, 1:44:06 AM)
+                    ✔ setup route. @done (5/11/2018, 1:44:06 AM)
+                simplebar 2.6.1:
+                    ✔ organize files. @done (5/11/2018, 1:44:07 AM)
+                    ✔ setup route. @done (5/11/2018, 1:44:08 AM)
+                tabulator 3.4.0:
+                    ✔ organize files. @done (5/11/2018, 1:44:09 AM)
+                    ✔ setup route. @done (5/11/2018, 1:44:09 AM)
+                ui.tabs.overflow-resize 1.0.0:
+                    ✔ organize files. @done (5/11/2018, 1:44:10 AM)
+                    ✔ setup route. @done (5/11/2018, 1:44:11 AM)
+            Core Libraries:
+                ✔ api.js added. Use ES6 syntax. @done (5/11/2018, 2:08:32 AM)
+                ✔ services.js temporary unusable (rename to service-plain.js). @done (5/11/2018, 2:08:55 AM)
+                ✔ service.js changed. Use ES6 syntax. @done (5/11/2018, 2:09:26 AM)
+            Concepts:
+                ✔ EventQueue class (ES6) concept. @done (5/11/2018, 2:11:49 AM)
+                ✔ DataSource class (ES6) concept. @done (5/11/2018, 2:12:05 AM)
+                ✔ Riotjs tag used global variable prove works. @done (5/11/2018, 2:12:46 AM)
+    Update on [2018-05-15]:
+        Database Create Scripts:
+            Tables and Views:
+                ✔ QSetView (VIEW). @done (5/15/2018, 6:57:08 PM)
+                ✔ QSetMLView (VIEW). @done (5/15/2018, 6:57:09 PM)
+                ✔ QSlideView (VIEW). @done (5/15/2018, 6:57:10 PM)
+                ✔ QSlideMLView (VIEW). @done (5/15/2018, 6:57:10 PM)
+                ✔ QSlideItemView (VIEW). @done (5/15/2018, 6:57:11 PM)
+                ✔ QSlideItemMLView (VIEW). @done (5/15/2018, 6:57:12 PM)
+            Stored Procedures and Functions:
+                ✔ SaveQSet (SP). @done (5/15/2018, 6:57:20 PM)
+                ✔ SaveQSetML (SP). @done (5/15/2018, 6:57:21 PM)
+                ✔ GetQsets (SP). @done (5/15/2018, 6:57:21 PM)
+                ✔ SaveQSlide (SP). @done (5/15/2018, 6:57:22 PM)
+                ✔ SaveQSlideML (SP). @done (5/15/2018, 6:57:23 PM)
+                ✔ GetQSlides (SP). @done (5/15/2018, 6:57:23 PM)
+                ✔ SaveQSlideItem (SP). @done (5/15/2018, 6:57:24 PM)
+                ✔ SaveQSlideItemML (SP). @done (5/15/2018, 6:57:25 PM)
+                ✔ GetQSlideItems (SP). @done (5/15/2018, 6:57:25 PM)
+                ✔ GetRawVotes (SP). @done (5/15/2018, 6:57:27 PM)
+            Init Stored Procedures:
+                ✔ InitErrorMessages (SP) Add New Error Code. @done (5/16/2018, 10:40:07 AM)
+        Database Document Updated:
+            Error Code:
+                ✔ Update Error Code in Excel file. @done (5/16/2018, 10:40:58 AM)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-05-15 (generate db script). @done (5/16/2018, 10:41:00 AM)
+            Stored Procedure Definitions (json files) and Wrapper Code (rater-web-db.js):  
+                QSet:
+                    SaveQSet:
+                        ✔ definition file created. @done (5/15/2018, 7:02:04 PM)
+                        ✔ wrapper code updated. @done (5/15/2018, 7:02:05 PM)
+                    SaveQSetML:
+                        ✔ definition file created. @done (5/15/2018, 7:02:07 PM)
+                        ✔ wrapper code updated. @done (5/15/2018, 7:02:08 PM)
+                    GetQSets:
+                        ✔ definition file created. @done (5/15/2018, 7:02:08 PM)
+                        ✔ wrapper code updated. @done (5/15/2018, 7:02:09 PM)
+                QSlide:
+                    SaveQSlide:
+                        ✔ definition file created. @done (5/15/2018, 7:02:09 PM)
+                        ✔ wrapper code updated. @done (5/15/2018, 7:02:10 PM)
+                    SaveQSlideML:
+                        ✔ definition file created. @done (5/15/2018, 7:02:11 PM)
+                        ✔ wrapper code updated. @done (5/15/2018, 7:02:12 PM)
+                    GetQSlides:
+                        ✔ definition file created. @done (5/15/2018, 7:02:12 PM)
+                        ✔ wrapper code updated. @done (5/15/2018, 7:02:13 PM)
+                QSlideItem:
+                    SaveQSlideItem:
+                        ✔ definition file created. @done (5/15/2018, 7:02:14 PM)
+                        ✔ wrapper code updated. @done (5/15/2018, 7:02:15 PM)
+                    SaveQSlideItemML:
+                        ✔ definition file created. @done (5/15/2018, 7:02:15 PM)
+                        ✔ wrapper code updated. @done (5/15/2018, 7:02:16 PM)
+                    GetQSlideItems:
+                        ✔ definition file created. @done (5/15/2018, 7:02:17 PM)
+                        ✔ wrapper code updated. @done (5/15/2018, 7:02:17 PM)
+                Votes:
+                    GetRawVotes:
+                        ✔ definition file created. @done (5/15/2018, 7:02:18 PM)
+                        ✔ wrapper code updated. @done (5/15/2018, 7:02:18 PM)
+            Core Libraries:
+                Modules:
+                    ✔ app-paths.js updated. Add  third party libraries. @done (5/15/2018, 7:05:21 PM)
+                    ✔ app-routes.js updated. Add routes for apis and views @done (5/15/2018, 7:05:24 PM)
+                    ✔ rater-web-db.js updated. Add stored procedures. @done (5/15/2018, 7:05:26 PM)
+                Views:
+                    ✔ Temporary remove all views and routes excepts dev-home. @done (5/15/2018, 7:07:01 PM)
+                    ✔ Update view and route for dev-home. @done (5/15/2018, 7:07:01 PM)
+                    ✔ Each view route code update to supports get model in both GET and POST method. @done (5/15/2018, 7:19:15 PM)
+        Clients:
+            Third Parties:
+                reveal 3.4.1:
+                    ✔ organize files. @done (5/15/2018, 7:07:54 PM)
+                    ✔ setup route. @done (5/15/2018, 7:07:55 PM)
+            Core Libraries:
+                api.js:
+                    ✔ Update api add new url for updated SPs. @done (5/16/2018, 10:44:37 AM)
+                nlib.js:
+                    ✔ Add NDelegate class. @done (5/15/2018, 7:11:38 PM)
+                    ✔ Add EventHandler class. @done (5/15/2018, 7:11:38 PM)
+                    ✔ Add EventArgs class. @done (5/15/2018, 7:11:39 PM)
+                    ✔ Add DataSource class. @done (5/15/2018, 7:11:39 PM)
+                service.js:
+                    ✔ Add LocalStorage class. @done (5/15/2018, 7:16:16 PM)
+                    ✔ Add UserPerference class. @done (5/15/2018, 7:16:17 PM)
+                    ✔ Add LanguageService class. @done (5/15/2018, 7:16:17 PM)
+                    ✔ Add ContentModel class. For model.js file to implements how to load each page contents. @done (5/15/2018, 7:16:19 PM)
+                    ✔ Add ContentService class. @done (5/15/2018, 7:16:20 PM)
+                    ✔ Add ClientApp class. @done (5/15/2018, 7:16:20 PM)
+                    ✔ To access LanguageService call by window global varialbe 'lang'. @done (5/15/2018, 7:16:21 PM)
+                    ✔ To access ClientApp call by window global varialbe 'app'. @done (5/15/2018, 7:16:21 PM)
+                tags.js:
+                    ✔ page-footer tag update to used content from server (supports ML). @done (5/15/2018, 7:16:22 PM)
+                    ✔ page-nav-bar tag update now should work properly (supports ML). @done (5/15/2018, 11:18:53 PM)
+    Update on [2018-05-16]:
+        Database Create Scripts:
+            Stored Procedures and Functions:
+                ✔ SignIn (SP) update. @done (5/16/2018, 3:36:31 PM)
+        Database Document Updated:
+            Server Update History:
+                ✔ Add server-update.todo to keep track generate script file status. @done (5/16/2018, 11:07:24 AM)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-05-16 (generate db script). @done (5/16/2018, 11:07:35 AM)
+            Core Libraries:
+                Views:
+                    ✔ Implements default-home supports page, nav, footer content (ML). @done (5/16/2018, 6:45:17 PM)
+                    ✔ Implements register supports page, nav, footer, entry content (ML). @done (5/16/2018, 6:45:17 PM)
+                    ✔ Implements signin supports page, nav, footer, entry content (ML). @done (5/16/2018, 6:45:17 PM)
+        Clients:
+            Core Libraries:
+                css files:
+                    ✔ Add rater-client.css for client browser uses. @done (5/16/2018, 11:22:45 AM)
+                    ✔ Add rater-device.css for device view (for display question) uses. @done (5/16/2018, 11:22:46 AM)
+                nlib.js:
+                    ✔ Add data type extenstion method -> string.format. @done (5/16/2018, 6:44:03 PM)
+                service.js:
+                    ✔ ContentModel class add property mountTags. @done (5/16/2018, 11:33:13 PM)
+                    ✔ ContentService class change property ModelService to modelService. @done (5/16/2018, 11:33:48 PM)
+                tags.js:
+                    ✔ Add register-entry tag with supports ML code. @done (5/16/2018, 6:44:05 PM)
+                    ✔ Add signin-entry tag with supports ML code. @done (5/16/2018, 6:44:05 PM)
+                model.js files:
+                    ✔ all model.js file must implements constructor with set mountTags. @done (5/16/2018, 11:35:02 PM)
+    Update on [2018-05-17]:
+        Clients:
+            Concepts:
+                ✔ Add sample signin process (example 05). @done (5/17/2018, 11:18:27 PM)
+                ✔ Add sample dashboard (example 06). @done (5/17/2018, 11:32:47 PM)
+                ✔ Add sample clientjs (example 07). @done (5/17/2018, 11:36:07 PM)
+    Update on [2018-05-18]:
+        Database Create Scripts:
+            Tables and Views:
+                ✔ ErrorMessageML (TABLE). @done (5/18/2018, 11:39:32 AM)
+                ✔ ErrorMessageView (VIEW). @done (5/18/2018, 11:49:58 AM)
+                ✔ ErrorMessageMLView (VIEW). @done (5/18/2018, 11:49:58 AM)
+            Stored Procedures and Functions:
+                ✔ SaveErrorMsg (SP). @done (5/18/2018, 12:26:02 PM)
+                ✔ SaveErrorMsgML (SP). @done (5/18/2018, 11:40:16 AM)
+                ✔ GetErrorMsg (SP) droped. @done (5/18/2018, 11:46:16 AM)
+                ✔ GetErrorMsgs (SP). @done (5/18/2018, 11:46:16 AM)
+            Init Stored Procedures:
+                ✔ InitErrorMessages (SP) Add New Error Code. @done (5/18/2018, 12:13:12 PM)
+        Database Document Updated:
+            Error Code:
+                ✔ Update Error Code in Excel file. @done (5/18/2018, 12:13:14 PM)
+            Server Update History:
+                ✔ Add server-update.todo to keep track generate script file status. @done (5/18/2018, 12:13:15 PM)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-05-18 (generate db script). @done (5/18/2018, 12:55:15 PM)
+            Stored Procedure Definitions (json files) and Wrapper Code (rater-web-db.js):  
+                Error Message:
+                    SaveErrorMsg:
+                        ✔ definition file created. @done (5/18/2018, 12:14:29 PM)
+                        ✔ wrapper code updated. @done (5/18/2018, 12:14:30 PM)
+                    SaveErrorMsgML:
+                        ✔ definition file created. @done (5/18/2018, 12:14:31 PM)
+                        ✔ wrapper code updated. @done (5/18/2018, 12:14:31 PM)
+                    GetErrorMsgs:
+                        ✔ definition file created. @done (5/18/2018, 12:14:32 PM)
+                        ✔ wrapper code updated. @done (5/18/2018, 12:14:32 PM)
+            Core Libraries:
+                Modules:
+                    ✔ app-routes.js updated. Add routes for error message apis. @done (5/18/2018, 11:53:14 AM)
+                    ✔ rater-web-db.js updated. Add stored procedures for error message. @done (5/18/2018, 11:52:59 AM)
+                Views:
+                    ✔ Implements EDL Admin Home supports page, nav, footer, content (ML). @done (5/18/2018, 1:29:45 PM)
+                    ✔ Implements Customer Admin Home supports page, nav, footer, content (ML). @done (5/18/2018, 1:29:46 PM)
+        Clients:
+            Third Parties:
+                animate-css 3.6.1:
+                    ✔ update version. @done (5/18/2018, 2:34:12 PM)
+                wow 1.3.0:
+                    ✔ update version. @done (5/18/2018, 2:34:12 PM)
+                reveal-3.6.0:
+                    ✔ update version. @done (5/18/2018, 2:39:21 PM)
+                highcharts-6.1.0:
+                    ✔ update version. @done (5/18/2018, 2:39:21 PM)
+            Core Libraries:
+                api.js:
+                    ✔ Update api add new url for error message SPs. @done (5/18/2018, 11:49:23 AM)
+            Concepts:
+                ✔ Add sample Flexbox (BS4) (example 08). @done (5/18/2018, 5:52:21 AM)
+                ✔ Add sample Card/div scrollable (BS4) (example 08). @done (5/18/2018, 9:08:17 AM)
+    Update on [2018-05-19]:
+        Node Server:
+            Stored Procedure Definitions (json files) and Wrapper Code (rater-web-db.js):
+                Reports:
+                    GetRawVotes:
+                        ✔ definition file updated fixed Misspell and Invalid datatype. @done (5/19/2018, 10:16:54 PM)
+            Core Libraries:
+                Modules:
+                    ✔ mssql-db.js Rewrite code use array.forEach. @done (5/19/2018, 10:16:56 PM)
+                    ✔ mssql-db.js Update code supports to map input case-insensitive (auto map). @done (5/19/2018, 10:16:57 PM)
+        Clients:
+            Third Parties:
+                tether-1.3.3:
+                    ✔ organize files. @done (5/19/2018, 11:34:32 PM)
+                    ✔ setup route. @done (5/19/2018, 11:54:14 PM)
+                jarallax-1.10.3:
+                    ✔ organize files. @done (5/19/2018, 11:55:01 PM)
+                    ✔ setup route. @done (5/19/2018, 11:55:02 PM)
+                offline-0.7.13:
+                    ✔ organize files. @done (5/19/2018, 11:53:50 PM)
+                    ✔ setup route. @done (5/19/2018, 11:54:14 PM)
+            Core Libraries:
+                nlib.js:
+                    ✔ Add MockPromise class. @done (5/19/2018, 10:22:30 PM)
+                    ✔ Add Date format extension method. @done (5/19/2018, 10:25:19 PM)
+                    ✔ Update EventHandler class. Add handled property in evtData. @done (5/19/2018, 11:13:42 PM)
+                Views:
+                    ✔ Remove all excepts dev-home. @done (2018-5-22 04:25:45)
+            Concepts:
+                Quokka samples:
+                    ✔ Add 03.promise.js !!PROVED!!. @done (5/19/2018, 10:21:19 PM)
+                    ✔ Add 04.objects.case.sensitive.js. !!PROVED!!. @done (5/19/2018, 10:22:53 PM)
+                    ✔ Add 05.objects.fluent.interface.js. @done (5/19/2018, 10:23:17 PM)
+                    ✔ Add 06.design.pattern.pipe.js. @done (5/19/2018, 10:23:10 PM)
+                    ✔ Add 07.design.pattern.pub-sub.js. @done (5/19/2018, 10:23:11 PM)
+                    ✔ Add 08.date.extension.method.js. @done (5/19/2018, 10:23:14 PM)
+                    ✔ Add 09.objects.properties.merger.js. @done (5/19/2018, 10:41:57 PM)
+                    ✔ Add 10.delegate.take.2.js. !!FINISHED!! @done (5/19/2018, 11:13:40 PM)
+    Update on [2018-05-20]:
+        Clients:
+            Core Libraries:
+                nlib.js:
+                    ✔ Add NJson class. @done (2018-5-20 23:46:14)
+                service.js:
+                    ✔ Add UserService class. @done (2018-5-20 23:29:09)
+                    ✔ UserService class add signIn method. @done (2018-5-20 23:29:40)
+                    ✔ UserService class add signOut method. @done (2018-5-20 23:29:40)
+                    ✔ UserService class add registerCustomer method. @done (2018-5-20 23:29:40)
+                    ✔ UserService class add add userNotFound event. @done (2018-5-20 23:30:10)
+                    ✔ UserService class add add currentUserChanged event. @done (2018-5-20 23:30:10)
+                tags.js:
+                    ✔ Update page-nav-bar tag move condition checks into virtual tag. @done (2018-5-20 23:31:02)
+                    ✔ Update signin-entry tag now supports connect to server. @done (2018-5-20 23:33:43)
+                    ✔ Update signin-entry tag now supports allow to choose user if more than on user found. @done (2018-5-20 23:33:44)
+            Concepts:
+                NetBeans:
+                    ✔ Port NetBeans sample site 1. @done (5/20/2018, 12:33:12 AM)
+                    ✔ Port NetBeans sample site 1. @done (5/20/2018, 12:33:13 AM)
+                    ✔ Port Brackets sample site. @done (5/20/2018, 12:57:20 AM)
+    Update on [2018-05-21]:
+        Database Create Scripts:
+            Stored Procedures and Functions:
+                ✔ SignIn (SP) updated. @done (2018-5-21 00:06:01)
+                ✔ GetMemberDescription (SP) added. @done (2018-5-21 02:47:58)
+        Database Document Updated:
+            Server Update History:
+                ✔ Add server-update.todo to keep track generate script file status. @done (2018-5-21 21:40:03)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-05-21 (generate db script). @done (2018-5-21 21:39:26)
+            Stored Procedure Definitions (json files) and Wrapper Code (rater-web-db.js):  
+                Misc:
+                    GetMemberDescription:
+                        ✔ definition file created. @done (2018-5-21 02:49:57)
+                        ✔ wrapper code updated. @done (2018-5-21 02:53:14)
+        Clients:
+            Third Parties:
+                client-side-capcha-1.0.0:
+                    ✔ add to public/dist and setup route. @done (2018-5-21 22:55:59)
+                    ✔ fixed example (demo) reference. @done (2018-5-21 22:56:31)
+                js-captcha-1.1.0:
+                    ✔ add to public/dist and setup route. @done (2018-5-21 22:55:59)
+                puzzle-captcha-1.0.0:
+                    ✔ add to public/dist and setup route. @done (2018-5-21 22:56:00)
+                    ✔ fixed example (demo) reference and add sample image. @done (2018-5-21 22:56:33)
+                paperjs-0.11.5:
+                    ✔ add to public/dist and setup route. @done (2018-5-21 23:02:44)
+                scroll-magic-2.0.5:
+                    ✔ add to public/dist and setup route. @done (2018-5-21 23:10:37)
+                fabricjs-2.3.0:
+                    ✔ add to public/dist and setup route. @done (2018-5-21 23:20:34)
+                snapjs-1.9.2:
+                    ✔ add to public/dist and setup route. @done (2018-5-21 23:20:51)
+                    ✔ update all reference in demo files. @done (2018-5-21 23:27:08)
+            Core Libraries:
+                api.js:
+                    ✔ Update api add new url for GetMemberDescription SP. @done (2018-5-21 02:55:00)
+                service.js:
+                    ✔ UserService class rename method registerCustomer to register. @done (2018-5-21 00:57:47)
+                    ✔ UserService class implements register method. @done (2018-5-21 00:57:47)
+                    ✔ UserService class implements signOut method. @done (2018-5-21 01:01:02)
+                    ✔ Add ClientInfo class. @done (2018-5-21 01:18:41)
+                    ✔ UserService class update logic to save/load data from local storage. @done (2018-5-21 02:56:07)
+                    ✔ UserService class update code to sync member description when language changed. @done (2018-5-21 04:09:17)
+                tags.js:
+                    ✔ Update signin-entry tag now show CustomerName instead of CustomerId. @done (2018-5-21 00:12:27)
+                    ✔ update register-entry tag now work properly. @done (2018-5-21 00:56:53)
+                    ✔ Update signin-entry tag now supports show scrollbar in choose company properly. @done (2018-5-21 01:58:48)
+                    ✔ Update page-footer tag now show current user on footer. @done (2018-5-21 04:09:40)
+        URGENT TASK:
+            Update security:
+                ✔ Backup all code in views to views (backup2). @done (2018-5-21 21:43:37)
+                ✔ Backup all code in lib to lib (backup2). @done (2018-5-21 21:43:37)
+                ✔ Backup all code in api to api (backup2). @done (2018-5-21 21:43:38)
+                ✔ Backup all code in src to src (backup2). @done (2018-5-21 21:43:38)
+                ✔ Backup all code in public/lib to public/lib (backup2). @done (2018-5-21 21:43:39)
+                ✔ Change all index.handlebars files to simple one html for test. @done (2018-5-21 21:44:55)
+                ✔ Change all module.js of all views to empty code. @done (2018-5-21 21:44:55)
+    Update on [2018-05-22]:
+        Database Create Scripts:
+            Tables and Views:
+                ✔ ClientAccess (TABLE) added. @done (2018-5-24 14:39:07)
+            Stored Procedures and Functions:
+                ✔ RegisterClient (SP) added. @done (2018-5-24 14:39:19)
+        Database Scripts folder:
+            ✔ Remove all scripts folders from 2018-04-26 until 2018-05-21. @done (2018-5-22 04:52:49)
+        Database Document Updated:
+            Error Code:
+                ✔ Update Error Code in Excel file. @done (2018-5-22 04:16:58)
+            Server Update History:
+                ✔ Add server-update.todo to keep track generate script file status. @done (2018-5-22 04:16:45)
+        Node Server:
+            Stored Procedure Definitions (json files) and Wrapper Code (rater-web-db.js):  
+                ✔ Remove all definition files. @done (2018-5-22 04:19:36)
+            Core Libraries:
+                Modules:
+                    ✔ mssql-db.js update code to work with date string. @done (2018-5-22 03:04:12)
+                    ✔ rater-web-db.js remove all. @done (2018-5-22 04:21:44)
+                    ✔ api routes remove all. @done (2018-5-22 04:22:07)
+        Clients:
+            Core Libraries:
+                api.js:
+                    ✔ Remove all api. @done (2018-5-22 04:50:34)
+                nlib.js:
+                    ✔ Add extenstion for jQuery to supports $.when.all @done (2018-5-22 03:02:56)
+                service.js:
+                    ✔ Remove all code. @done (2018-5-22 04:50:59)
+                tags.js:
+                    ✔ Remove all. @done (2018-5-22 04:23:50)
+            Concepts:
+                Quokka samples:
+                    ✔ Remove all. @done (2018-5-22 04:23:07)
+                tests:
+                    ✔ Remove all. @done (2018-5-22 04:24:30)
+        Git:
+            master:
+                ✔ Commit clean project. @done (2018-5-22 04:41:58)
+            v1:
+                ✔ Commit backup project to v1 branch. @done (2018-5-22 04:41:59)
+    Update on [2018-05-23]:
+        Database Create Scripts:
+            Drop Script:
+                ✔ Add Drop scripts. @done (2018-5-22 04:16:16)
+        Database Create Scripts:
+            Tables and Views:
+                ✔ dboView (VIEW). @done (2018-5-22 05:11:26)
+                ✔ Language (TABLE). @done (2018-5-22 05:15:13)
+                ✔ LanguageView (VIEW). @done (2018-5-22 05:15:14)
+                ✔ ErrorMessage (TABLE). @done (2018-5-22 05:17:34)
+                ✔ ErrorMessageML (TABLE). @done (2018-5-22 05:19:12)
+                ✔ ErrorMessageView (VIEW). @done (2018-5-22 05:19:12)
+                ✔ ErrorMessageMLView (VIEW). @done (2018-5-22 05:19:13)
+            Stored Procedures and Functions:
+                ✔ IsSameDate (Function). @done (2018-5-22 05:08:49)
+                ✔ IsSameMonth (Function). @done (2018-5-22 05:08:50)
+                ✔ IsSameYear (Function). @done (2018-5-22 05:08:50)
+                ✔ IsNullOrEmpty (Function). @done (2018-5-22 05:08:52)
+                ✔ GetRandomHexCode (SP). @done (2018-5-22 05:08:52)
+                ✔ DeleteAll (SP). @done (2018-5-22 05:08:53)
+                ✔ GetErrorMsg (SP). @done (2018-5-22 05:33:36)
+                ✔ SaveErrorMsg (SP). @done (2018-5-22 05:33:37)
+                ✔ SaveErrorMsgML (SP). @done (2018-5-22 05:34:09)
+                ✔ GetErrorMsgs (SP). @done (2018-5-22 05:34:40)
+                ✔ SaveLanguage (SP). @done (2018-5-22 05:35:06)
+                ✔ DisableLanguage (SP). @done (2018-5-22 05:35:38)
+                ✔ EnableLanguage (SP). @done (2018-5-22 05:35:39)
+                ✔ GetLanguages (SP). @done (2018-5-22 05:35:55)
+        Node Server:
+            Node Modules:
+                ✔ Add express-fingerprint. @done (2018-5-22 06:18:16)
+    Update on [2018-05-24]:
+        Database Create Scripts:
+            Tables and Views:
+                Local Logs:
+                    ✔ LocalLog (TABLE). @done (2018-5-23 19:55:24)
+                MasterPK:
+                    ✔ MasterPK (TABLE). @done (2018-5-23 18:27:04)                    
+                Member Types:
+                    ✔ MemberType (TABLE). @done (2018-5-23 18:37:26)
+                    ✔ MemberTypeML (TABLE). @done (2018-5-23 18:37:27)
+                    ✔ MemberTypeView (VIEW). @done (2018-5-23 18:38:21)
+                    ✔ MemberTypeMLView (VIEW). @done (2018-5-23 18:38:22)
+                Period Units:
+                    ✔ PeriodUnit (TABLE). @done (2018-5-23 19:00:25)
+                    ✔ PeriodUnitML (TABLE). @done (2018-5-23 19:00:26)
+                    ✔ PeriodUnitView (VIEW). @done (2018-5-23 19:00:26)
+                    ✔ PeriodUnitMLView (VIEW). @done (2018-5-23 19:00:27)
+                Limit Units:
+                    ✔ LimitUnit (TABLE). @done (2018-5-23 19:01:49)
+                    ✔ LimitUnitML (TABLE). @done (2018-5-23 19:01:50)
+                    ✔ LimitUnitView (VIEW). @done (2018-5-23 19:02:00)
+                    ✔ LimitUnitMLView (VIEW). @done (2018-5-23 19:02:00)
+                License Types:
+                    ✔ LicenseType (TABLE). @done (2018-5-23 19:24:29)
+                    ✔ LicenseTypeML (TABLE). @done (2018-5-23 19:24:30)
+                    ✔ LicenseTypeView (VIEW). @done (2018-5-23 19:24:30)
+                    ✔ LicenseTypeMLView (VIEW). @done (2018-5-23 19:24:31)
+                License Features and License:
+                    ✔ LicenseFeature (TABLE). @done (2018-5-23 19:26:22)
+                    ✔ LicenseFeatureMLView (VIEW). @done (2018-5-23 19:26:37)
+                    ✔ LicenseMLView (VIEW). @done (2018-5-23 19:27:31)
+                UserInfo:
+                    ✔ UserInfo (TABLE). @done (2018-5-23 19:42:20)
+                    ✔ UserInfoML (TABLE). @done (2018-5-23 19:42:24)
+                    ✔ UserInfoView (VIEW). @done (2018-5-23 19:42:26)
+                    ✔ UserInfoMLView (VIEW). @done (2018-5-23 19:42:29)
+                Customer PKs:
+                    ✔ CustomerPK (TABLE). @done (2018-5-23 19:43:06)
+                Customers:
+                    ✔ Customer (TABLE). @done (2018-5-23 20:00:44)
+                    ✔ CustomerML (TABLE). @done (2018-5-23 20:00:45)
+                    ✔ CustomerView (VIEW). @done (2018-5-23 20:00:45)
+                    ✔ CustomerMLView (VIEW). @done (2018-5-23 20:00:46)
+                MemberInfo:
+                    ✔ MemberInfo (TABLE). @done (2018-5-23 20:02:59)
+                    ✔ MemberInfoML (TABLE). @done (2018-5-23 20:03:20)
+                    ✔ MemberInfoView (VIEW). @done (2018-5-23 20:03:43)
+                    ✔ MemberInfoMLView (VIEW). @done (2018-5-23 20:03:57)
+                Branchs:
+                    ✔ Branch (TABLE). @done (2018-5-23 20:01:49)
+                    ✔ BranchML (TABLE). @done (2018-5-23 20:01:49)
+                    ✔ BranchView (VIEW). @done (2018-5-23 20:02:37)
+                    ✔ BranchMLView (VIEW). @done (2018-5-23 20:02:37)
+                Orgs:
+                    ✔ Org (TABLE). @done (2018-5-23 20:04:26)
+                    ✔ OrgML (TABLE). @done (2018-5-23 20:04:35)
+                    ✔ OrgView (VIEW). @done (2018-5-23 20:04:46)
+                    ✔ OrgMLView (VIEW). @done (2018-5-23 20:05:03)
+                QSets:
+                    ✔ QSet (TABLE). @done (2018-5-23 20:16:21)
+                    ✔ QSetML (TABLE). @done (2018-5-23 20:16:31)
+                    ✔ QSetView (VIEW). @done (2018-5-23 20:16:53)
+                    ✔ QSetMLView (VIEW). @done (2018-5-23 20:17:02)
+                QSlides:
+                    ✔ QSlide (TABLE). @done (2018-5-23 20:17:34)
+                    ✔ QSlideML (TABLE). @done (2018-5-23 20:17:44)
+                    ✔ QSlideView (VIEW). @done (2018-5-23 20:18:09)
+                    ✔ QSlideMLView (VIEW). @done (2018-5-23 20:18:21)
+                QSlideItems:
+                    ✔ QSlideItem (TABLE). @done (2018-5-23 20:18:45)
+                    ✔ QSlideItemML (TABLE). @done (2018-5-23 20:19:22)
+                    ✔ QSlideItemView (VIEW). @done (2018-5-23 20:19:25)
+                    ✔ QSlideItemMLView (VIEW). @done (2018-5-23 20:19:36)
+                Devices:
+                    ✔ DeviceType (TABLE). @done (2018-5-23 21:02:59)
+                    ✔ DeviceTypeML (TABLE). @done (2018-5-23 21:03:01)
+                    ✔ DeviceTypeView (VIEW). @done (2018-5-23 21:20:36)
+                    ✔ DeviceTypeMLView (VIEW). @done (2018-5-23 21:20:36)
+                    ✔ Device (TABLE). @done (2018-5-23 21:10:36)
+                    ✔ DeviceML (TABLE). @done (2018-5-23 21:10:36)
+                    ✔ DeviceView (VIEW). @done (2018-5-23 21:23:33)
+                    ✔ DeviceMLView (VIEW). @done (2018-5-23 21:26:46)
+                Votes:
+                    ✔ Vote (TABLE). @done (2018-5-23 20:46:49)
+                Register-SignIn-Setup:
+                    ✔ LogInView (VIEW). @done (2018-5-24 04:50:36)
+            Stored Procedures and Functions:
+                Error Message:
+                    ✔ InitErrorMessages (SP CREATE). @done (2018-5-23 18:47:18)
+                Local Logs:
+                    ✔ BeginLog (SP). @done (2018-5-23 19:57:01)
+                    ✔ Log (SP). @done (2018-5-23 19:57:44)
+                    ✔ EndLog (SP). @done (2018-5-23 19:57:47)
+                MasterPK:
+                    ✔ SetMasterPK (SP). @done (2018-5-23 18:31:16)
+                    ✔ NextMasterPK (SP). @done (2018-5-23 18:31:17)
+                    ✔ GetMasterPK (SP). @done (2018-5-23 18:31:17)
+                Member Types:
+                    ✔ GetMemberTypes (SP). @done (2018-5-23 18:40:56)
+                Period Units:
+                    ✔ SavePeriodUnit (SP). @done (2018-5-23 19:05:02)
+                    ✔ SavePeriodUnitML (SP). @done (2018-5-23 19:05:02)
+                    ✔ GetPeriodUnits (SP). @done (2018-5-23 19:05:03)
+                Limit Units:
+                    ✔ SaveLimitUnit (SP). @done (2018-5-23 19:05:48)
+                    ✔ SaveLimitUnitML (SP). @done (2018-5-23 19:05:48)
+                    ✔ GetLimitUnits (SP). @done (2018-5-23 19:05:49)
+                License Types:
+                    ✔ SaveLicenseType (SP). @done (2018-5-23 19:32:25)
+                    ✔ SaveLicenseTypeML (SP). @done (2018-5-23 19:32:26)
+                    ✔ GetLicenseTypes (SP). @done (2018-5-23 19:32:27)
+                License Features and License:
+                    ✔ SaveLicenseFeature (SP). @done (2018-5-23 19:33:53)
+                    ✔ GetLicenseFeatures (SP). @done (2018-5-23 19:33:54)
+                    ✔ GetLicenses (SP). @done (2018-5-23 19:34:08)
+                UserInfo:
+                    ✔ SaveUserInfo (SP). @done (2018-5-23 19:46:30)
+                    ✔ SaveUserInfoML (SP). @done (2018-5-23 19:46:31)
+                    ✔ GetUserInfos (SP). @done (2018-5-23 19:46:45)
+                Customer PKs:
+                    ✔ SetCustomerPK (SP). @done (2018-5-23 19:47:45)
+                    ✔ NextCustomerPK (SP). @done (2018-5-23 19:48:24)
+                    ✔ GetCustomerPK (SP). @done (2018-5-23 19:49:02)
+                Customers:
+                    ✔ SaveCustomer (SP). @done (2018-5-23 20:23:37)
+                    ✔ SaveCustomerML (SP). @done (2018-5-23 20:23:38)
+                    ✔ GetCustomers (SP). @done (2018-5-23 20:23:38)
+                    ✔ DeleteCustomer (SP). @done (2018-5-24 03:34:28)
+                    ✔ DeleteCustomers (SP). @done (2018-5-24 03:34:36)
+                MemberInfo:
+                    ✔ SaveMemberInfo (SP). @done (2018-5-23 20:24:21)
+                    ✔ SaveMemberInfoML (SP). @done (2018-5-23 20:24:21)
+                    ✔ GetMemberInfos (SP). @done (2018-5-23 20:24:21)
+                Branchs:
+                    ✔ SaveBranch (SP). @done (2018-5-23 20:25:01)
+                    ✔ SaveBranchML (SP). @done (2018-5-23 20:25:28)
+                    ✔ GetBranchs (SP). @done (2018-5-23 20:25:28)
+                Orgs:
+                    ✔ SaveOrg (SP). @done (2018-5-23 20:26:20)
+                    ✔ SaveOrgML (SP). @done (2018-5-23 20:26:20)
+                    ✔ GetOrgs (SP). @done (2018-5-23 20:26:20)
+                QSets:
+                    ✔ SaveQSet (SP). @done (2018-5-23 20:29:08)
+                    ✔ SaveQSetML (SP). @done (2018-5-23 20:29:08)
+                    ✔ GetQSets (SP). @done (2018-5-23 20:29:09)
+                QSlides:
+                    ✔ SaveQSlide (SP). @done (2018-5-23 20:29:10)
+                    ✔ SaveQSlideML (SP). @done (2018-5-23 20:29:10)
+                    ✔ GetQSlides (SP). @done (2018-5-23 20:29:11)
+                QSlideItems:
+                    ✔ SaveQSlideItem (SP). @done (2018-5-23 20:29:50)
+                    ✔ SaveQSlideItemML (SP). @done (2018-5-23 20:29:51)
+                    ✔ GetQSlideItems (SP). @done (2018-5-23 20:30:06)
+                Devices:
+                    ✔ SaveDevice (SP). @done (2018-5-23 22:30:05)
+                    ✔ SaveDeviceML (SP). @done (2018-5-23 22:55:08)
+                    ✔ GetDevices (SP). @done (2018-5-23 22:55:17)
+                    ✔ GetDeviceTypes (SP). @done (2018-5-23 23:47:34)
+                Votes:
+                    ✔ SaveVote (SP). @done (2018-5-23 20:47:20)
+                Reports:
+                    ✔ __GenerateSubOrgInClause (SP). @done (2018-5-23 23:04:45)
+                    ✔ GenerateSubOrgInClause (SP). @done (2018-5-23 23:04:59)
+                    ✔ __BuildTotalVoteCountQuery (SP). @done (2018-5-23 23:05:10)
+                    ✔ GetVoteSummaries (SP). @done (2018-5-23 23:05:20)
+                    ✔ GetRawVotes (SP). @done (2018-5-23 23:05:21)
+                Register-SignIn-Setup:
+                    ✔ Register (SP). @done (2018-5-24 04:04:30)
+                    ✔ CheckUsers (SP). @done (2018-5-24 04:23:44)
+                    ✔ SignIn (SP). @done (2018-5-24 05:12:31)
+        Database Document Updated:
+            Server Update History:
+                ✔ Add server-update.todo to keep track generate script file status. @done (2018-5-24 18:33:32)
+            Init Stored Procedures:
+                ✔ InitLanguage (SP). @done (2018-5-23 19:11:09)
+                ✔ InitMemberTypes (SP). @done (2018-5-23 19:13:44)
+                ✔ InitPeriodUnits (SP). @done (2018-5-23 19:16:16)
+                ✔ InitLimitUnits (SP). @done (2018-5-23 19:16:17)
+                ✔ InitLicenseTypes (SP). @done (2018-5-23 19:36:22)
+                ✔ InitLicenseFeatures (SP). @done (2018-5-23 19:37:47)
+                ✔ InitMasterPKs (SP). @done (2018-5-23 19:19:35)
+                ✔ InitDeviceTypes (SP). @done (2018-5-23 22:09:40)
+                ✔ InitDefaultUser (SP). @done (2018-5-23 19:51:32)
+                ✔ InitSample (SP). @done (2018-5-24 03:36:30)
+                ✔ InitErrorMessages (SP ALTER). @done (2018-5-24 18:33:37)
+        Database Document Updated:
+            Error Code:
+                ✔ Update Error Code in Excel file. @done (2018-5-24 15:22:44)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-05-24 (generate db script). @done (2018-5-24 15:22:45)
+            Stored Procedure Definitions (json files) and Wrapper Code (rater-web-db.js):  
+                Utilities:
+                    GetRandomHexCode:
+                        ✔ definition file created. @done (2018-5-23 23:20:52)
+                        ✔ wrapper code updated. @done (2018-5-23 23:51:56)
+                        ✔ setup route. @done (2018-5-24 00:31:49)
+                Languages and Error Messages:
+                    SaveErrorMsg:
+                        ✔ definition file created. @done (2018-5-23 23:23:10)
+                        ✔ wrapper code updated. @done (2018-5-23 23:52:16)
+                        ✔ setup route. @done (2018-5-24 00:34:18)
+                    SaveErrorMsgML:
+                        ✔ definition file created. @done (2018-5-23 23:23:11)
+                        ✔ wrapper code updated. @done (2018-5-23 23:52:21)
+                        ✔ setup route. @done (2018-5-24 00:34:19)
+                    GetErrorMsgs:
+                        ✔ definition file created. @done (2018-5-23 23:22:52)
+                        ✔ wrapper code updated. @done (2018-5-23 23:52:28)
+                        ✔ setup route. @done (2018-5-24 00:34:20)
+                    GetErrorMsg:
+                        ✔ definition file created. @done (2018-5-23 23:40:15)
+                        ✔ wrapper code updated. @done (2018-5-23 23:52:49)
+                        ✔ setup route. @done (2018-5-24 00:34:22)
+                    SaveLanguage:
+                        ✔ definition file created. @done (2018-5-23 23:23:31)
+                        ✔ wrapper code updated. @done (2018-5-23 23:53:37)
+                        ✔ setup route. @done (2018-5-24 00:34:23)
+                    DisableLanguage:
+                        ✔ definition file created. @done (2018-5-23 23:21:46)
+                        ✔ wrapper code updated. @done (2018-5-23 23:53:38)
+                        ✔ setup route. @done (2018-5-24 00:34:24)
+                    EnableLanguage:
+                        ✔ definition file created. @done (2018-5-23 23:21:47)
+                        ✔ wrapper code updated. @done (2018-5-23 23:53:39)
+                        ✔ setup route. @done (2018-5-24 00:34:25)
+                    GetLanguages:
+                        ✔ definition file created. @done (2018-5-23 23:23:34)
+                        ✔ wrapper code updated. @done (2018-5-23 23:53:47)
+                        ✔ setup route. @done (2018-5-24 00:34:25)
+                Member Types:
+                    GetMemberTypes:
+                        ✔ definition file created. @done (2018-5-23 23:24:16)
+                        ✔ wrapper code updated. @done (2018-5-23 23:53:49)
+                        ✔ setup route. @done (2018-5-24 01:02:52)
+                Period Units:
+                    SavePeriodUnit:
+                        ✔ definition file created. @done (2018-5-23 23:25:13)
+                        ✔ wrapper code updated. @done (2018-5-23 23:54:41)
+                        ✔ setup route. @done (2018-5-24 01:02:58)
+                    SavePeriodUnitML:
+                        ✔ definition file created. @done (2018-5-23 23:25:18)
+                        ✔ wrapper code updated. @done (2018-5-23 23:54:42)
+                        ✔ setup route. @done (2018-5-24 01:02:58)
+                    GetPeriodUnits:
+                        ✔ definition file created. @done (2018-5-23 23:25:19)
+                        ✔ wrapper code updated. @done (2018-5-23 23:54:43)
+                        ✔ setup route. @done (2018-5-24 01:03:00)
+                Limit Units:
+                    SaveLimitUnit:
+                        ✔ definition file created. @done (2018-5-23 23:26:04)
+                        ✔ wrapper code updated. @done (2018-5-23 23:54:53)
+                        ✔ setup route. @done (2018-5-24 01:03:02)
+                    SaveLimitUnitML:
+                        ✔ definition file created. @done (2018-5-23 23:26:06)
+                        ✔ wrapper code updated. @done (2018-5-23 23:54:53)
+                        ✔ setup route. @done (2018-5-24 01:03:04)
+                    GetLimitUnits:
+                        ✔ definition file created. @done (2018-5-23 23:26:07)
+                        ✔ wrapper code updated. @done (2018-5-23 23:54:54)
+                        ✔ setup route. @done (2018-5-24 01:03:05)
+                License Types:
+                    SaveLicenseType:
+                        ✔ definition file created. @done (2018-5-23 23:27:21)
+                        ✔ wrapper code updated. @done (2018-5-23 23:55:02)
+                        ✔ setup route. @done (2018-5-24 01:05:10)
+                    SaveLicenseTypeML:
+                        ✔ definition file created. @done (2018-5-23 23:27:24)
+                        ✔ wrapper code updated. @done (2018-5-23 23:55:03)
+                        ✔ setup route. @done (2018-5-24 01:05:11)
+                    GetLicenseTypes:
+                        ✔ definition file created. @done (2018-5-23 23:27:25)
+                        ✔ wrapper code updated. @done (2018-5-23 23:55:09)
+                        ✔ setup route. @done (2018-5-24 01:05:12)
+                License Features:
+                    SaveLicenseFeature:
+                        ✔ definition file created. @done (2018-5-23 23:27:31)
+                        ✔ wrapper code updated. @done (2018-5-23 23:55:15)
+                        ✔ setup route. @done (2018-5-24 01:07:49)
+                    GetLicenseFeatures:
+                        ✔ definition file created. @done (2018-5-23 23:27:32)
+                        ✔ wrapper code updated. @done (2018-5-23 23:55:21)
+                        ✔ setup route. @done (2018-5-24 01:07:50)
+                    GetLicenses:
+                        ✔ definition file created. @done (2018-5-23 23:27:33)
+                        ✔ wrapper code updated. @done (2018-5-23 23:55:25)
+                        ✔ setup route. @done (2018-5-24 01:07:52)
+                UserInfo:
+                    SaveUserInfo:
+                        ✔ definition file created. @done (2018-5-23 23:28:06)
+                        ✔ wrapper code updated. @done (2018-5-23 23:56:39)
+                        ✔ setup route. @done (2018-5-24 01:11:49)
+                    SaveUserInfoML:
+                        ✔ definition file created. @done (2018-5-23 23:28:14)
+                        ✔ wrapper code updated. @done (2018-5-23 23:56:40)
+                        ✔ setup route. @done (2018-5-24 01:11:50)
+                    GetUserInfos:
+                        ✔ definition file created. @done (2018-5-23 23:28:15)
+                        ✔ wrapper code updated. @done (2018-5-23 23:56:40)
+                        ✔ setup route. @done (2018-5-24 01:11:51)
+                Customers:
+                    SaveCustomer:
+                        ✔ definition file created. @done (2018-5-23 23:28:35)
+                        ✔ wrapper code updated. @done (2018-5-23 23:58:27)
+                        ✔ setup route. @done (2018-5-24 01:12:22)
+                    SaveCustomerML:
+                        ✔ definition file created. @done (2018-5-23 23:28:37)
+                        ✔ wrapper code updated. @done (2018-5-23 23:58:28)
+                        ✔ setup route. @done (2018-5-24 01:12:23)
+                    GetCustomers:
+                        ✔ definition file created. @done (2018-5-23 23:28:42)
+                        ✔ wrapper code updated. @done (2018-5-23 23:58:28)
+                        ✔ setup route. @done (2018-5-24 01:12:23)
+                MemberInfo:
+                    SaveMemberInfo:
+                        ✔ definition file created. @done (2018-5-23 23:29:09)
+                        ✔ wrapper code updated. @done (2018-5-23 23:58:30)
+                        ✔ setup route. @done (2018-5-24 01:15:36)
+                    SaveMemberInfoML:
+                        ✔ definition file created. @done (2018-5-23 23:29:10)
+                        ✔ wrapper code updated. @done (2018-5-23 23:58:30)
+                        ✔ setup route. @done (2018-5-24 01:15:36)
+                    GetMemberInfos:
+                        ✔ definition file created. @done (2018-5-23 23:29:11)
+                        ✔ wrapper code updated. @done (2018-5-23 23:58:31)
+                        ✔ setup route. @done (2018-5-24 01:15:37)
+                Branchs:
+                    SaveBranch:
+                        ✔ definition file created. @done (2018-5-23 23:29:36)
+                        ✔ wrapper code updated. @done (2018-5-23 23:58:32)
+                        ✔ setup route. @done (2018-5-24 01:15:38)
+                    SaveBranchML:
+                        ✔ definition file created. @done (2018-5-23 23:29:41)
+                        ✔ wrapper code updated. @done (2018-5-23 23:58:32)
+                        ✔ setup route. @done (2018-5-24 01:15:39)
+                    GetBranchs:
+                        ✔ definition file created. @done (2018-5-23 23:29:44)
+                        ✔ wrapper code updated. @done (2018-5-23 23:58:33)
+                        ✔ setup route. @done (2018-5-24 01:15:40)
+                Orgs:
+                    SaveOrg:
+                        ✔ definition file created. @done (2018-5-23 23:30:01)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:04)
+                        ✔ setup route. @done (2018-5-24 01:15:41)
+                    SaveOrgML:
+                        ✔ definition file created. @done (2018-5-23 23:30:05)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:04)
+                        ✔ setup route. @done (2018-5-24 01:15:42)
+                    GetOrgs:
+                        ✔ definition file created. @done (2018-5-23 23:30:18)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:05)
+                        ✔ setup route. @done (2018-5-24 01:15:43)
+                QSets:
+                    SaveQSet:
+                        ✔ definition file created. @done (2018-5-23 23:30:29)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:06)
+                        ✔ setup route. @done (2018-5-24 01:15:44)
+                    SaveQSetML:
+                        ✔ definition file created. @done (2018-5-23 23:30:35)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:07)
+                        ✔ setup route. @done (2018-5-24 01:15:45)
+                    GetQSets:
+                        ✔ definition file created. @done (2018-5-23 23:30:43)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:08)
+                        ✔ setup route. @done (2018-5-24 01:15:45)
+                QSlides:
+                    SaveQSlide:
+                        ✔ definition file created. @done (2018-5-23 23:31:00)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:15)
+                        ✔ setup route. @done (2018-5-24 01:15:47)
+                    SaveQSlideML:
+                        ✔ definition file created. @done (2018-5-23 23:31:05)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:16)
+                        ✔ setup route. @done (2018-5-24 01:15:47)
+                    GetQSlides:
+                        ✔ definition file created. @done (2018-5-23 23:31:13)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:17)
+                        ✔ setup route. @done (2018-5-24 01:15:48)
+                QSlideItems:
+                    SaveQSlideItem:
+                        ✔ definition file created. @done (2018-5-23 23:31:24)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:18)
+                        ✔ setup route. @done (2018-5-24 01:15:50)
+                    SaveQSlideItemML:
+                        ✔ definition file created. @done (2018-5-23 23:31:34)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:19)
+                        ✔ setup route. @done (2018-5-24 01:15:51)
+                    GetQSlideItems:
+                        ✔ definition file created. @done (2018-5-23 23:31:40)
+                        ✔ wrapper code updated. @done (2018-5-23 23:59:19)
+                        ✔ setup route. @done (2018-5-24 01:15:52)
+                Device and Device Types:
+                    SaveDevice:
+                        ✔ definition file created. @done (2018-5-23 23:36:32)
+                        ✔ wrapper code updated. @done (2018-5-24 00:03:16)
+                        ✔ setup route. @done (2018-5-24 01:21:19)
+                    SaveDeviceML:
+                        ✔ definition file created. @done (2018-5-23 23:37:29)
+                        ✔ wrapper code updated. @done (2018-5-24 00:03:18)
+                        ✔ setup route. @done (2018-5-24 01:21:19)
+                    GetDevices:
+                        ✔ definition file created. @done (2018-5-23 23:37:51)
+                        ✔ wrapper code updated. @done (2018-5-24 00:03:18)
+                        ✔ setup route. @done (2018-5-24 01:21:21)
+                    GetDeviceTypes:
+                        ✔ definition file created. @done (2018-5-23 23:49:15)
+                        ✔ wrapper code updated. @done (2018-5-24 00:03:19)
+                        ✔ setup route. @done (2018-5-24 01:21:22)
+                Votes:
+                    SaveVote:
+                        ✔ definition file created. @done (2018-5-23 23:32:39)
+                        ✔ wrapper code updated. @done (2018-5-24 00:03:41)
+                        ✔ setup route. @done (2018-5-24 01:17:54)
+                Reports:
+                    GetRawVotes:
+                        ✔ definition file created. @done (2018-5-23 23:33:05)
+                        ✔ wrapper code updated. @done (2018-5-24 00:04:05)
+                        ✔ setup route. @done (2018-5-24 01:17:56)
+                    GetVoteSummaries:
+                        ✔ definition file created. @done (2018-5-23 23:33:06)
+                        ✔ wrapper code updated. @done (2018-5-24 00:04:06)
+                        ✔ setup route. @done (2018-5-24 01:17:56)
+                Register-SignIn-Setup:
+                    Register:
+                        ✔ definition file created. @done (2018-5-24 04:06:03)
+                        ✔ wrapper code updated. @done (2018-5-24 04:10:46)
+                        ✔ setup route. @done (2018-5-24 04:10:47)
+                    CheckUsers:
+                        ✔ definition file created. @done (2018-5-24 04:23:55)
+                        ✔ wrapper code updated. @done (2018-5-24 04:24:38)
+                        ✔ setup route. @done (2018-5-24 04:27:25)
+                    SignIn:
+                        ✔ definition file created. @done (2018-5-24 05:13:06)
+                        ✔ wrapper code updated. @done (2018-5-24 05:13:16)
+                        ✔ setup route. @done (2018-5-24 05:14:18)
+            Core Module:
+                nlib-core-js:
+                    ✔ Add cookie2obj method. @done (2018-5-23 17:20:13)
+                    ✔ Add obj2cookie method. @done (2018-5-23 17:20:14)
+                mssql-db.js:
+                    ✔ Update code to auto search definition file in sub directory. @done (2018-5-24 00:33:53)
+                rater-web-db.js:
+                    ✔ Restore exists all SPs routes. @done (2018-5-24 15:28:34)
+            Views:
+                dev:
+                    home:
+                        ✔ Update route.js. @done (2018-5-24 16:16:34)
+                        ✔ Update index.handlebars. @done (2018-5-24 16:16:34)
+                        ✔ Update app.js. @done (2018-5-24 16:58:20)
+                        ✔ Update model.js. @done (2018-5-24 16:58:21)
+                default:
+                    home:
+                        ✔ add route.js. @done (2018-5-24 17:05:18)
+                        ✔ add index.handlebars. @done (2018-5-24 17:05:19)
+                        ✔ add app.js. @done (2018-5-24 17:05:19)
+                        ✔ add model.js. @done (2018-5-24 17:05:20)
+                    register:
+                        ✔ add route.js. @done (2018-5-24 17:05:20)
+                        ✔ add index.handlebars. @done (2018-5-24 17:05:21)
+                        ✔ add app.js. @done (2018-5-24 17:05:21)
+                        ✔ add model.js. @done (2018-5-24 17:05:22)
+                    signin:
+                        ✔ add route.js. @done (2018-5-24 17:05:23)
+                        ✔ add index.handlebars. @done (2018-5-24 17:05:23)
+                        ✔ add app.js. @done (2018-5-24 17:05:24)
+                        ✔ add model.js. @done (2018-5-24 17:05:26)
+                customer:
+                    admin:
+                        home:
+                            ✔ add route.js. @done (2018-5-24 17:11:00)
+                            ✔ add index.handlebars. @done (2018-5-24 17:12:43)
+                            ✔ add app.js. @done (2018-5-24 17:13:02)
+                            ✔ add model.js. @done (2018-5-24 17:13:03)
+                    exclusive:
+                        home:
+                            ✔ add route.js. @done (2018-5-24 17:14:09)
+                            ✔ add index.handlebars. @done (2018-5-24 17:14:48)
+                            ✔ add app.js. @done (2018-5-24 17:12:53)
+                            ✔ add model.js. @done (2018-5-24 17:12:56)
+                    staff:
+                        home:
+                            ✔ add route.js. @done (2018-5-24 17:16:23)
+                            ✔ add index.handlebars. @done (2018-5-24 17:16:23)
+                            ✔ add app.js. @done (2018-5-24 17:13:05)
+                            ✔ add model.js. @done (2018-5-24 17:13:06)
+                    device:
+                        home:
+                            ✔ add route.js. @done (2018-5-24 17:12:49)
+                            ✔ add index.handlebars. @done (2018-5-24 17:12:49)
+                            ✔ add app.js. @done (2018-5-24 17:12:51)
+                            ✔ add model.js. @done (2018-5-24 17:12:52)
+                    question:
+                        home:
+                            ✔ add route.js. @done (2018-5-24 17:16:25)
+                            ✔ add index.handlebars. @done (2018-5-24 17:16:25)
+                            ✔ add app.js. @done (2018-5-24 17:13:07)
+                            ✔ add model.js. @done (2018-5-24 17:13:08)
+                edl:
+                    admin:
+                        home:
+                            ✔ add route.js. @done (2018-5-24 17:21:05)
+                            ✔ add index.handlebars. @done (2018-5-24 17:21:05)
+                            ✔ add app.js. @done (2018-5-24 17:13:09)
+                            ✔ add model.js. @done (2018-5-24 17:13:10)
+                    supervisor:
+                        home:
+                            ✔ add route.js. @done (2018-5-24 17:21:44)
+                            ✔ add index.handlebars. @done (2018-5-24 17:21:45)
+                            ✔ add app.js. @done (2018-5-24 17:13:11)
+                            ✔ add model.js. @done (2018-5-24 17:13:11)
+                    staff:
+                        home:
+                            ✔ add route.js. @done (2018-5-24 17:22:21)
+                            ✔ add index.handlebars. @done (2018-5-24 17:22:21)
+                            ✔ add app.js. @done (2018-5-24 17:13:12)
+                            ✔ add model.js. @done (2018-5-24 17:13:13)
+        Clients:
+            Core Libraries:
+                tags.js:
+                    common:
+                        ✔ add page-content-absolute.tag. @done (2018-5-24 16:55:02)
+                        ✔ add page-content-relative.tag. @done (2018-5-24 16:55:14)
+                        ✔ add page-nav-bar.tag. @done (2018-5-24 16:55:22)
+                        ✔ add page-footer.tag. @done (2018-5-24 16:55:31)
+                    dev:
+                        __layouts:
+                            ✔ add dev-page-layout.tag. @done (2018-5-24 16:18:42)
+                        home:
+                            ✔ add dev-home-dashboard.tag. @done (2018-5-24 16:18:58)
+                    default:
+                        __layouts:
+                            ✔ add default-page-layout.tag. @done (2018-5-24 16:20:37)
+                        home:
+                            ✔ add default-home-dashboard.tag. @done (2018-5-24 16:21:38)
+                        register:
+                            ✔ add register-entry.tag. @done (2018-5-24 16:31:38)
+                        signin:
+                            ✔ add signin-entry.tag. @done (2018-5-24 16:33:58)
+                    customer:
+                        admin:
+                            __layouts:
+                                ✔ add admin-page-layout.tag. @done (2018-5-24 16:29:52)
+                            home:
+                                ✔ add admin-home-dashboard.tag. @done (2018-5-24 16:36:17)
+                        exclusive:
+                            __layouts:
+                                ✔ add exclusive-page-layout.tag. @done (2018-5-24 16:30:01)
+                            home:
+                                ✔ add exclusive-home-dashboard.tag. @done (2018-5-24 16:37:23)
+                        staff:
+                            __layouts:
+                                ✔ add staff-page-layout.tag. @done (2018-5-24 16:30:05)
+                            home:
+                                ✔ add staff-home-dashboard.tag. @done (2018-5-24 16:38:09)
+                        device:
+                            __layouts:
+                                ✔ add device-page-layout.tag. @done (2018-5-24 16:30:13)
+                            home:
+                                ✔ add device-home-dashboard.tag. @done (2018-5-24 16:39:15)
+                        question:
+                            __layouts:
+                                ✔ add question-page-layout.tag. @done (2018-5-24 16:30:19)
+                            home:
+                                ✔ add question-home-dashboard.tag. @done (2018-5-24 16:40:00)
+                    edl:
+                        admin:
+                            __layouts:
+                                ✔ add edl-admin-page-layout.tag. @done (2018-5-24 16:44:12)
+                            home:
+                                ✔ add edl-admin-home-dashboard.tag. @done (2018-5-24 16:48:10)
+                        supervisor:
+                            __layouts:
+                                ✔ add edl-supervisor-page-layout.tag. @done (2018-5-24 16:45:08)
+                            home:
+                                ✔ add edl-supervisor-home-dashboard.tag. @done (2018-5-24 16:46:20)
+                        staff:
+                            __layouts:
+                                ✔ add edl-staff-page-layout.tag. @done (2018-5-24 16:44:41)
+                            home:
+                                ✔ add edl-staff-home-dashboard.tag. @done (2018-5-24 16:48:04)
+    Update on [2018-05-25]:
+        Database Create Scripts:
+            Tables and Views:
+                ✔ ClientAccess (TABLE). @done (2018-5-25 05:27:17)
+            Stored Procedures and Functions:
+                ✔ SignIn (SP) ALTER. @done (2018-5-25 06:43:20)
+                ✔ CheckAccess (SP). @done (2018-5-25 06:43:38)
+                ✔ GetAccessUser (SP). @done (2018-5-25 07:38:15)
+                ✔ SignOut (SP). @done (2018-5-25 07:51:11)
+            Init Stored Procedures:
+                ✔ InitErrorMessages (SP) Add New Error Code. @done (2018-5-25 19:03:21)
+        Database Document Updated:
+            Error Code:
+                ✔ Update Error Code in Excel file. @done (2018-5-25 19:03:22)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-05-25 (generate db script). @done (2018-5-25 19:03:32)
+            Stored Procedure Definitions (json files) and Wrapper Code (rater-web-db.js):  
+                Signin and Register:
+                    CheckAccess:
+                        ✔ definition file created. @done (2018-5-25 06:45:51)
+                        ✔ wrapper code updated. @done (2018-5-25 06:46:43)
+                    GetAccessUser:
+                        ✔ definition file created. @done (2018-5-25 07:39:20)
+                        ✔ wrapper code updated. @done (2018-5-25 07:40:20)
+                    SignOut:
+                        ✔ definition file created. @done (2018-5-25 07:51:15)
+                        ✔ wrapper code updated. @done (2018-5-25 07:51:19)
+            Core Module:
+                rater-web-secure.js:
+                    ✔ Add hasAccessId method. @done (2018-5-25 14:55:34)
+                    ✔ Add setAccessId method. @done (2018-5-25 14:55:51)
+                    ✔ Add clearAccessId method. @done (2018-5-25 14:56:07)
+                    ✔ Add getHomeUrl method. @done (2018-5-25 14:56:21)
+            Views:
+                dev:
+                    home:
+                        ✔ Update model.js. @done (2018-5-25 21:15:59)
+                        ✔ route.js add getModels. @done (2018-5-25 21:16:00)
+                    report:
+                        ✔ Update route.js. @done (2018-5-25 04:00:22)
+                        ✔ Update index.handlebars. @done (2018-5-25 04:00:23)
+                        ✔ Update app.js. @done (2018-5-25 04:00:23)
+                        ✔ Update model.js. @done (2018-5-25 04:00:24)
+                        ✔ route.js add getModels. @done (2018-5-25 21:16:17)
+                    register:
+                        ✔ Update route.js. @done (2018-5-25 04:33:17)
+                        ✔ Update index.handlebars. @done (2018-5-25 04:33:18)
+                        ✔ Update app.js. @done (2018-5-25 04:33:18)
+                        ✔ Update model.js. @done (2018-5-25 04:33:19)
+                        ✔ route.js add getModels. @done (2018-5-25 21:16:18)
+                    signin:
+                        ✔ Update route.js. @done (2018-5-25 04:33:26)
+                        ✔ Update index.handlebars. @done (2018-5-25 04:33:27)
+                        ✔ Update app.js. @done (2018-5-25 04:33:29)
+                        ✔ Update model.js. @done (2018-5-25 04:33:28)
+                        ✔ route.js add getModels. @done (2018-5-25 21:16:19)
+                default:
+                    home:
+                        ✔ Update route.js. @done (2018-5-25 20:50:41)
+                        ✔ Update index.handlebars. @done (2018-5-25 20:50:42)
+                        ✔ Update app.js. @done (2018-5-25 20:50:43)
+                        ✔ Update model.js. @done (2018-5-25 20:50:43)
+                        ✔ route.js add getModels. @done (2018-5-25 21:21:35)
+                    signin:
+                        ✔ Update route.js. @done (2018-5-25 20:50:44)
+                        ✔ Update index.handlebars. @done (2018-5-25 20:50:44)
+                        ✔ Update app.js. @done (2018-5-25 20:50:45)
+                        ✔ Update model.js. @done (2018-5-25 20:50:47)
+                        ✔ route.js add getModels. @done (2018-5-25 21:16:22)
+                    register:
+                        ✔ Update route.js. @done (2018-5-25 20:50:48)
+                        ✔ Update index.handlebars. @done (2018-5-25 20:50:49)
+                        ✔ Update app.js. @done (2018-5-25 20:50:49)
+                        ✔ Update model.js. @done (2018-5-25 20:50:50)
+                        ✔ route.js add getModels. @done (2018-5-25 21:21:36)
+                customer:
+                    admin:
+                        home:
+                            ✔ Update route.js. @done (2018-5-25 15:05:35)
+                            ✔ Update model.js. @done (2018-5-25 20:44:33)
+                            ✔ route.js add getModels. @done (2018-5-25 21:27:36)
+                    exclusive:
+                        home:
+                            ✔ Update route.js. @done (2018-5-25 15:05:36)
+                            ✔ Update model.js. @done (2018-5-25 20:44:35)
+                            ✔ route.js add getModels. @done (2018-5-25 21:27:37)
+                    staff:
+                        home:
+                            ✔ Update route.js. @done (2018-5-25 15:05:37)
+                            ✔ Update model.js. @done (2018-5-25 20:44:36)
+                            ✔ route.js add getModels. @done (2018-5-25 21:27:38)
+                    device:
+                        home:
+                            ✔ Update route.js. @done (2018-5-25 15:05:37)
+                            ✔ Update model.js. @done (2018-5-25 20:44:37)
+                            ✔ route.js add getModels. @done (2018-5-25 21:27:40)
+                    question:
+                        home:
+                            ✔ Update route.js. @done (2018-5-25 15:05:39)
+                            ✔ Update model.js. @done (2018-5-25 20:44:38)
+                            ✔ route.js add getModels. @done (2018-5-25 21:27:40)
+                edl:
+                    admin:
+                        home:
+                            ✔ Update route.js. @done (2018-5-25 15:06:21)
+                            ✔ Update model.js. @done (2018-5-25 20:47:16)
+                            ✔ route.js add getModels. @done (2018-5-25 21:32:01)
+                    supervisor:
+                        home:
+                            ✔ Update route.js. @done (2018-5-25 15:06:21)
+                            ✔ Update model.js. @done (2018-5-25 20:47:14)
+                            ✔ route.js add getModels. @done (2018-5-25 21:32:01)
+                    staff:
+                        home:
+                            ✔ Update route.js. @done (2018-5-25 15:06:22)
+                            ✔ Update model.js. @done (2018-5-25 20:47:13)
+                            ✔ route.js add getModels. @done (2018-5-25 21:32:02)
+        Clients:
+            Core Libraries:
+                api.js:
+                    ✔ remove all api functions. @done (2018-5-25 05:07:02)
+                    ✔ add LanguageAPI class and create new namespace to access. @done (2018-5-25 05:07:03)
+                    ✔ add SecureAPI class and create new namespace to access. @done (2018-5-25 05:07:13)
+                    ✔ add ModelAPI class and create new namespace to access. @done (2018-5-25 21:19:14)
+                    ✔ ModeAPI class add supports getModelNames. @done (2018-5-25 21:19:30)
+                service.js:
+                    ✔ Add ClientAccess class. @done (2018-5-25 10:33:00)
+                    ✔ Add BS4Modal class. @done (2018-5-25 10:33:00)
+                    ✔ Add BS4ToolTip class. @done (2018-5-25 15:54:25)
+                    ✔ Add BS4Alert class. @done (2018-5-25 16:06:26)
+                    ✔ Add LocalStorage class. @done (2018-5-25 16:45:39)
+                    ✔ Add UserPerference class. @done (2018-5-25 16:45:50)
+                    ✔ Add LanguageService class and create new namespace to access. @done (2018-5-25 16:46:10)
+                    ✔ Add RaterPage class and create new namespace to access. @done (2018-5-25 18:55:25)
+                    ✔ LanguageService add supports getModelNames when language changed. @done (2018-5-25 21:18:38)
+                tags.js:
+                    dev:
+                        report:
+                            ✔ Add dev-report-dashboard.tag. @done (2018-5-25 04:01:10)
+                        register:
+                            ✔ Add dev-register-entry.tag. @done (2018-5-25 04:33:02)
+                        signin:
+                            ✔ Add dev-signin-entry.tag. @done (2018-5-25 04:33:02)
+                    common:
+                        page-footer:
+                            ✔ Update code and add supports get current user. @done (2018-5-25 20:19:59)
+    Update on [2018-05-26]:
+        Database Create Scripts:
+            Stored Procedures and Functions:
+                ✔ CheckUsers (SP) ALTER. @done (2018-5-26 22:32:31)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-05-26 (generate db script). @done (2018-5-26 22:53:52)
+            Core Module:
+                rater-web-secure.js:
+                    ✔ change dev mode off. @done (2018-5-26 22:50:40)
+            Views:
+                dev:
+                    home:
+                        ✔ update link in nav.json both EN and TH. @done (2018-5-26 21:18:34)
+                        ✔ update model.js @done (2018-5-26 21:29:14)
+                    register:
+                        ✔ update link in nav.json both EN and TH. @done (2018-5-26 21:21:10)
+                        ✔ update link in banner.json both EN and TH. @done (2018-5-26 21:21:17)
+                        ✔ update model.js @done (2018-5-26 21:29:15)
+                    signin:
+                        ✔ add contents signin.json. @done (2018-5-26 20:52:24)
+                        ✔ update link in banner.json both EN and TH. @done (2018-5-26 21:15:37)
+                        ✔ update link in nav.json both EN and TH. @done (2018-5-26 21:14:28)
+                    report:
+                        ✔ remove all links in nav.json both EN and TH. @done (2018-5-26 21:32:15)
+                default:
+                    home:
+                        ✔ add all contents jsons from v1. @done (2018-5-26 21:02:35)
+                        ✔ banner.json fixed link both TH and EN. @done (2018-5-26 21:39:36)
+                        ✔ fixed link in banner.json both EN and TH. @done (2018-5-26 21:55:40)
+                    register:
+                        ✔ add all contents jsons from v1. @done (2018-5-26 21:08:47)
+                    signin:
+                        ✔ add all contents jsons from dev-signin. @done (2018-5-26 20:58:04)
+                        ✔ fixed link in nav.json both EN and TH. @done (2018-5-26 21:07:46)
+                        ✔ fixed link in banner.json both EN and TH. @done (2018-5-26 21:43:15)
+                customer:
+                    admin:
+                        home:
+                            ✔ add all contents jsons from v1. @done (2018-5-26 21:51:56)
+                            ✔ fixed link in banner.json both EN and TH. @done (2018-5-26 21:51:56)
+                            ✔ remove all links in nav.json both EN and TH. @done (2018-5-26 21:52:19)
+                    exclusive:
+                        home:
+                            ✔ add all contents jsons from v1. @done (2018-5-26 21:57:28)
+                            ✔ fixed link in banner.json both EN and TH. @done (2018-5-26 21:57:30)
+                            ✔ remove all links in nav.json both EN and TH. @done (2018-5-26 21:57:30)
+                    staff:
+                        home:
+                            ✔ add all contents jsons from v1. @done (2018-5-26 22:01:02)
+                            ✔ fixed link in banner.json both EN and TH. @done (2018-5-26 22:01:03)
+                            ✔ remove all links in nav.json both EN and TH. @done (2018-5-26 22:01:04)
+                    device:
+                        home:
+                            ✔ add all contents jsons from v1. @done (2018-5-26 22:45:28)
+                            ✔ fixed link in banner.json both EN and TH. @done (2018-5-26 22:45:28)
+                            ✔ remove all links in nav.json both EN and TH. @done (2018-5-26 22:45:29)
+                    question:
+                        home:
+                            ✔ add all contents jsons from v1. @done (2018-5-26 22:45:30)
+                            ✔ fixed link in banner.json both EN and TH. @done (2018-5-26 22:45:32)
+                            ✔ remove all links in nav.json both EN and TH. @done (2018-5-26 22:45:33)
+                edl:
+                    admin:
+                        home:
+                            ✔ add all contents jsons from v1. @done (2018-5-26 22:02:25)
+                            ✔ fixed link in banner.json both EN and TH. @done (2018-5-26 22:02:26)
+                            ✔ remove all links in nav.json both EN and TH. @done (2018-5-26 22:02:27)
+                    supervisor:
+                        home:
+                            ✔ add all contents jsons from v1. @done (2018-5-26 22:40:01)
+                            ✔ fixed link in banner.json both EN and TH. @done (2018-5-26 22:40:01)
+                            ✔ remove all links in nav.json both EN and TH. @done (2018-5-26 22:40:02)
+                    staff:
+                        home:
+                            ✔ add all contents jsons from v1. @done (2018-5-26 22:41:35)
+                            ✔ fixed link in banner.json both EN and TH. @done (2018-5-26 22:41:36)
+                            ✔ remove all links in nav.json both EN and TH. @done (2018-5-26 22:41:36)
+        Clients:
+            Core Libraries:
+                service.js:
+                    ✔ Language Service fixed misspell method name 'chaage' -> 'chnage'. @done (2018-5-26 20:52:44)
+                tags.js:
+                    page-nav-bar:
+                        ✔ port code from v1. @done (2018-5-26 20:53:17)
+                        ✔ fixed up reference properties in riot tags. @done (2018-5-26 20:53:29)
+                        ✔ setup model change handler. @done (2018-5-26 20:53:42)
+                    page-footer:
+                        ✔ fixed up reference properties in riot tags. @done (2018-5-26 20:53:29)
+                    dev-signin-entry:
+                        ✔ fixed up reference properties in riot tags. @done (2018-5-26 20:54:27)
+                    default-signin-entry:
+                        ✔ update all code from dev-signIn-entry. @done (2018-5-26 20:57:42)
+    Update on [2018-05-30]:
+            Core Module:
+                rater-web-secure.js:
+                    ✔ Change timeout for accessId to 30 minutes. @done (2018-5-30 08:19:04)
+            Views:
+                default:
+                    register:
+                        ✔ port layout from v1 and update code. @done (2018-5-30 07:28:38)
+                        ✔ add msg.json in content EN and TH. @done (2018-5-30 07:28:39)
+                    signin:
+                        ✔ add msg.json in content EN and TH. @done (2018-5-30 07:28:40)
+                        ✔ auto hide modal when language changed. @done (2018-5-30 07:28:42)
+                customer:
+                    admin:
+                        home:
+                            ✔ add signout in nav.json in content EN and TH. @done (2018-5-30 08:04:17)
+                    exclusive:
+                        home:
+                            ✔ add signout in nav.json in content EN and TH. @done (2018-5-30 08:04:17)
+                    staff:
+                        home:
+                            ✔ add signout in nav.json in content EN and TH. @done (2018-5-30 08:04:18)
+                edl:
+                    admin:
+                        home:
+                            ✔ add signout in nav.json in content EN and TH. @done (2018-5-30 08:04:18)
+                    supervisor:
+                        home:
+                            ✔ add signout in nav.json in content EN and TH. @done (2018-5-30 08:04:20)
+                    staff:
+                        home:
+                            ✔ add signout in nav.json in content EN and TH. @done (2018-5-30 08:04:21)
+        Clients:
+                service.js:
+                    ✔ update ClientAccess class add register method. @done (2018-5-30 08:13:50)
+                tags.js:
+                    page-nav-bar:
+                        ✔ update signout handler. @done (2018-5-30 08:05:59)
+        Samples:
+                riot:
+                    ✔ remove misplacs end body tag in all samples. @done (2018-5-31 09:05:51)
+    Update on [2018-05-31]:
+        Node Server:
+            Views:
+                dev:
+                    home:
+                        ✔ add sidebar.json. @done (2018-5-31 23:30:36)
+                    report:
+                        ✔ add sidebar.json. @done (2018-5-31 23:30:37)
+        Clients:
+            Core Libraries:
+                rater-client.css:
+                    ✔ Add sidebar styles. @done (2018-5-31 21:14:03)
+                    ✔ Update sidebar fixed for used with simplebar.js. @done (2018-5-31 23:02:23)
+                    ✔ Update fixed dashboard-content. @done (2018-5-31 23:39:10)
+                tags.js:
+                    dev-home:
+                        ✔ add supports sidebars. @done (2018-5-31 22:06:44)
+                    dev-page-layout:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:55)
+                    dev-home-dashboard:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:41)
+                    dev-report:
+                        ✔ add supports sidebars. @done (2018-5-31 22:06:45)
+                    dev-report-dashboard:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:06:14)
+                    admin-page-layout:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:09)
+                    admin-home-dashboard:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:43)
+                    exclusive-page-layout:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:12)
+                    exclusive-home-dashboard:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:44)
+                    staff-page-layout:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:14)
+                    staff-home-dashboard:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:45)
+                    device-page-layout:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:16)
+                    device-home-dashboard:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:46)
+                    question-page-layout:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:17)
+                    question-home-dashboard:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:47)
+                    edl-admin-page-layout:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:19)
+                    edl-admin-home-dashboard:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:48)
+                    edl-supervisor-page-layout:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:21)
+                    edl-supervisor-home-dashboard:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:50)
+                    edl-staff-page-layout:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:22)
+                    edl-staff-home-dashboard:
+                        ✔ fixed code to supports sidebar and simplebar.js. @done (2018-5-31 23:05:51)
+    Update on [2018-06-01]:
+        Database Create Scripts:
+            Move:
+                ✔ Move DB Scripts from 2018-05-29 to 2018-06-05. @done (2018-6-1 10:02:52)
+            Stored Procedures and Functions:
+                ✔ Add MinDateTime (FN). @done (2018-6-1 10:40:46)
+                ✔ Add MaxDateTime (FN). @done (2018-6-1 10:40:46)
+                ✔ Add ToMinTime (FN) @done (2018-6-1 11:17:51)
+                ✔ Add ToMaxTime (FN) @done (2018-6-1 11:17:52)
+    Update on [2018-06-09]:
+        Database Create Scripts:
+            Tables and Views:
+                ✔ Add LocalLoc (TABLE). @done (2018-5-29 09:37:45)
+                ✔ Add dboView (VIEW). @done (2018-5-29 09:37:45)
+                ✔ Add Language (TABLE). @done (2018-5-29 09:39:43)
+                ✔ Add ErrorMessage (TABLE). @done (2018-5-29 09:39:44)
+                ✔ Add NewIDView (VIEW) as part of NewSID script. @done (2018-5-29 09:44:28)
+                ✔ Add MemberType (TABLE). @done (2018-5-29 10:28:02)
+                ✔ Add PeriodUnit (TABLE). @done (2018-5-29 11:43:05)
+                ✔ Add LimitUnit (TABLE). @done (2018-5-29 11:47:58)
+            Stored Procedures and Functions:
+                ✔ IsNullOrEmpty (FN). @done (2018-5-29 09:44:00)
+                ✔ IsSameDate (FN). @done (2018-5-29 09:44:01)
+                ✔ IsSameMonth (FN). @done (2018-5-29 09:44:02)
+                ✔ IsSameYear (FN). @done (2018-5-29 09:44:02)
+                ✔ NewSID (FN). @done (2018-5-29 09:44:03)
+                ✔ MinDateTime (FN). @done (2018-6-1 10:41:00)
+                ✔ MaxDateTime (FN). @done (2018-6-1 10:41:01)
+                ✔ ToMinTime (FN) @done (2018-6-1 11:18:24)
+                ✔ ToMaxTime (FN) @done (2018-6-1 11:18:25)
+                ✔ BeginLoig (SP). @done (2018-5-29 09:46:43)
+                ✔ Log (SP). @done (2018-5-29 09:46:47)
+                ✔ EndLog (SP). @done (2018-5-29 09:46:55)
+                ✔ GetRandomCode (SP). @done (2018-5-29 09:48:03)
+                ✔ SaveErrorMsg (SP). @done (2018-5-29 09:50:30)
+                ✔ GetErrorMsg (SP). @done (2018-5-29 09:50:37)
+                ✔ SaveLanguage (SP). @done (2018-5-29 09:52:03)
+                ✔ GetLanguages (SP). @done (2018-5-29 10:01:30)
+                ✔ GetMemberTypes (SP). @done (2018-5-29 10:51:29)
+                ✔ FindLangId (SP). @done (2018-5-29 11:31:08)
+                ✔ EnableLanguage (SP). @done (2018-5-29 11:38:04)
+                ✔ DisableLanguage (SP). @done (2018-5-29 11:38:04)
+            Init Stored Procedures:
+                ✔ InitErrorMessages (SP) Part 1. @done (2018-5-29 09:55:04)
+                ✔ InitLanguages (SP). @done (2018-5-29 09:53:42)
+                ✔ InitMemberTypes (SP). @done (2018-5-29 10:28:52)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-06-09 (generate db script). @done (2018-5-29 09:54:57)
+        Clients:
+            Third Parties:
+                Remove Unused Libraries:
+                    ✔ animate-css-3.5 @done (2018-6-9 00:14:26)
+                    ✔ bootstrap-3.3 @done (2018-6-9 00:14:27)
+                    ✔ datatables @done (2018-6-9 00:14:28)
+                    ✔ flag-icon-css-2.8 @done (2018-6-9 00:14:28)
+                    ✔ font-awesome-4.6 @done (2018-6-9 00:14:29)
+                    ✔ reveal-3.4 @done (2018-6-9 00:14:30)
+                    ✔ riotjs-3.9 @done (2018-6-9 00:14:30)
+                    ✔ wow-1.1 @done (2018-6-9 00:14:31)
+    Update on [2018-06-12]:
+        Database Create Scripts:
+            Tables and Views:
+                ✔ LimitUnit (TABLE) change column name. @done (2018-6-12 23:05:50)
+                ✔ PeriodUnit (TABLE). change column name. @done (2018-6-12 23:06:51)
+                ✔ MemberType (TABLE). change column name. @done (2018-6-12 23:09:54)
+            Stored Procedures and Functions:
+                ✔ IsLangExist (FN). @done (2018-6-12 17:53:39)
+                ✔ GetMemberTypes (SP). change column match new structure. @done (2018-6-12 23:13:44)
+                ✔ NewSID (FN). change column size from 80 to 40. @done (2018-6-12 23:21:35)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-06-09 remove. @done (2018-6-12 20:32:53)
+                    ✔ db-script-2018-06-14 add. @done (2018-6-12 23:27:40)
+            Node Modules:
+                mssql:
+                    ✔ Try version 4.1.0 but seem not good. @done (2018-6-12 22:47:15)
+                    ✔ Reinstall version 3.3.0. @done (2018-6-12 22:47:41)
+            Server Libraries:
+                nLib-core.js:
+                    ✔ Move to Backup folder. @done (2018-6-12 20:39:27)
+                    ✔ Create empty file. @done (2018-6-12 20:39:52)
+                mssql-db.js:
+                    ✔ Move to Backup folder. @done (2018-6-12 20:40:21)
+                    ✔ Create empty file. @done (2018-6-12 20:40:22)
+                rater-web-db.js:
+                    ✔ Move to Backup folder. @done (2018-6-12 20:40:27)
+                    ✔ Create empty file. @done (2018-6-12 20:40:27)
+                rater-web-secure.js:
+                    ✔ Move to Backup folder. @done (2018-6-12 20:40:33)
+                    ✔ Create empty file. @done (2018-6-12 20:40:34)
+            JEST Tests:
+                db.test.js:
+                    ✔ Add Test code for connect mssql used node mssql@4.1.0. @done (2018-6-12 22:40:43)
+        Clients:
+            Third Party Libraries:
+                ✔ Remove handlebars and jquery-handlebars. @done (2018-6-12 20:29:02)
+                ✔ Remove bliss.js. @done (2018-6-12 20:29:11)
+                ✔ Remove CAPCHA libs. @done (2018-6-12 20:29:19)
+                ✔ Remove jarallax. @done (2018-6-12 20:29:28)
+                ✔ Remove knockout. @done (2018-6-12 20:29:52)
+                ✔ Remove hierarchy-view. @done (2018-6-12 20:29:53)
+                ✔ Remove jquery-scrolltabs. @done (2018-6-12 20:30:07)
+                ✔ Remove ui.tabs.overflow-resize. @done (2018-6-12 20:30:16)
+                ✔ Remove pushy. @done (2018-6-12 20:30:33)
+                ✔ Remove combo-tree. @done (2018-6-12 20:30:41)
+                ✔ Remove creative. @done (2018-6-12 20:30:48)
+                ✔ Remove fabric.js. @done (2018-6-12 20:30:59)
+                ✔ Remove pace-js. @done (2018-6-12 20:31:07)
+                ✔ Remove magnific-popup. @done (2018-6-12 20:31:14)
+                ✔ Remove pouchdb. @done (2018-6-12 20:31:22)
+                ✔ Remove scrollreveal and scroll magic. @done (2018-6-12 20:31:31)
+                ✔ Remove snapjs. @done (2018-6-12 20:31:40)
+                ✔ Remove paperjs. @done (2018-6-12 20:31:50)
+                ✔ Remove jsTree. @done (2018-6-12 20:31:57)
+                ✔ Remove chosen and select2. @done (2018-6-12 20:32:07)
+    Update on [2018-06-13]:
+        Node Server:
+            Server Libraries:
+                app-configs.js:
+                    ✔ comment out all code for test refactor related modules to ES6. @done (2018-6-13 23:04:03)
+                    ✔ Convert code to ES6 class. @done (2018-6-13 23:22:06)
+                server.js:
+                    ✔ comment out all code for test refactor related modules to ES6. @done (2018-6-13 22:26:10)
+                    ✔ Test ServerConfig class. @done (2018-6-13 23:22:20)
+    Update on [2018-06-14]:
+        Node Server:
+            Server Libraries:
+                app-configs.js:
+                    ✔ move app-configs.js and change name to server-configs.js. @done (2018-6-14 00:37:10)
+                server-configs.js:
+                    ✔ The config data now load fron server-config.json file in configs folder. @done (2018-6-14 00:37:13)
+                express-server.js:
+                    ✔ Implements __initPort method. @done (2018-6-14 00:49:13)
+                    ✔ Implements start method. @done (2018-6-14 00:49:21)
+    Update on [2018-06-30]:
+        Database Create Scripts:
+            Tables and Views:
+                ✔ MasterPK (TABLE). @done (2018-6-30 09:52:38)
+            Stored Procedures and Functions:
+                ✔ SetMasterPK (SP). @done (2018-6-30 10:11:16)
+                ✔ NextMasterPK (SP). @done (2018-6-30 10:31:38)
+                ✔ GetMasterPK (SP). @done (2018-6-30 10:36:12)
+            Init Stored Procedures:
+                ✔ InitErrorMessages (SP). @done (2018-7-7 16:55:44)
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-06-14 remove. @done (2018-6-30 09:37:23)
+                    ✔ db-script-2018-07-02 add. @done (2018-6-30 09:37:24)
+    Update on [2018-07-07]:
+        Node Server:
+            Build Scripts:
+                Gulp Tasks:
+                    ✔ db-script-2018-07-02 remove. @done (2018-7-7 16:57:09)
+                    ✔ db-script-2018-07-12 add. @done (2018-7-7 16:57:10)

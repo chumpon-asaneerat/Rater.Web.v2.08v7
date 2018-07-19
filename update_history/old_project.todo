@@ -1,0 +1,1316 @@
+My Choice Rater v2.0:
+    Update on [2017-06-30]:
+        Database:
+            Database File:
+                ✔ Create New database TestDb8 (SQL Server 2008, THAI_CI_AS) @done
+            Table:
+                Default:
+                    ✔ Create Table - DefaultSetting. @done
+                Language:
+                    ✔ Create Table - Language. @done
+                PeriodUnit:
+                    ✔ Create Table - PeriodUnit. @done
+                    ✔ Create Table - PeriodUnitML. @done
+                LimitUnit:
+                    ✔ Create Table - LimitUnit. @done
+                    ✔ Create Table - LimitUnitML. @done
+                MemberType:
+                    ✔ Create Table - MemberType. @done 
+                    ✔ Create Table - MemberTypeML. @done
+                UserInfo:
+                    ✔ Create Table - UserInfo. @done
+                    ✔ Create Table - UserInfoML @done
+                LicenseTypes and Features:
+                    ✔ Create Table - LicenseType. @done
+                    ✔ Create Table - LicenseTypeML. @done
+                    ✔ Create Table - LicenseFeature. @done
+                MasterPK and CustomerPK:
+                    ✔ Create Table - MasterPK. @done
+                    ✔ Create Table - CustomerPK. @done
+                Customer - Structures:
+                    ✔ Create Table - Customer. @done
+                    ✔ Create Table - CustomerML. @done
+                    ✔ Create Table - Branch. @done
+                    ✔ Create Table - BranchML. @done
+                    ✔ Create Table - MemberInfo. @done
+                    ✔ Create Table - MemberInfoML. @done
+                    ✔ Create Table - Org. @done
+                    ✔ Create Table - OrgML. @done
+                Customer - Device:
+                    ✔ Create Table - Device. @done
+                    ✔ Create Table - DeviceML. @done
+                Customer - Questions:
+                    ✔ Create Table - QSet. @done
+                    ✔ Create Table - QSetML. @done
+                    ✔ Create Table - QSlide. @done
+                    ✔ Create Table - QSlideML. @done
+                    ✔ Create Table - QSlideItem. @done
+                    ✔ Create Table - QSlideItemML. @done
+                Web UI:
+				    ✔ Create Table - WebPage. @done
+				    ✔ Create Table - WebPageML. @done
+				    ✔ Create Table - WebPageElement. @done
+				    ✔ Create Table - WebPageElementML. @done
+            Init Data:
+                Default:
+                    ✔ Init Data For Table - DefaultSetting. @done
+                    ✔ Init Data For Table - Language. @done
+                    ✔ Init Data For Table - PeriodUnit. @done
+                    ✔ Init Data For Table - PeriodUnitML. @done
+                    ✔ Init Data For Table - LimitUnit. @done
+                    ✔ Init Data For Table - LimitUnitML. @done
+                    ✔ Init Data For Table - MemberType. @done
+                    ✔ Init Data For Table - MemberTypeML. @done
+                LicenseType and Features:
+                    ✔ Init Data For Table - LicenseType. @done
+                    ✔ Init Data For Table - LicenseTypeML. @done
+                    ✔ Init Data For Table - LicenseFeature. @done
+            View:
+                Language:
+                    ✔ Create View - LanguageView. @done
+                    ✔ Test View - LanguageView. @done
+                PeriodUnit:
+                    ✔ Create View - PeriodUnitView. @done
+                    ✔ Test View - PeriodUnitView. @done
+                    ✔ Create View - PeriodUnitMLView. @done
+                    ✔ Test View - PeriodUnitMLView. @done
+                LimitUnit:
+                    ✔ Create View - LimitUnitView. @done
+                    ✔ Test View - LimitUnitView. @done
+                    ✔ Create View - LimitUnitMLView. @done
+                    ✔ Test View - LimitUnitMLView. @done
+                MemberType:
+                    ✔ Create View - MemberTypeView. @done
+                    ✔ Test View - MemberTypeView. @done
+                    ✔ Create View - MemberTypeMLView. @done
+                    ✔ Test View - MemberTypeMLView. @done
+                UserInfo:
+                    ✔ Create View - UserInfoView. @done
+                    ✔ Test View - UserInfoView. @done
+                    ✔ Create View - UserInfoMLView. @done
+                    ✔ Test View - UserInfoMLView. @done
+                LicenseType and Features:
+                    ✔ Create View - LicenseTypeView. @done
+                    ✔ Test View - LicenseTypeView. @done
+                    ✔ Create View - LicenseTypeMLView. @done
+                    ✔ Test View - LicenseTypeMLView. @done
+                    ✔ Create View - LicenseFeatureMLView. @done
+                    ✔ Test View - LicenseFeatureMLView. @done
+                Customers - Structures:
+                    ✔ Create View - CustomerView. @done
+                    ✔ Test View - CustomerView. @done
+                    ✔ Create View - CustomerMLView. @done
+                    ✔ Test View - CustomerMLView. @done
+                    ✔ Create View - BranchView. @done
+                    ✔ Test View - BranchView. @done
+                    ✔ Create View - BranchMLView. @done
+                    ✔ Test View - BranchMLView. @done
+                    ✔ Create View - MemberInfoView. @done
+                    ✔ Test View - MemberInfoView. @done
+                    ✔ Create View - MemberInfoMLView. @done
+                    ✔ Test View - MemberInfoMLView. @done
+                    ✔ Create View - OrgView. @done
+                    ✔ Test View - OrgView. @done
+                    ✔ Create View - OrgMLView. @done
+                    ✔ Test View - OrgMLView. @done
+                Customer - Device:
+                    ✔ Create View - DeviceView. @done
+                    ✔ Test View - DeviceView. @done
+                    ✔ Create View - DeviceMLView. @done
+                    ✔ Test View - DeviceMLView. @done
+                Regisrer:
+                    ✔ Create View - LogInView. @done
+                    ✔ Test View - LogInView. @done
+                Web UI:
+                    ✔ Create View - WebPageView. @done
+                    ✔ Test View - WebPageView. @done
+                    ✔ Create View - WebPageMLView. @done
+                    ✔ Test View - WebPageMLView. @done
+                    ✔ Create View - WebPageElementView. @done
+                    ✔ Test View - WebPageElementView. @done
+                    ✔ Create View - WebPageElementMLView. @done
+                    ✔ Test View - WebPageElementMLView. @done
+            Functionss:
+                Utilities:
+                    ✔ Create DB Function - IsSameDate. @done
+                    ✔ Test DB Function - IsSameDate. @done
+                    ✔ Create DB Function - IsSameMonth. @done
+                    ✔ Test DB Function - IsSameMonth. @done
+                    ✔ Create DB Function - IsSameYear. @done
+                    ✔ Test DB Function - IsSameYear. @done
+                    ✔ Create DB Function - IsNullOrEmpty. @done
+                    ✔ Test DB Function - IsNullOrEmpty. @done
+                Default:
+                    ✔ Create DB Function - GetDefaultSetting. @done
+                    ✔ Test DB Function - GetDefaultSetting. @done
+            Stored Procedures:
+                Utilities:
+                    ✔ Create SP - GetRandomHexCode. @done
+                    ✔ Test SP - GetRandomHexCode. @done
+                    ✔ Create SP - GetRoutines. @done
+                    ✔ Test SP - GetRoutines. @done
+                    ✔ Create SP - GetRoutineParameters. @done
+                    ✔ Test SP - GetRoutineParameters. @done
+                Language:
+                    ✔ Create SP - SaveLanguage. @done
+                    ✔ Test SP - SaveLanguage. @done
+                    ✔ Create SP - GetLanguages. @done
+                    ✔ Test SP - GetLanguages. @done
+                    ✔ Create SP - DisableLanguage. @done
+                    ✔ Test SP - DisableLanguage. @done
+                    ✔ Create SP - EnableLanguage. @done
+                    ✔ Test SP - EnableLanguage. @done
+                    ✔ Create SP - ChangeDefaultLanguage. @done
+                    ✔ Test SP - ChangeDefaultLanguage. @done
+                PeriodUnit:
+                    ✔ Create SP - SavePeriodUnit. @done
+                    ✔ Test SP - SavePeriodUnit. @done
+                    ✔ Create SP - SavePeriodUnitML. @done
+                    ✔ Test SP - SavePeriodUnitML. @done
+                    ✔ Create SP - GetPeriodUnits. @done
+                    ✔ Test SP - GetPeriodUnits. @done
+                LimitUnit:
+                    ✔ Create SP - SaveLimitUnit. @done
+                    ✔ Test SP - SaveLimitUnit. @done
+                    ✔ Create SP - SaveLimitUnitML. @done
+                    ✔ Test SP - SaveLimitUnitML. @done
+                    ✔ Create SP - GetLimitUnits. @done
+                    ✔ Test SP - GetLimitUnits. @done
+                MemberType:
+                    ✔ Create SP - GetMemberTypes. @done
+                    ✔ Test SP - GetMemberTypes. @done
+                UserInfo:
+                    ✔ Create SP - SaveUserInfo. @done
+                    ✔ Test SP - SaveUserInfo. @done
+                    ✔ Create SP - SaveUserInfoML. @done
+                    ✔ Test SP - SaveUserInfoML. @done
+                    ✔ Create SP - GetUserInfos. @done
+                    ✔ Test SP - GetUserInfos. @done
+                LicenseType and Features:
+                    ✔ Create SP - GetLicenseTypes. @done
+                    ✔ Test SP - GetLicenseTypes. @done
+                    ✔ Create SP - SaveLicenseType. @done
+                    ✔ Test SP - SaveLicenseType. @done
+                    ✔ Create SP - SaveLicenseTypeML. @done
+                    ✔ Test SP - SaveLicenseTypeML. @done
+                    ✔ Create SP - SaveLicenseFeature. @done
+                    ✔ Test SP - SaveLicenseFeature. @done
+                    ✔ Create SP - GetLicenseFeatures. @done
+                    ✔ Test SP - GetLicenseFeatures. @done
+                MasterPK and CustomerPK:
+                    ✔ Create SP - SetMasterPK. @done
+                    ✔ Test SP - SetMasterPK. @done
+                    ✔ Create SP - NextMasterPK. @done
+                    ✔ Test SP - NextMasterPK. @done
+                    ✔ Create SP - GetMasterPK. @done
+                    ✔ Test SP - GetMasterPK. @done
+                    ✔ Create SP - InitMasterPKs. @done
+                    ✔ Test SP - InitMasterPKs. @done
+                    ✔ Create SP - SetCustomerPK. @done
+                    ✔ Test SP - SetCustomerPK. @done
+                    ✔ Create SP - NextCustomerPK. @done
+                    ✔ Test SP - NextCustomerPK. @done
+                    ✔ Create SP - GetCustomerPK. @done
+                    ✔ Test SP - GetCustomerPK. @done
+                Customer - Structures:
+                    ✔ Create SP - SaveCustomer. @done
+                    ✔ Test SP - SaveCustomer. @done
+                    ✔ Create SP - SaveCustomerML. @done
+                    ✔ Test SP - SaveCustomerML. @done
+                    ✔ Create SP - GetCustomers. @done
+                    ✔ Test SP - GetCustomers (RE TEST). @done
+                    ✔ Create SP - SaveBranch. @done 
+                    ✔ Test SP - SaveBranch (RE TEST). @done 
+                    ✔ Create SP - SaveBranchML. @done
+                    ✔ Test SP - SaveBranchML. @done
+                    ✔ Create SP - GetBranchs. @done
+                    ✔ Test SP - GetBranchs. @done
+                    ✔ Create SP - SaveMemberInfo. @done
+                    ✔ Test SP - SaveMemberInfo. @done
+                    ✔ Create SP - SaveMemberInfoML. @done
+                    ✔ Test SP - SaveMemberInfoML. @done
+                    ✔ Create SP - GetMemberInfos. @done
+                    ✔ Test SP - GetMemberInfos. @done
+                    ✔ Create SP - SaveOrg. @done
+                    ✔ Test SP - SaveOrg. @done
+                    ✔ Create SP - SaveOrgML. @done
+                    ✔ Create SP - SaveOrgML. @done
+                    ✔ Create SP - GetOrgs. @done
+                    ✔ Test SP - GetOrgs. @done
+                Customer - Device:
+                    ✔ Create SP - SaveDevice. @done
+                    ✔ Test SP - SaveDevice. @done
+                    ✔ Create SP - SaveDeviceML. @done
+                    ✔ Test SP - SaveDeviceML. @done
+                    ✔ Create SP - GetDevices. @done
+                    ✔ Test SP - GetDevices. @done
+        Node Server:
+            Init and Installation:
+                ✔ Init project (nodejs) Reater Web v2.0.8. @done
+                ✔ install node module - latest version of express. @done
+                ✔ install node module - latest version of express--serve-static-core @done
+                ✔ install node module - latest version of body-parser. @done
+                ✔ install node module - latest version of cookie-parser. @done
+                ✔ install node module - latest version of serve-favicon. @done
+                ✔ install node module - latest version of serve-static. @done
+                ✔ install node module - latest version of debug. @done
+                ✔ install node module - latest version of morgan. @done
+                ✔ install node module - latest version of nib. @done
+                ✔ install node module - latest version of pug. @done
+                ✔ install node module - latest version of stylus. @done
+                ✔ install node module - latest version of mkdirp. @done
+                ✔ install node module - latest version of formidable. @done
+                ✔ install node module - version @3.3.0 of mssql. @done
+                ✔ install node module - latest version of cors. @done
+            Directories:
+                Layouts:
+                    ✔ Add layouts directory. @done
+                    ✔ Add layouts/components directory. @done
+                Routes - Default:
+                    ✔ Add routes directory. @done
+                    ✔ Add routes/default directory. @done
+                    ✔ Add routes/default/home directory. @done
+                    ✔ Add routes/default/login directory. @done
+                    ✔ Add routes/default/register directory. @done
+                Routes - Errors:
+                    ✔ Add routes/errors directory. @done
+                Routes - Dev:
+                    ✔ Add routes/dev directory. @done
+                    ✔ Add routes/dev/home directory. @done
+                Routes - EDL [Default]:
+                    ✔ Add routes/edl directory. @done
+                Routes - EDL [Admin]:
+                    ✔ Add routes/edl/admin directory. @done
+                    ✔ Add routes/edl/admin/home directory. @done
+                Routes - EDL [Supervisor]:
+                    ✔ Add routes/edl/supervisor directory. @done
+                    ✔ Add routes/edl/supervisor/home directory. @done
+                Routes - EDL [Staff]:
+                    ✔ Add routes/edl/staff directory. @done
+                    ✔ Add routes/edl/staff/home directory. @done
+                Routes - Customer [Admin]:
+                    ✔ Add routes/customers directory. @done
+                    ✔ Add routes/customers/admin directory. @done
+                    ✔ Add routes/customers/admin/home directory. @done
+                Routes - Customer [Exclusive]:
+                    ✔ Add routes/customers/exclusive directory. @done
+                    ✔ Add routes/customers/exclusive/home directory. @done
+                Routes - Customer [Staff]:
+                    ✔ Add routes/customers/staff directory. @done
+                    ✔ Add routes/customers/staff/home directory. @done
+                Routes - Customer [Device]:
+                    ✔ Add routes/customers/device directory. @done
+                    ✔ Add routes/customers/device/home directory. @done
+            Routes and Views:
+                Layouts:
+                    ✔ Add blank.pug file to layouts directory. @done
+                Routes - Default:
+                    ✔ Add index.js to routes/default directory. @done
+                Routes - Errors:
+                    ✔ Add error404.pug file to layouts/errors directory. @done
+                    ✔ Add error500.pug file to layouts/errors directory. @done
+                Routes - Dev:
+                    ✔ Add index.js to routes/dev/home directory. @done
+                    ✔ Add index.pug to routes/dev/home directory. @done
+                Routes - EDL [Default]:
+                    ✔ Add index.js to routes/default/home directory. @done
+                    ✔ Add index.pug to routes/default/home directory. @done
+                    ✔ Add index.js to routes/default/login directory. @done
+                    ✔ Add index.pug to routes/default/login directory. @done
+                    ✔ Add index.js to routes/default/register directory. @done
+                    ✔ Add index.pug to routes/default/register directory. @done
+                Routes - EDL [Admin]:
+                    ✔ Add index.js to routes/edl/admin/home directory. @done
+                    ✔ Add index.pug to routes/edl/admin/home directory. @done
+                Routes - EDL [Supervisor]:
+                    ✔ Add index.js to routes/edl/supervisor/home directory. @done
+                    ✔ Add index.pug to routes/edl/supervisor/home directory. @done
+                Routes - EDL [Staff]:
+                    ✔ Add index.js to routes/edl/staff/home directory. @done
+                    ✔ Add index.pug to routes/edl/staff/home directory. @done
+                Routes - Customer [Admin]:
+                    ✔ Add index.js to routes/customers/admin/home directory. @done
+                    ✔ Add index.pug to routes/customers/admin/home directory. @done
+                Routes - Customer [Exclusive]:
+                    ✔ Add index.js to routes/customers/exclusive/home directory. @done
+                    ✔ Add index.pug to routes/customers/exclusive/home directory. @done
+                Routes - Customer [Staff]:
+                    ✔ Add index.js to routes/customers/staff/home directory. @done
+                    ✔ Add index.pug to routes/customers/staff/home directory. @done
+                Routes - Customer [Device]:
+                    ✔ Add index.js to routes/customers/device/home directory. @done
+                    ✔ Add index.pug to routes/customers/device/home directory. @done
+            Public Libraries:
+                ✔ Add public directory. @done
+                ✔ Add jquery 3.1.0 to public directory. @done
+                ✔ Add jquery-ui 1.12.1 to public directory. @done
+                ✔ Add underscore.js 1.8.3 to public directory. @done
+                ✔ Add bootstrap 3.3.7 to public directory. @done
+                ✔ Add font-awesome 4.6.3 to public directory. @done
+                ✔ Add emoji-symbols 1.0.0 to public directory. @done
+                ✔ Add flag-icon-css 2.8.0 to public directory. @done
+                ✔ Add clientjs 0.1.11 to public directory. @done
+                ✔ Add knockout 3.4.1 to public directory. @done
+                ✔ Add moment 2.17.1 to public directory. @done
+                ✔ Add bootstrap-datetimepicker 4.17.46 to public directory. @done
+                ✔ Add handlebars 4.0.5 to public directory. @done
+                ✔ Add jquery-handlebars 1.3.7 to public directory. @done
+                ✔ Add reveal.js 3.4.1 to public directory. @done
+                ✔ Add howler.js 2.0.3 to public directory. @done
+                ✔ Add data-table 1.10.13 to public directory. @done
+                ✔ Add highcharts 5.0.0 to public directory. @done
+                ✔ Add favicon.ico to public directory. @done
+            Node Core Modules:
+                ✔ Add backends directory. @done
+                ✔ Add app-paths.js to backends directory. @done
+                ✔ Add app-middlewares.js to backends directory. @done
+                ✔ Add app-routes.js to backends directory. @done
+                ✔ Add configs directory. @done
+                ✔ Add app-configs.js to configs directory. @done
+                ✔ Add server.js to root directory. @done
+            Database Note Modules:
+                ✔ Add mssql-db.js file to backends directory. @done
+                ✔ Add rater-web-db.js file to backends directory. @done
+            NLib Node Module:
+                ✔ Add nlib-core.js file to backends directory. @done
+                ✔ nlib-core.js add IsNull method. @done
+                ✔ nlib-core.js add SendJson method. @done
+                ✔ nlib-core.js add ReqModel class. @done
+                ✔ nlib-core.js add JsonFile class. @done
+            Database Wrapper:
+                Directory:
+                    ✔ Add api directory. @done
+                    ✔ Add json directory. @done
+                    ✔ Add json/rater-web-db directory (for stored procedure definition). @done
+                Stored Procedure Json Files:
+                    Utilities:
+                        ✔ Add GetRandomHexCode.json for SP GetRandomHexCode. @done
+                        ✔ Add GetRoutines.json for SP GetRoutines. @done
+                        ✔ Add GetRoutineParameters.json for SP GetRoutineParameters. @done
+                    Language:
+                        ✔ Add ChangeDefaultLanguage.json for SP ChangeDefaultLanguage. @done
+                        ✔ Add DisableLanguage.json for SP DisableLanguage. @done
+                        ✔ Add EnableLanguage.json for SP EnableLanguage. @done
+                        ✔ Add SaveLanguage.json for SP SaveLanguage. @done
+                        ✔ Add GetLanguages.json for SP GetLanguages. @done
+                    PeriodUnit:
+                        ✔ Add SavePeriodUnit.json for SP SavePeriodUnit. @done
+                        ✔ Add SavePeriodUnitML.json for SP SavePeriodUnitML. @done
+                        ✔ Add GetPeriodUnits.json for SP GetPeriodUnits. @done
+                    LimitUnit:
+                        ✔ Add SaveLimitUnit.json for SP SaveLimitUnit. @done
+                        ✔ Add SaveLimitUnitML.json for SP SaveLimitUnitML. @done
+                        ✔ Add GetLimitUnits.json for SP GetLimitUnits. @done
+                    MemberType:
+                        ✔ Add GetMemberTypes.json for SP GetMemberTypes. @done
+                    UserInfo:
+                        ✔ Add SaveUserInfo.json for SP SaveUserInfo. @done
+                        ✔ Add SaveUserInfoML.json for SP SaveUserInfoML. @done
+                        ✔ Add GetUserInfos.json for SP GetUserInfos. @done
+                    LicenseType and Features:
+                        ✔ Add SaveLicenseType.json for SP SaveLicenseType. @done
+                        ✔ Add SaveLicenseTypeML.json for SP SaveLicenseTypeML. @done
+                        ✔ Add GetLicenseTypes.json for SP GetLicenseTypes. @done
+                        ✔ Add SaveLicenseFeature.json for SP SaveLicenseFeature. @done
+                        ✔ Add GetLicenseFeatures.json for SP GetLicenseFeatures. @done
+                    Customer - Structures:
+                        ✔ Add SaveCustomer.json for SP SaveCustomer. @done
+                        ✔ Add SaveCustomerML.json for SP SaveCustomerML. @done
+                        ✔ Add GetCustomers.json for SP GetCustomers. @done
+                        ✔ Add SaveBranch.json for SP SaveBranch. @done
+                        ✔ Add SaveBranchML.json for SP SaveBranchML. @done
+                        ✔ Add GetBranchs.json for SP GetBranchs. @done
+                        ✔ Add SaveMemberInfo.json for SP SaveMemberInfo. @done
+                        ✔ Add SaveMemberInfoML.json for SP SaveMemberInfoML. @done
+                        ✔ Add GetMemberInfos.json for SP GetMemberInfos. @done
+                        ✔ Add SaveOrg.json for SP SaveOrg. @done
+                        ✔ Add SaveOrgML.json for SP SaveOrgML. @done
+                        ✔ Add GetOrgs.json for SP GetOrgs. @done
+                    Customer - Device:
+                        ✔ Add SaveDevice.json for SP SaveDevice. @done
+                        ✔ Add SaveDeviceML.json for SP SaveDeviceML. @done
+                        ✔ Add GetDevices.json for SP GetDevices. @done
+                Stored Procedure Rest API:
+                    Utilities:
+                        ✔ Add Server Function GetRandomHexCode. @done
+                        ✔ Add route /api/edl/utils/randomcode For GetRandomHexCode SP. @done
+                    Language:
+                        ✔ Add Server Function ChangeDefaultLanguage. @done
+                        ✔ Add route /api/edl/languages/default For ChangeDefaultLanguage SP. @done
+                        ✔ Add Server Function DisableLanguage. @done
+                        ✔ Add route /api/edl/languages/disable For DisableLanguage SP. @done
+                        ✔ Add Server Function EnableLanguage. @done
+                        ✔ Add route /api/edl/languages/enable For EnableLanguage SP. @done
+                        ✔ Add Server Function GetLanguages. @done
+                        ✔ Add route /api/edl/languages/search For GetLanguages SP. @done
+                        ✔ Add Server Function SaveLanguage. @done
+                        ✔ Add route /api/edl/languages/save For SaveLanguage SP. @done
+                    PeriodUnit:
+                        ✔ Add Server Function SavePeriodUnit. @done
+                        ✔ Add route /api/edl/periodunits/save For SavePeriodUnit SP. @done
+                        ✔ Add Server Function SavePeriodUnitML. @done
+                        ✔ Add route /api/edl/periodunits/save-ml For SavePeriodUnitML SP. @done
+                        ✔ Add Server Function GetPeriodUnits. @done
+                        ✔ Add route /api/edl/periodunits/search For GetPeriodUnits SP. @done
+                    LimitUnit:
+                        ✔ Add Server Function SaveLimitUnit. @done
+                        ✔ Add route /api/edl/limitunits/save For SaveLimitUnit SP. @done
+                        ✔ Add Server Function SaveLimitUnitML. @done
+                        ✔ Add route /api/edl/limitunits/save-ml For SaveLimitUnitML SP. @done
+                        ✔ Add Server Function GetLimitUnits. @done
+                        ✔ Add route /api/edl/limitunits/search For GetLimitUnits SP. @done
+                    MemberType:
+                        ✔ Add Server Function GetMemberTypes. @done
+                        ✔ Add route /api/edl/membertypes/search For GetMemberTypes SP. @done
+                    UserInfo:
+                        ✔ Add Server Function SaveUserInfo. @done
+                        ✔ Add route /api/edl/users/save For SaveUserInfo SP. @done
+                        ✔ Add Server Function SaveUserInfoML. @done
+                        ✔ Add route /api/edl/users/save-ml For SaveUserInfoML SP. @done
+                        ✔ Add Server Function GetUserInfos. @done
+                        ✔ Add route /api/edl/users/search For GetUserInfos SP. @done
+                    LicenseType and Features:
+                        ✔ Add Server Function SaveLicenseType. @done
+                        ✔ Add route /api/edl/licensetypes/save For SaveLicenseType SP. @done
+                        ✔ Add Server Function SaveLicenseTypeML. @done
+                        ✔ Add route /api/edl/licensetypes/save-ml For SaveLicenseTypeML SP. @done
+                        ✔ Add Server Function GetLicenseTypes. @done
+                        ✔ Add route /api/edl/licensetypes/search For GetLicenseTypes SP. @done
+                        ✔ Add Server Function SaveLicenseFeature. @done
+                        ✔ Add route /api/edl/licensefeatures/save For SaveLicenseFeature SP. @done
+                        ✔ Add Server Function GetLicenseFeatures. @done
+                        ✔ Add route /api/edl/licensefeatures/search For GetLicenseFeatures SP. @done
+                    Customer - Structures:
+                        ✔ Add Server Function SaveCustomer. @done
+                        ✔ Add route /api/customers/save For SaveCustomer SP. @done
+                        ✔ Add Server Function SaveCustomerML. @done
+                        ✔ Add route /api/customers/save-ml For SaveCustomerML SP. @done
+                        ✔ Add Server Function GetCustomers. @done
+                        ✔ Add route /api/customers/search For GetCustomers SP. @done
+                        ✔ Add Server Function SaveBranch. @done
+                        ✔ Add route /api/branchs/save For SaveBranch SP. @done
+                        ✔ Add Server Function SaveBranchML. @done
+                        ✔ Add route /api/branchs/save-ml For SaveBranchML SP. @done
+                        ✔ Add Server Function GetBranchs. @done
+                        ✔ Add route /api/branchs/search For GetBranchs SP. @done
+                        ✔ Add Server Function SaveOrg. @done
+                        ✔ Add route /api/orgs/save For SaveOrg SP. @done
+                        ✔ Add Server Function SaveOrgML. @done
+                        ✔ Add route /api/orgs/save-ml For SaveOrgML SP. @done
+                        ✔ Add Server Function GetOrgs. @done
+                        ✔ Add route /api/orgs/search For GetOrgs SP. @done
+                        ✔ Add Server Function SaveMemberInfo. @done
+                        ✔ Add route /api/members/save For SaveMemberInfo SP. @done
+                        ✔ Add Server Function SaveMemberInfoML. @done
+                        ✔ Add route /api/members/save-ml For SaveMemberInfoML SP. @done
+                        ✔ Add Server Function GetMemberInfos. @done
+                        ✔ Add route /api/members/search For GetMemberInfos SP. @done
+                    Customer - Device:
+                        ✔ Add Server Function SaveDevice. @done
+                        ✔ Add route /api/devices/save For SaveDevice SP. @done
+                        ✔ Add Server Function SaveDeviceML. @done
+                        ✔ Add route /api/devices/save-ml For SaveDeviceML SP. @done
+                        ✔ Add Server Function GetDevices. @done
+                        ✔ Add route /api/devices/search For GetDevices SP. @done
+                    Customer - Questions:
+                    Customer - Vote:
+                    Web UI:
+                        ✔ Add Server Function GetWebPages. @done
+                        ✔ Add route /api/webpages/save For GetWebPages SP. @done
+                        ✔ Add Server Function GetWebPageElements. @done
+                        ✔ Add route /api/webpageelements/search For GetWebPageElements SP. @done
+    Update on [2017-07-02]:
+        Node Server:
+            Routes and Views:
+                Layouts:
+                    ✔ add layout.pug into all main layout folders. @done
+            Pug Components:
+                ✔ bootstrap-mixins.pug update code to check undefined variables. @done
+                ✔ html-mixins.pug update code load bootstrap theme. @done
+            Public - Bootstrap:
+                ✔ move fonts folder into css folder. @done
+                ✔ rename all bootstrap.min.css to bootstrap.themeName.min.css. @done
+    Update on [2017-07-04]:
+        Node Server:
+            Restful API:
+                ✔ split code into individual related folder. @done
+                ✔ rename __CallSP to CallSP and move to rater-web-db.js. @done
+                ✔ remove index.js from api root folder. @done
+    Update on [2017-07-05]:
+        Node Server:
+            Stored Procedure Json Files:
+                ✔ move json files to spperated folders. @done
+            Database Note Modules:
+                ✔ Split rater-web-db.js file into seperated sub folders by its functional. @done
+                ✔ rater-web-db-utilities.js file added. @done
+                    ✔ Set Json SP Path to '00 - Utilities' PASSED. @done
+                    ✔ GetRandomHexCode SP PASSED. @done
+                    ✔ GetRoutines SP PASSED. @done
+                    ✔ GetRoutineParameters SP PASSED. @done
+                ✔ rater-web-db-defaultsetting.js file added. @done
+                    ✔ Set Json SP Path to '01 - DefaultSetting' PASSED. @done
+                ✔ rater-web-db-languages.js file added. @done
+                    ✔ Set Json SP Path to '02 - Languages' PASSED. @done
+                    ✔ ChangeDefaultLanguage SP PASSED. @done
+                    ✔ DisableLanguage SP PASSED. @done
+                    ✔ EnableLanguage SP PASSED. @done
+                    ✔ GetLanguages SP PASSED. @done
+                    ✔ SaveLanguage SP PASSED. @done
+                ✔ rater-web-db-periodunits.js file added. @done
+                    ✔ Set Json SP Path to '03 - PeriodUnits' PASSED. @done
+                    ✔ SavePeriodUnit SP PASSED. @done
+                    ✔ SavePeriodUnitML SP PASSED. @done
+                    ✔ GetPeriodUnits SP PASSED. @done
+                ✔ rater-web-db-limitunits.js file added. @done
+                    ✔ Set Json SP Path to '04 - LimitUnits' PASSED. @done
+                    ✔ SaveLimitUnit SP PASSED. @done
+                    ✔ SaveLimitUnitML SP PASSED. @done
+                    ✔ GetLimitUnits SP PASSED. @done
+                ✔ rater-web-db-membertype.js file added. @done
+                    ✔ Set Json SP Path to '05 - MemberTypes' PASSED. @done
+                    ✔ GetMemberTypes SP PASSED. @done
+                ✔ rater-web-db-userinfo.js file added. @done
+                    ✔ Set Json SP Path to '07 - UserInfo' PASSED. @done
+                    ✔ SaveUserInfo SP PASSED. @done
+                    ✔ SaveUserInfoML SP PASSED. @done
+                    ✔ GetUserInfos SP PASSED. @done
+                ✔ rater-web-db-licensetypes.js file added. @done
+                    ✔ Set Json SP Path to '08 - LicenseTypes' PASSED. @done
+                    ✔ SaveLicenseType SP PASSED. @done
+                    ✔ SaveLicenseTypeML SP PASSED. @done
+                    ✔ GetLicenseTypes SP PASSED. @done
+                ✔ rater-web-db-licensefeatures.js file added. @done
+                    ✔ Set Json SP Path to '09 - LicenseFeatures' PASSED. @done
+                    ✔ SaveLicenseFeature SP PASSED. @done
+                    ✔ GetLicenseFeatures SP PASSED. @done
+                ✔ rater-web-db-customer.js file added. @done
+                    ✔ Set Json SP Path to '10 - Customer' PASSED. @done
+                    ✔ SaveCustomer SP PASSED. @done
+                    ✔ SaveCustomerML SP PASSED. @done
+                    ✔ GetCustomers SP PASSED. @done
+                ✔ rater-web-db-branch.js file added. @done
+                    ✔ Set Json SP Path to '21 - Branch' PASSED. @done
+                    ✔ SaveBranch SP PASSED. @done
+                    ✔ SaveBranchML SP PASSED. @done
+                    ✔ GetBranchs SP PASSED. @done
+                ✔ rater-web-db-memberinfo.js file added. @done
+                    ✔ Set Json SP Path to '22 - MemberInfo' PASSED. @done
+                    ✔ SaveMemberInfo SP PASSED. @done
+                    ✔ SaveMemberInfoML SP PASSED. @done
+                    ✔ GetMemberInfos SP PASSED. @done
+                ✔ rater-web-db-org.js file added. @done
+                    ✔ Set Json SP Path to '23 - Org' PASSED. @done
+                    ✔ SaveOrg SP PASSED. @done
+                    ✔ SaveOrgML SP PASSED. @done
+                    ✔ GetOrgs SP PASSED. @done
+                ✔ rater-web-db-devices.js file added. @done
+                    ✔ Set Json SP Path to '24 - Devices' PASSED. @done
+                    ✔ SaveDevice SP PASSED. @done
+                    ✔ SaveDeviceML SP PASSED. @done
+                    ✔ GetDevices SP PASSED. @done
+                ✔ rater-web-db-qset.js file added. @done
+                    ✔ Set Json SP Path to '25 - QSet' PASSED. @done
+                ✔ rater-web-db-qslide.js file added. @done
+                    ✔ Set Json SP Path to '26 - QSlide' PASSED. @done
+                ✔ rater-web-db-qslideitem.js file added. @done
+                    ✔ Set Json SP Path to '27 - QSlideItem' PASSED. @done
+                ✔ rater-web-db-votes.js file added. @done
+                    ✔ Set Json SP Path to '28 - Votes' PASSED. @done
+                ✔ rater-web-db-register.js file added. @done
+                    ✔ Set Json SP Path to '30 - Register' PASSED. @done
+                ✔ rater-web-db-webpages.js file added. @done
+                    ✔ Set Json SP Path to '40 - WebPages' PASSED. @done
+                    ✔ GetWebPages SP PASSED. @done
+                    ✔ GetWebPageElements SP PASSED. @done
+            Restful API:
+                ✔ split SP caller code by functional (in spperated folders). @done
+                ✔ rater-web-db-> utilities route(s) refactor PASSED. @done
+                    ✔ Mapped Code for GetRandomHexCode PASSED. @done
+                    ✔ Mapped Code for GetRoutines PASSED. @done
+                    ✔ Mapped Code for GetRoutineParameters PASSED. @done
+                    ✔ Mapped Code for Query PASSED. @done
+                ✔ rater-web-db-> default settings route(s) refactor PASSED. @done
+                ✔ rater-web-db-> languages route(s) refactor PASSED. @done
+                    ✔ Mapped Code for ChangeDefaultLanguage PASSED. @done
+                    ✔ Mapped Code for DisableLanguage PASSED. @done
+                    ✔ Mapped Code for EnableLanguage PASSED. @done
+                    ✔ Mapped Code for GetLanguages PASSED. @done
+                    ✔ Mapped Code for SaveLanguage PASSED. @done
+                ✔ rater-web-db-> period units route(s) refactor PASSED. @done
+                    ✔ Mapped Code for SavePeriodUnit PASSED. @done
+                    ✔ Mapped Code for SavePeriodUnitML PASSED. @done
+                    ✔ Mapped Code for GetPeriodUnits PASSED. @done
+                ✔ rater-web-db-> limit units route(s) refactor PASSED. @done
+                    ✔ Mapped Code for SaveLimitUnit PASSED. @done
+                    ✔ Mapped Code for SaveLimitUnitML PASSED. @done
+                    ✔ Mapped Code for GetLimitUnits PASSED. @done
+                ✔ rater-web-db-> member types route(s) refactor PASSED. @done
+                    ✔ Mapped Code for GetMemberTypes PASSED. @done
+                ✔ rater-web-db-> userinfo route(s) refactor PASSED. @done
+                    ✔ Mapped Code for SaveUserInfo PASSED. @done
+                    ✔ Mapped Code for SaveUserInfoML PASSED. @done
+                    ✔ Mapped Code for GetUserInfos PASSED. @done
+                ✔ rater-web-db-> license types route(s) refactor PASSED. @done
+                    ✔ Mapped Code for SaveLicenseType PASSED. @done
+                    ✔ Mapped Code for SaveLicenseTypeML PASSED. @done
+                    ✔ Mapped Code for GetLicenseTypes PASSED. @done
+                ✔ rater-web-db-> license features route(s) refactor PASSED. @done
+                    ✔ Mapped Code for SaveLicenseFeature PASSED. @done
+                    ✔ Mapped Code for GetLicenseFeatures PASSED. @done
+                ✔ rater-web-db-> customer route(s) refactor PASSED. @done
+                    ✔ Mapped Code for SaveCustomer PASSED. @done
+                    ✔ Mapped Code for SaveCustomerML PASSED. @done
+                    ✔ Mapped Code for GetCustomers PASSED. @done
+                ✔ rater-web-db-> branch route(s) refactor PASSED. @done
+                    ✔ Mapped Code for SaveBranch PASSED. @done
+                    ✔ Mapped Code for SaveBranchML PASSED. @done
+                    ✔ Mapped Code for GetBranchs PASSED. @done
+                ✔ rater-web-db-> memberinfo route(s) refactor PASSED. @done
+                    ✔ Mapped Code for SaveMemberInfo PASSED. @done
+                    ✔ Mapped Code for SaveMemberInfoML PASSED. @done
+                    ✔ Mapped Code for GetMemberInfos PASSED. @done
+                ✔ rater-web-db-> org route(s) refactor PASSED. @done
+                    ✔ Mapped Code for SaveOrg PASSED. @done
+                    ✔ Mapped Code for SaveOrgML PASSED. @done
+                    ✔ Mapped Code for GetOrgs PASSED. @done
+                ✔ rater-web-db-> devices route(s) refactor PASSED. @done
+                    ✔ Mapped Code for SaveDevice PASSED. @done
+                    ✔ Mapped Code for SaveDeviceML PASSED. @done
+                    ✔ Mapped Code for GetDevices PASSED. @done
+                ✔ rater-web-db-> qset route(s) refactor PASSED. @done
+                ✔ rater-web-db-> qslide route(s) refactor PASSED. @done
+                ✔ rater-web-db-> qslideitem route(s) refactor PASSED. @done
+                ✔ rater-web-db-> votes route(s) refactor PASSED. @done
+                ✔ rater-web-db-> register route(s) refactor PASSED. @done
+                ✔ rater-web-db-> webpages route(s) refactor PASSED. @done
+                    ✔ Mapped Code for GetWebPages PASSED. @done
+                    ✔ Mapped Code for GetWebPageElements PASSED. @done
+                ✔ templates route(s) added PASSED. @done
+                    ✔ Mapped Code for GetTemplate PASSED. @done
+            NLib Node Module:
+                ✔ nlib-core.js add HandleBarsFile class. @done
+                ✔ nlib-core.js add data_result class. @done
+                ✔ mssql-db.js remove db_result class. @done
+                ✔ rater-web-db.js move custom error message to nlib-core.js. @done
+    Update on [2017-07-06]:
+        Node Server:
+            Pug Components:
+                ✔ html-mixins.pug split into individual files (group by folder). @done
+                ✔ bootstrap-mixins.pug change name to bootstrap-layout-mixins.pug. @done
+                ✔ add flags-font-mixins.pug file in layouts/components/fonts folder. @done
+                ✔ add fingerprint-mixins.pug file in layouts/components/common folder. @done
+                ✔ add nlib-mixins.pug file in layouts/components/lib folder. @done
+                ✔ add edllib-mixins.pug file in layouts/components/lib folder. @done
+            Public:
+                ✔ add nlib-1.0.5. folder @done
+                    ✔ add nlib-client.core.js @done
+                ✔ add edl-lib-1.0.2. folder @done
+                    ✔ add edllib.js @done
+            Routes and Views:
+                Layouts:
+                    ✔ update layout.pug to load only required css and js (for all pages). @done
+    Update on [2017-07-07]:
+        Node Server:
+            NLib Node Module:
+                ✔ add rater-web-page.js in backends folder. @done
+                    ✔ rater-web-page.js add RaterWebPage class. @done
+                    ✔ rater-web-page.js add InitPages method. @done
+                    ✔ rater-web-page.js add IsValid method. @done
+            Routes and Views:
+                ✔ rechecked index.js for customers->admin->home PASSED. @done
+                ✔ rechecked index.js for customers->device->home PASSED. @done
+                ✔ rechecked index.js for customers->exclusive->home PASSED. @done
+                ✔ rechecked index.js for customers->staff->home PASSED. @done
+                ✔ rechecked index.js for default->home PASSED. @done
+                ✔ rechecked index.js for default->login PASSED. @done
+                ✔ rechecked index.js for default->register PASSED. @done
+                ✔ rechecked index.js for dev->db->sp-api PASSED. @done
+                ✔ rechecked index.js for dev->home PASSED. @done
+                ✔ rechecked index.js for dev->nlib->ajax PASSED. @done
+                ✔ rechecked index.js for dev->nlib->templates PASSED. @done
+                ✔ rechecked index.js for edl->admin->home PASSED. @done
+                ✔ rechecked index.js for edl->staff->home PASSED. @done
+                ✔ rechecked index.js for edl->supervisor->home PASSED. @done
+    Update on [2017-07-08]:
+        Node Server:
+            Public Libraries:
+                ✔ Update MaxAge[1 day(s)] for jquery directory. @done
+                ✔ Update MaxAge[1 day(s)] for jquery-ui directory. @done
+                ✔ Update MaxAge[1 day(s)] for underscore directory. @done
+                ✔ Update MaxAge[1 day(s)] for bootstrap directory. @done
+                ✔ Update MaxAge[1 day(s)] for font-awesome directory. @done
+                ✔ Update MaxAge[1 day(s)] for emoji-symbols directory. @done
+                ✔ Update MaxAge[1 day(s)] for flag-icon directory. @done
+                ✔ Update MaxAge[1 day(s)] for clientjs directory. @done
+                ✔ Update MaxAge[1 day(s)] for knockout directory. @done
+                ✔ Update MaxAge[1 day(s)] for moment directory. @done
+                ✔ Update MaxAge[1 day(s)] for bootstrap-datetimepicker directory. @done
+                ✔ Update MaxAge[1 day(s)] for handlebars directory. @done
+                ✔ Update MaxAge[1 day(s)] for jquery-handlebars directory. @done
+                ✔ Update MaxAge[1 day(s)] for reveal directory. @done
+                ✔ Update MaxAge[1 day(s)] for howler directory. @done
+                ✔ Update MaxAge[1 day(s)] for data-table directory. @done
+                ✔ Update MaxAge[1 day(s)] for highcharts directory. @done
+                ✔ Update MaxAge[5 second(s)] for nlib directory. @done
+                ✔ Update MaxAge[5 second(s)] for edl-lib directory. @done
+                ✔ Remove route to layouts directory. @done
+    Update on [2017-07-09]:
+        Client Side:
+            NLib Client:
+                ✔ nlib add 3rd party code : JavaScript Cookie v2.1.3. @done
+                ✔ nlib add 3rd party code : simpleStorage.js (0.2.1) -> jsStorage. @done
+                ✔ nlib add utils method : isValidEmail. @done
+                ✔ nlib add utils method : isNull. @done
+                ✔ nlib add utils method : getExpiredDate. @done
+                ✔ nlib add nav method : gotoUrl. @done
+                ✔ nlib add utils method : hasWhiteSpace. @done
+                ✔ nlib add ajax method : getJson. @done
+                ✔ nlib add ajax method : postJson. @done
+            EDLlib Client:
+                ✔ edllib add api method : get. @done
+                ✔ edllib add api method : post. @done
+            Developer:
+                ✔ Add edl-dev-home.js to edllib directory. @done
+    Update on [2017-07-10]:
+        Client Side:
+            NLib Client:
+                ✔ nlib rewrite code for supports singelton. @done
+                    ✔ nlib add utils readonly property. @done
+                    ✔ nlib add ajax readonly property. @done
+                    ✔ nlib add nav readonly property. @done
+                    ✔ nlib add helpers readonly property. @done
+                    ✔ nlib utils class add isValidEmail method. @done
+                    ✔ nlib utils class add isNull method. @done
+                    ✔ nlib utils class add getExpiredDate method. @done
+                    ✔ nlib utils class add hasWhiteSpage method. @done
+                    ✔ nlib ajax class add execute method. @done
+                    ✔ nlib ajax class add postJson method. @done
+                    ✔ nlib nav class add gotoUrl method. @done
+                    ✔ nlib helpers class add registerCodeAddIn method. @done
+            EDLlib Client:
+                ✔ edllib rewrite code for supports singelton. @done
+                    ✔ edllib add api readonly property. @done
+                    ✔ edllib api class add get method. @done
+                    ✔ edllib api class add post method. @done
+                    ✔ edllib api class add getTemplate method. @done
+    Update on [2017-07-11]:
+        Database:
+            Stored Procedures:
+                Utilities:
+                    ✔ Create SP - DeleteAll. @done
+                    ✔ Test SP - DeleteAll (required to run InitMasterPKs and InitAll data again). @done
+    Update on [2017-07-12]:
+        Node Server:
+            NLib Node Module:
+                ✔ rater-web-page.js add IsLogIn property to used for enable logout UI. @done
+                ✔ rater-web-page.js fixed logic to setup routes. @done
+                ✔ add edl-dev-template.js and move code from edl-dev-home.js. @done
+            Pug Components:
+                ✔ bootstrap-layout-mixins.pug updated. @done
+                    ✔ layout: add dropdown languages. @done
+                    ✔ layout: add logout menu (required to set via rater-web-page model). @done
+                ✔ edl--mixins.pug updated. @done
+                    ✔ mixins: add edl-dev-template-js. @done
+            Routes and Views:
+                Routes:
+                    ✔ update code for new rater-web-page in index.js for default->home. @done
+                    ✔ update code for new rater-web-page in index.js for default->login. @done
+                    ✔ update code for new rater-web-page in index.js for default->register. @done
+                    ✔ update code for new rater-web-page in index.js for dev->db->sp-api. @done
+                    ✔ update code for new rater-web-page in index.js for edl->admin->home. @done
+                    ✔ update code for new rater-web-page in index.js for edl->supervisor->home. @done
+                    ✔ update code for new rater-web-page in index.js for edl->staff->home. @done
+                    ✔ update code for new rater-web-page in index.js for customers->admin->home. @done
+                    ✔ update code for new rater-web-page in index.js for customers->device->home. @done
+                    ✔ update code for new rater-web-page in index.js for customers->exclusive->home. @done
+                    ✔ update code for new rater-web-page in index.js for customers->staff->home. @done
+                    ✔ update code for new rater-web-page in index.js for dev->home. @done
+                    ✔ update code for new rater-web-page in index.js for dev->nlib->db->sp-api. @done
+                    ✔ update code for new rater-web-page in index.js for dev->nlib->ajax. @done
+                    ✔ update code for new rater-web-page in index.js for dev->nlib->templates. @done
+                Layouts:
+                    ✔ update code for default. @done
+                    ✔ update code for default->home. @done
+                    ✔ update code for default->login. @done
+                    ✔ update code for default->register. @done
+                    ✔ update code for edl. @done
+                    ✔ update code for edl->admin->home. @done
+                    ✔ update code for edl->supervisor->home. @done
+                    ✔ update code for edl->staff->home. @done
+                    ✔ update code for customers->admin->home. @done
+                    ✔ update code for customers->exclusive->home. @done
+                    ✔ update code for customers->staff->home. @done
+                    ✔ update code for customers->device->home. @done
+    Update on [2017-07-13]:
+        Database:
+            Init Data:
+                Web UI (experiment):
+                    ✔ Init Data For Table - WebPage. @done
+                    ✔ Init Data For Table - WebPageML. @done
+                    ✔ Init Data For Table - WebPageElement. @done
+                    ✔ Init Data For Table - WebPageElementML. @done
+            Stored Procedures:
+                Web UI (experiment):
+                    ✔ Update SP - GetWebPageElements. (has bug). @done
+                    ✔ Test SP - GetWebPageElements. (has bug). @done
+        Node Server:
+            NLib Node Module:
+                ✔ mssql-db.js fixed hasOwneProperty in Prepare method. @done
+                ✔ rater-web-page.js add Elements property to used for render UI. @done
+                ✔ rater-web-page.js add getTextById method to used for render UI. @done
+                ✔ rater-web-page.js update code to load multilanguage text for each element. @done
+            Pug Layout and Components:
+                ✔ bootstrap-layout-mixins.pug updated. @done
+                    ✔ layout: label mixins added. @done
+                    ✔ layout: nav mixins change name and seperate code to smaller mixins. @done
+                ✔ layout.pug updated (all). @done
+                    ✔ update all layout.pug to used new nav mixins. @done
+                    ✔ update all link to append langId. @done
+            Routes and Views:
+                Routes:
+                    ✔ add LangId and WebPageId in index.js for default->home. @done
+                    ✔ add LangId and WebPageId in index.js for default->login. @done
+                    ✔ add LangId and WebPageId in index.js for default->register. @done
+                    ✔ add LangId and WebPageId in index.js for dev->db->sp-api. @done
+                    ✔ add LangId and WebPageId in index.js for edl->admin->home. @done
+                    ✔ add LangId and WebPageId in index.js for edl->supervisor->home. @done
+                    ✔ add LangId and WebPageId in index.js for edl->staff->home. @done
+                    ✔ add LangId and WebPageId in index.js for customers->admin->home. @done
+                    ✔ add LangId and WebPageId in index.js for customers->device->home. @done
+                    ✔ add LangId and WebPageId in index.js for customers->exclusive->home. @done
+                    ✔ add LangId and WebPageId in index.js for customers->staff->home. @done
+                    ✔ add LangId and WebPageId in index.js for dev->home. @done
+                    ✔ add LangId and WebPageId in index.js for dev->nlib->db->sp-api. @done
+                    ✔ add LangId and WebPageId in index.js for dev->nlib->ajax. @done
+                    ✔ add LangId and WebPageId in index.js for dev->nlib->templates. @done
+            Public - edl-lib:
+                ✔ add edllib.css. @done
+                    ✔ add language-menu classes. @done
+        Client Side:
+            NLib Client:
+                ✔ nlib-client-core.js updated. @done
+                    ✔ nlib helpers class updated registerCodeAddIn method now supports nested properties depend on the instance parameter. @done
+                    ✔ nlib ajax class remove execute method (uses done/fail). @done
+                    ✔ nlib ajax class remove postJson method (uses done/fail). @done
+                    ✔ nlib ajax class add get method (uses done/fail). @done
+                    ✔ nlib ajax class add post method (uses done/fail). @done
+                    ✔ nlib ajax class add createGetAjax method. @done
+                    ✔ nlib ajax class add createPostAjax method. @done
+                ✔ nlib-client-handlebars.js updated. @done
+                    ✔ nlib handlebars class add compile method. @done
+                    ✔ nlib handlebars class add html method. @done
+                    ✔ nlib handlebars class add registerHelper method. @done
+                    ✔ nlib handlebars class add unregisterHelper method. @done
+                    ✔ nlib handlebars class add registerPartial method. @done
+                    ✔ nlib handlebars class add unregisterPartial method. @done
+            EDLlib Client:
+                ✔ edllib.js updated. @done
+                    ✔ edl api class updated code (used new registerCodeAddIn). @done
+                    ✔ edl api.languages class. @done
+                        ✔ add getLanguages method. @done
+                        ✔ add ajaxGetLanguages method. @done
+                    ✔ edl api.html class. @done
+                        ✔ add initLanguages method. @done
+                        ✔ add setCurrantLanguage method. @done
+                    ✔ add common function to load language to combobox. @done
+    Update on [2017-07-15]:
+        Node Server:
+            NLib Node Module:
+                ✔ Rename JsonFile class to DbSchemaJsonFile class. @done
+            Routes and Views:
+                ✔ Remove all routes and load from json file. @done
+                ✔ change routes directory to views directory. @done
+                ✔ refoactor app-routes.js to init routes and map view from json file. @done
+                ✔ refoactor app-routes.js to init api from json file. @done
+                ✔ refoactor rater-web-page.js remove all properties. @done
+                ✔ Add Json files in routes/webpages . @done
+                    ✔ Add file: 01 - default.json . @done
+                    ✔ Add file: 02 - dev.json . @done
+                    ✔ Add file: 03 - edl-amin.json . @done
+                    ✔ Add file: 04 - edl-supervisor.json . @done
+                    ✔ Add file: 05 - edl-staff.json . @done
+                    ✔ Add file: 06 - customer-admin.json . @done
+                    ✔ Add file: 07 - customer-exclusive.json . @done
+                    ✔ Add file: 08 - customer-staff.json . @done
+                    ✔ Add file: 09 - customer-device.json . @done
+                ✔ Add Json files in routes/api . @done
+                    ✔ Add file: 01 - utilities.json . @done
+                ✔ rater-web-page.js add property Info.Title. @done
+                ✔ rater-web-page.js add property Info.PageName. @done
+                ✔ rater-web-page.js add property Info.LangId. @done
+                ✔ rater-web-page.js add property Menu.PageId. @done
+                ✔ rater-web-page.js add property Menu.ThemeName. @done
+                ✔ rater-web-page.js add property Menu.PageGroupId. @done
+                ✔ rater-web-page.js add property Http.Url. @done
+                ✔ rater-web-page.js add property Http.Method. @done
+                ✔ rater-web-page.js add property Response.ReturnType. @done
+                ✔ rater-web-page.js add property Response.FileName. @done
+                ✔ rater-web-page.js add property Elements. @done
+    Update on [2017-07-25]:
+        Client Side:
+            NLib Client:
+                ✔ Add supports inject css style/rule dynamic (nlib.css.injec(...)). @done
+    Update on [2017-07-23]:
+        Node Server:
+            Pug Layout and Components:
+                ✔ Update blank.pug for supports loading/error/success div sections. @done
+        Client Side:
+            EDLlib Client:
+                ✔ Update edllib.css. Add page related classes. @done
+                ✔ Update edllib.js. Add code (temporary) for test detected error. @done
+    Update on [2017-07-25]:
+        Database:
+            Init Data:
+                ✔ Remove all init data scripts. @done
+            Stored Procedures:
+                ✔ Add InitLanguages stored procedure to Inits folders. @done
+                ✔ Add InitDefaultSettings stored procedure to Inits folders. @done
+                ✔ Add InitPeriodUnits stored procedure to Inits folders. @done
+                ✔ Add InitLimitUnits stored procedure to Inits folders. @done
+                ✔ Add InitMemberTypes stored procedure to Inits folders. @done
+                ✔ Move InitMasterPKs procedure to Inits folders. @done
+                ✔ Add InitLicenseTypes stored procedure to Inits folders. @done
+                ✔ Add InitLicenseFeature stored procedure to Inits folders. @done
+                ✔ Add InitDefaultUser stored procedure to Inits folders. @done
+                ✔ Add InitAll stored procedure to Inits folders. @done
+            Database Scripts:
+                ✔ Add table-compare.sql for compare table between 2 database. @done
+                ✔ Add routine-compare.sql for compare table between 2 database. @done
+    Update on [2017-07-26]:
+        Database:
+            Table:
+                ✔ Drop table WebPage. @done
+                ✔ Drop table WebPageElement. @done
+            View:
+                ✔ Drop view WebPageView. @done
+                ✔ Drop view WebPageMLView. @done
+                ✔ Drop view WebPageElementView. @done
+                ✔ Drop view WebPageElementMLView. @done
+            Stored Procedures:        
+                ✔ Drop Stored Procedure SaveWebPage. @done
+                ✔ Drop Stored Procedure SaveWebPageML. @done
+                ✔ Drop Stored Procedure SaveWebPageElement. @done
+                ✔ Drop Stored Procedure SaveWebPageElementML. @done
+                ✔ Drop Stored Procedure GetWebPages. @done
+                ✔ Drop Stored Procedure GetWebPageElements. @done
+        Node Server:
+            NLib Node Module:
+                ✔ Rename data_result class to dataResult. @done
+    Update on [2017-07-29]:
+        Database:
+            Stored Procedures:
+                Customers - Structures:
+                    ✔ Create SP - __GenerateSubOrgInClause. @done
+        Node Server:            
+            Routes and Views:
+                Customer - admin:
+                    ✔ Add layout.pug. @done
+                    ✔ Add home folder with index.pug. @done
+                    ✔ Add member-edit folder with index.pug. @done
+                    ✔ Add member-manage folder with index.pug. @done
+                    ✔ Add org-edit folder with index.pug. @done
+                    ✔ Add org-manage folder with index.pug. @done
+                    ✔ Add question-manage folder with index.pug. @done
+                    ✔ Add report-rawvotes folder with index.pug. @done
+                    ✔ Add report-staffperformances folder wiht index.pug. @done
+                    ✔ Add report-votesummaries folder with index.pug. @done
+                Customer - device:
+                    ✔ Add layout.pug. @done
+                    ✔ Add home folder with index.pug. @done
+                    ✔ Add question folder with index.pug. @done
+                Customer - exclusive:
+                    ✔ Add layout.pug. @done
+                    ✔ Add home folder with index.pug. @done
+                    ✔ Add member-edit folder with index.pug. @done
+                    ✔ Add member-manage folder with index.pug. @done
+                    ✔ Add report-rawvotes folder with index.pug. @done
+                    ✔ Add report-staffperformances folder with index.pug. @done
+                    ✔ Add report-votesummaries folder with index.pug. @done
+                Customer - staff:
+                    ✔ Add layout.pug. @done
+                    ✔ Add home folder with index.pug. @done
+                    ✔ Add member-edit folder with index.pug. @done
+                Dev:
+                    ✔ Add layout.pug. @done
+                    ✔ Add home folder with index.pug. @done
+                EDL - admin:
+                    ✔ Add layout.pug. @done
+                    ✔ Add home folder with index.pug. @done
+                EDL - staff:
+                    ✔ Add layout.pug. @done
+                    ✔ Add home folder with index.pug. @done
+                EDL - supervisor:
+                    ✔ Add layout.pug. @done
+                    ✔ Add home folder with index.pug. @done
+    Update on [2017-07-31]:
+        Node Server:
+            Routes and Views:
+                Dev:
+                    ✔ Add home folder add index.js. @done
+        Client Side:
+            EDLlib Client:
+                ✔ Add code to handle loading/error in common loader section. @done
+                ✔ Add methods to get/set langId (rater2_langId) in edl.preference class. @done
+    Update on [2017-08-01]:
+        Node Server:
+            NLib Node Module:
+                ✔ app-routes.js add try-catch when load index.js. @done
+                ✔ nlib.isNull update code. @done
+            Routes and Views:
+                ✔ move layouts in to views folders and change name to __layouts. @done
+                ✔ restructure all views folders. @done                
+        Client Side:
+            Nlib Client:
+                ✔ nlib.isNull update code. @done
+                ✔ cookie and localstorage code is seperate to nlib-client-storage.js. @done                
+    Update on [2017-08-02]:
+        Node Server:
+            NLib Node Module:
+                ✔ nlib core remove dataResult class. @done
+                ✔ nlib core remove ReqModel class. @done
+                ✔ nlib core remove DbSchemaJsonFile class. @done
+                ✔ nlib core remove HandleBarsFile class. @done
+                ✔ nlib core remove SendNotSupportError method. @done
+                ✔ nlib core remove CreateErrorResult class. @done
+            Routes and Views:
+                ✔ remove all api routes. @done
+    Update on [2017-08-03]:
+        Node Server:
+            NLib Node Module:
+                ✔ nlib core add NReqult class. @done
+                ✔ nlib core add parseReq method. @done
+                ✔ nlib core add loadJsonFile method. @done
+                ✔ nlib core rename IsNull method to isNull method. @done
+                ✔ nlib core rename SendJson method to sendJson method. @done
+            Routes and Views:
+                ✔ Add tests api(s). @done
+    Update on [2017-08-04]:
+        Node Server:
+            NLib Node Module:
+                ✔ mssql-db.js refactor used new NResult class. @done
+                ✔ nlib add parseReqAsync. @done
+                ✔ nlib add loadJsonFileAsync. @done
+            Routes and Views:
+                ✔ edl-default-home -> update index.pug and update edllib-mixins. @done
+                ✔ edl-default-home -> add edl-default-home.css (for price tag). @done
+                ✔ edl-default-home -> add main-layout.handlebars (for templates). @done
+                ✔ edl-default-home -> edl-default-home.js (for client side render). @done
+    Update on [2017-08-12]:
+        Database:
+            Table:
+                ✔ Add Table WebPage. @done
+                ✔ Add Table WebPageML. @done
+            View:
+                ✔ Add View WebPageView. @done
+                ✔ Add View WebPageMLView. @done
+            Stored Procedures:
+                ✔ Add Stored Procedure SaveWebPage with Test Cases. @done
+                ✔ Add Stored Procedure SaveWebPageML with Test Cases. @done
+                ✔ Add Stored Procedure GetWebPages with Test Cases. @done
+        Node Server:
+            NLib Node Module:
+                ✔ Add SaveWebPage.json. @done
+                ✔ Add SaveWebPageML.json. @done
+                ✔ Add GetWebPages.json. @done
+                ✔ rater-web-db -> Add SaveWebPage api. @done
+                ✔ rater-web-db -> Add SaveWebPageML api. @done
+                ✔ rater-web-db -> Add GetWebPages api. @done
+            Routes and Views:
+                ✔ Add route for SaveWebPage. @done
+                ✔ Add route for SaveWebPageML. @done
+                ✔ Add route for GetWebPages. @done
+    Update on [2017-08-20]:
+        Node Server:
+            NLib Node Module:
+                ✔ Refactor GetTemplate method in templates/index.js. @done
+            Routes and Views:
+                ✔ Update Views files (index.js and index.pug) and update edllib-mixins. @done
+                    ✔ edl->default->home. @done
+                    ✔ edl->default->register. @done
+                    ✔ edl->default->signin. @done
+                    ✔ customer->admin->home. @done
+                    ✔ customer->admin->org->home. @done
+                    ✔ customer->admin->org->manage. @done
+                    ✔ customer->admin->org->edit. @done
+                    ✔ customer->admin->reports->home. @done
+                    ✔ customer->admin->reports->raw-vote. @done
+                    ✔ customer->admin->reports->staff-perf. @done
+                    ✔ customer->admin->reports->vote-summaries. @done
+                    ✔ customer->admin->staff->home. @done
+                    ✔ customer->admin->staff->manage. @done
+                    ✔ customer->admin->staff->edit. @done
+                    ✔ customer->exclusive->home. @done
+                    ✔ customer->exclusive->reports->home. @done
+                    ✔ customer->exclusive->reports->raw-vote. @done
+                    ✔ customer->exclusive->reports->staff-perf. @done
+                    ✔ customer->exclusive->reports->vote-summaries. @done
+                    ✔ customer->exclusive->staff->home. @done
+                    ✔ customer->exclusive->staff->manage. @done
+                    ✔ customer->exclusive->staff->edit. @done
+                    ✔ customer->staff->home. @done
+                    ✔ customer->staff->edit. @done
+                ✔ Add empty css and js files. @done
+                    ✔ edl->default->home. @done
+                    ✔ edl->default->register. @done
+                    ✔ edl->default->signin. @done
+                    ✔ customer->admin->home. @done
+                    ✔ customer->admin->org->home. @done
+                    ✔ customer->admin->org->manage. @done
+                    ✔ customer->admin->org->edit. @done
+                    ✔ customer->admin->reports->home. @done
+                    ✔ customer->admin->reports->raw-vote. @done
+                    ✔ customer->admin->reports->staff-perf. @done
+                    ✔ customer->admin->reports->vote-summaries. @done
+                    ✔ customer->admin->staff->home. @done
+                    ✔ customer->admin->staff->manage. @done
+                    ✔ customer->admin->staff->edit. @done
+                    ✔ customer->exclusive->home. @done
+                    ✔ customer->exclusive->reports->home. @done
+                    ✔ customer->exclusive->reports->raw-vote. @done
+                    ✔ customer->exclusive->reports->staff-perf. @done
+                    ✔ customer->exclusive->reports->vote-summaries. @done
+                    ✔ customer->exclusive->staff->home. @done
+                    ✔ customer->exclusive->staff->manage. @done
+                    ✔ customer->exclusive->staff->edit. @done
+                    ✔ customer->staff->home. @done
+                    ✔ customer->staff->edit. @done
+        Client Side:
+            EDLlib Client:
+                ✔ Update common initPage method in api class. @done
+    Update on [2017-09-01]:
+        Node Server:
+            NLib Node Module:
+                ✔ Add Template Folders (with EN folder). @done
+                    ✔ default->home. @done
+                    ✔ default->register. @done
+                    ✔ edl->default->signin. @done
+                    ✔ customer->admin->home. @done
+                    ✔ customer->admin->org->home. @done
+                    ✔ customer->admin->org->manage. @done
+                    ✔ customer->admin->org->edit. @done
+                    ✔ customer->admin->reports->home. @done
+                    ✔ customer->admin->reports->raw-vote. @done
+                    ✔ customer->admin->reports->staff-perf. @done
+                    ✔ customer->admin->reports->vote-summaries. @done
+                    ✔ customer->admin->staff->home. @done
+                    ✔ customer->admin->staff->manage. @done
+                    ✔ customer->admin->staff->edit. @done
+                    ✔ customer->exclusive->home. @done
+                    ✔ customer->exclusive->reports->home. @done
+                    ✔ customer->exclusive->reports->raw-vote. @done
+                    ✔ customer->exclusive->reports->staff-perf. @done
+                    ✔ customer->exclusive->reports->vote-summaries. @done
+                    ✔ customer->exclusive->staff->home. @done
+                    ✔ customer->exclusive->staff->manage. @done
+                    ✔ customer->exclusive->staff->edit. @done
+                    ✔ customer->staff->home. @done
+                    ✔ customer->staff->edit. @done
+                    ✔ edl->admin->home. @done
+                    ✔ edl->supervisor->home. @done
+                    ✔ edl->staff->home. @done
+    Update on [2018-01-30]:
+        Node Server:
+            NLib Node Module:
+                ✔ . @done
+            Routes and Views:
+                ✔ . @done
+        Client Side:
+            EDLlib Client:
+                ✔ . @done
+    Update on [2018-01-30]:
+        Node Server:
+            NLib Node Module:
+                ✔ . @done
+            Routes and Views:
+                ✔ . @done
+        Client Side:
+            EDLlib Client:
+                ✔ . @done
+    Update on [2018-01-30]:
+        Node Server:
+            NLib Node Module:
+                ✔ . @done
+            Routes and Views:
+                ✔ . @done
+        Client Side:
+            EDLlib Client:
+                ✔ . @done
+            
+TODO:
+        Database:
+            Table:
+                UserInfo - Preferences:
+                    ☐ Create Table - UserInfoPreference. @done
+                Customer - Preferences:
+                    ☐ Create Table - MemberInfoPreference. @done
+                Customer - Questions:
+                    ☐ Create Table - QSetOrg. @done
+                Customer - Vote:
+                    ☐ Create Table - Vote. @done
+            View:
+                Customer - Questions:
+                    ☐ Create View - QSetView. @done
+                    ☐ Test View - QSetView. @done
+                    ☐ Create View - QSetMLView. @done
+                    ☐ Test View - QSetMLView. @done
+                    ☐ Create View - QSlideView. @done
+                    ☐ Test View - QSlideView. @done
+                    ☐ Create View - QSlideMLView. @done
+                    ☐ Test View - QSlideMLView. @done
+                    ☐ Create View - QSlideItemView. @done
+                    ☐ Test View - QSlideItemView. @done
+                    ☐ Create View - QSlideItemMLView. @done
+                    ☐ Test View - QSlideItemMLView. @done
+                Customer - Vote:
+                    ☐ Create View - VoteView. @done
+                    ☐ Test View - VoteView. @done
+                    ☐ Create View - VoteMLView. @done
+                    ☐ Test View - VoteMLView. @done
+            Stored Procedures:
+                Customer - Questions:
+                    ☐ Create SP - SaveQSet. @done
+                    ☐ Test SP - SaveQSet. @done
+                    ☐ Create SP - SaveQSetML. @done
+                    ☐ Test SP - SaveQSetML. @done
+                    ☐ Create SP - GetQSets. @done
+                    ☐ Test SP - GetQSets. @done
+                    ☐ Create SP - SaveQSlide. @done
+                    ☐ Test SP - SaveQSlide. @done
+                    ☐ Create SP - SaveQSlideML. @done
+                    ☐ Test SP - SaveQSlideML. @done
+                    ☐ Create SP - GetQSlides. @done
+                    ☐ Test SP - GetQSlides. @done
+                    ☐ Create SP - SaveQSlideItem. @done
+                    ☐ Test SP - SaveQSlideItem. @done
+                    ☐ Create SP - SaveQSlideItemML. @done
+                    ☐ Test SP - SaveQSlideItemML. @done
+                    ☐ Create SP - GetQSlideItems. @done
+                    ☐ Test SP - GetQSlideItems. @done
+                Customer - Vote:
+                    ☐ Create SP - SaveVote. @done
+                    ☐ Test SP - SaveVote. @done
+                    ☐ Create SP - GetRawVotes. @done
+                    ☐ Test SP - GetRawVotes. @done
+                    ☐ Create SP - GetVoteSummaries. @done
+                    ☐ Test SP - GetVoteSummaries. @done
+                Register:
+                    ☐ Create SP - . @done
+                    ☐ Test SP - . @done
+                    ☐ Create SP - . @done
+                    ☐ Test SP - . @done
+                    ☐ Create SP - . @done
+                    ☐ Test SP - . @done
+            Database Wrapper:
+                Stored Procedure Rest API:
+                    Customer - Questions:
+                    Customer - Vote:
+        Node Server:
+            NLib Node Module:
+                ☐ add encode for keep in local storate for used as qurey string. @done
+                ☐ add decode for read in qurey string when url call. @done
+                ☐ add special REST api for parse encode data and redirect to actual api. @done
+            Json:
+                ☐ Create Templates for page information. @done
+            Routes and Views:
+                ☐ refoactor rater-web-page.js add info property to keep json object. @done
+
