@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Single Page Template Designer.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+        <style>
+            html, body, .container {
+                height: 100%;
+            }
+            #viewer {
+                margin : 0;
+                padding : 0;
+                height: 100%;
+            }
+            
+            div[data-jquery-handlebars] {
+                height: 100%;
+                width: 100%;
+            }
+            /* same as above but only first handlebar compiled template */
+            /*
+            #viewer > div:first-child {
+                height: 100%;
+                width: 100%;
+            }
+            */            
+            #questionLayout {
+                display: block;
+                padding: 5px;
+            }
+            #choiceLayout {
+                padding: 5px;
+            }
+            .question-box {
+                margin : 5px;
+                padding : 5px;                
+                width : 100%;
+            }
+            /*
+            .btn-group .active { 
+                background-color : red 
+            } 
+            */
+            .btn-group {
+                margin : 5px;
+                padding : 5px;
+                width: calc(100% - 5px);
+            }
+            .btn-group-2 label.btn  {
+                margin : 5px;
+                padding : 5px;
+                width: calc(50% - 5px);
+            }
+            .btn-group-3 label.btn  {
+                margin : 5px;
+                padding : 5px;
+                width: calc(33.3% - 5px);
+            }
+            .btn-group-4 label.btn  {
+                margin : 5px;
+                padding : 5px;
+                width: calc(25% - 5px);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="viewer">
+
+        </div>
+
+        <script id="qt01" type="text/x-handlebars-template">
+            <table style="width: 100%; height: 100%">
+                <tr style="width: 100%; height: 70%">
+                    <td>
+                        <div class="container">
+                            <div id="questionLayout" class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <p class="question-box" style="{{question.style}}">{{question.text}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="width: 100%; height: 30%">
+                    <td>
+                        <div class="container">
+                            <div id="choiceLayout2" class="btn-group btn-group-2 input-group" data-toggle="buttons">
+                                {{#choices}}
+                                <label class="btn btn-primary">
+                                    <input name="{{question.id}}" id="{{id}}" value="{{value}}" type="radio">{{text}}
+                                </label>
+                                {{/choices}}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </script>
+
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/knockout.min.js"></script>
+        <script type="text/javascript" src="js/handlebars.min.js"></script>
+        <script type="text/javascript" src="js/jquery-handlebars.min.js"></script>
+        <script type="text/javascript">
+            var qslide = {            
+                layout : {
+                    banner : {
+                        css : ''
+                    },
+                    background : {
+                        css : ''
+                    }
+                },
+                question : { 
+                    id : 'QS001',
+                    text : 'Do you think about our service?.',
+                    style : 'font-size: 10em;'
+                },
+                choices : [
+                    {
+                        id : 'C-01',
+                        text : 'Poor',
+                        value : 1
+                    },
+                    {
+                        id : 'C-02',
+                        text : 'Fair',
+                        value : 2
+                    },
+                    {
+                        id : 'C-03',
+                        text : 'Good',
+                        value : 3
+                    },
+                    {
+                        id : 'C-04',
+                        text : 'Excellent',
+                        value : 4
+                    }
+                ]
+            };
+            
+            var $viewer = $('#viewer');
+            $viewer.handlebars('add', '#qt01', qslide);
+        </script>
+    </body>
+</html>

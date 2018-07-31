@@ -1,0 +1,6 @@
+{
+    "items": [
+        { "text": "Home", "url": "javascript:void(0);", "active": "true", "type": "font", "src": "home" },
+        { "text": "Report", "url": "/admin/votesummary", "active": "", "type": "font", "src": "chart-bar" }
+    ]
+}

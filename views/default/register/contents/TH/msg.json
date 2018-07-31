@@ -1,0 +1,9 @@
+{
+    "customerIsNull": "ไม่มีข้อมูลลูกค้า",
+    "customerNameRequired": "กรุณาบันทึกชื่อลูกค้า",
+    "userNameRequired": "กรุณาบันทึกชื่อบัญชี",
+    "userNameIsNotEmail": "ชื่อบัญชีต้องเป็นอีเมล์เท่านั้น",
+    "passWordRequired": "กรุณาบันทึกรหัสผ่าน",
+    "confirmPasswordRequired": "กรุณาบันทึกรหัสผ่านเพื่อการยืนยัน",
+    "confirmPasswordMismatch": "รหัสผ่านเพื่อการยืนยันไม่ตรงกับรหัสผ่าน"
+}

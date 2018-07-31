@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Single Page Template Designer.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+        <style>
+
+        </style>
+    </head>
+    <body>
+        <div id="main-layer">
+            <a id="a1" href="#">Show Error Layer.</a>
+        </div>
+        <div id="err-layer">
+            <a id="a2" href="#">Show Main Layer.</a>
+        </div>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/handlebars.min.js"></script>
+        <script type="text/javascript" src="js/jquery-handlebars.min.js"></script>
+        <script type="text/javascript" src="js/knockout.min.js"></script>
+        <!-- 
+        <script type="text/javascript" src="js/vein.js"></script>
+        <script type="text/javascript" src="js/dynamicCSS.js"></script>
+        -->
+        <script type="text/javascript" src="js/nlib-client-core.js"></script>
+        <script>
+            //dynamicCSS.inject("#a1", { "color" : "blue" });
+            //dynamicCSS.inject("#a2", { "color" : "yellow" });
+            //dynamicCSS.inject("#a2:hover", { "background-color" : "red" });
+            nlib.css.inject("#a1", { "color" : "blue" });
+            nlib.css.inject("#a2", { "color" : "yellow" });
+            nlib.css.inject("#a2:hover", { "background-color" : "red" });
+            
+            $('a').on('click', function(event) {
+                var parentId = $(this).closest('div').prop("id");
+                if (parentId === 'main-layer') {
+                    nlib.css.inject('#main-layer', { 'visibility': 'hidden' });
+                    nlib.css.inject('#err-layer', { 'visibility': 'visible' });
+                }
+                else {
+                    nlib.css.inject('#main-layer', { 'visibility': 'visible' });
+                    nlib.css.inject('#err-layer', { 'visibility': 'hidden' });
+                }
+            });
+            
+        </script>
+    </body>
+</html>

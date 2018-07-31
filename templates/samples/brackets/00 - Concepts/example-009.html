@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example 9 : Element Styles.</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../favicon.ico" rel="shortcut icon">
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/prism.css" rel="stylesheet" type="text/css">
+    <link href="css/example-009.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Example 9 : Element Styles.</h1>
+    </div>
+    <h3 id="test">Sample Text...</h3>
+    <div class="right-panel">
+        <pre class="fit-parent">
+            <code id="code-box" class="code-box-size language-json">
+                
+            </code>
+        </pre>
+    </div>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/prism.js"></script>
+    <script type="text/javascript" src="../js/nlib.js"></script>
+    <script type="text/javascript" src="js/example-009.js"></script>
+    <script>
+        /* Helper function */
+        String.prototype.trim = function () {
+            return this.replace(/^\s+|\s+$/g, "");
+        };
+
+        String.prototype.toCamel = function () {
+            return this.replace(/(\-[a-z])/g, function ($1) { return $1.toUpperCase().replace('-', ''); });
+        };
+
+        String.prototype.toDash = function () {
+            return this.replace(/([A-Z])/g, function ($1) { return "-" + $1.toLowerCase(); });
+        };
+
+        String.prototype.toUnderscore = function () {
+            return this.replace(/([A-Z])/g, function ($1) { return "_" + $1.toLowerCase(); });
+        };
+
+
+        var codeBox = document.getElementById('code-box');
+        var elementStyle = codeBox.style;
+        var computedStyle = window.getComputedStyle(codeBox, null);
+        //console.log(elementStyle);
+        /*
+        var data = {
+            'font-size': '1.3em',
+            'width': '35px',
+            'height': '10px'
+        };
+        codeBox.innerText = JSON.stringify(data, null, 4);
+        */
+        /*
+        var data = codeBox.style;
+        codeBox.innerText = JSON.stringify(data, null, 4);
+        */
+        /*
+        var data = {};
+        var name;
+        for (prop in elementStyle) {
+            name = prop.toDash();
+
+            if (name.indexOf('webkit-') > -1 && name.indexOf('-webkit-') === -1) {
+                name = '-' + name;
+            }
+            else if (name.indexOf('moz-') > -1 && name.indexOf('-moz-') === -1) {
+                name = '-' + name;
+            }
+            else if (name.indexOf('ms-') > -1 && name.indexOf('-ms-') === -1) {
+                name = '-' + name;
+            }
+            else if (name.indexOf('o-') > -1 && name.indexOf('-o-') === -1) {
+                name = '-' + name;
+            }
+            if (elementStyle.hasOwnProperty(prop)) {                
+                //data[name] = elementStyle[prop];
+                data[name] = computedStyle[prop];
+            }
+            else {
+                data[name] = '';
+            }
+        }
+        codeBox.innerText = JSON.stringify(data, null, 4);
+        */
+
+        // This code is work for all tested browsers.
+        var data = {};
+        var name;
+        var len = computedStyle.length;
+        for (var i = 0; i < len; ++i) {
+            name = computedStyle[i];
+
+            data[name] = computedStyle.getPropertyValue(name);
+        }
+
+        codeBox.innerText = JSON.stringify(data, null, 4);
+
+</script>
+</body>
+
+</html>

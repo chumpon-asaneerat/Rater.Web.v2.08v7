@@ -1,0 +1,6 @@
+{
+    "links": [
+        { "text": "Register", "url": "/register", "active": "", "type": "font", "src": "user-plus" },
+        { "text": "Sign In", "url": "javascript:void(0);", "active": "true", "type": "font", "src": "user-circle" }
+    ]
+}

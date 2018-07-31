@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example 14 : Test Property Editors.</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../favicon.ico" rel="shortcut icon">
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/example-014.css" rel="stylesheet" type="text/css">
+    <style>
+        .wrap1 * {
+            padding: 0;
+            margin: 0 !important;
+            border: 1px solid red;
+        }
+        .wrap1 p {
+            display: inline-block;
+        }
+        .wrap1 ul {
+            text-indent: 0;
+            text-decoration: none;
+        }
+        .wrap1 ul li {
+            text-indent: 0;
+            text-decoration: none;
+        }
+
+        .style-property {
+            display: block;
+            font-size: 0.75em;
+        }
+
+        .style-property label {
+            min-width: 70px;
+            text-align: right;
+        }
+
+        #propertyEditor {
+            position: absolute;
+            display: block;
+            left: 400px;
+            top: 200px;
+            width: 300px;
+            height: 300px;
+            border: 1px solid cornflowerblue;
+        }
+
+        
+        
+    </style>
+</head>
+
+<body>
+    <h1>H1 Element</h1>
+    <div id="designerArea" class="wrap1">
+        <ul><p>Group 1</p>
+            <li>This is item 1</li>
+            <li>This is item 2</li>
+        </ul>
+    </div>
+    <div>
+        <label id="selectedElement">Element : -</label>
+        <div id="propertyEditor" class="panel-group">
+        
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/nlib2.js"></script>
+    <script type="text/javascript" src="../js/designer3.js"></script>
+    <script type="text/javascript" src="js/example-014.js"></script>
+    <script>
+        var __selectObject = null;
+
+        function createStyleEditorGroup(caption, id) {
+            var parentId = 'accordion';
+            var panel = document.createElement('div');
+            panel.className = 'panel panel-default';
+            panel['id'] = parentId;
+
+            var headerDiv = document.createElement('div');
+            headerDiv.className = 'panel-heading';
+
+            var headerTitle = document.createElement('h6');
+            headerTitle.className = 'panel-title';
+            headerTitle.innerHTML = '<a data-toggle = "collapse" data-parent = "#' + parentId + '" href="#' + id + '">' + caption + '</a>'
+
+            headerDiv.appendChild(headerTitle);
+
+            var contentDiv = document.createElement('div');
+            contentDiv.className = "panel-collapse collapse in";
+            contentDiv['id'] = id;
+
+            panel.appendChild(headerDiv);
+            panel.appendChild(contentDiv);
+
+            return panel;
+        };
+
+        function createStyleEditor(caption, styleName, value) {
+            // Caption
+            var styleEditDiv = document.createElement('div');
+            styleEditDiv.className = 'style-property';
+            var styleLabel = document.createElement('label');
+            styleLabel.innerHTML = caption + ': &nbsp;'
+            styleEditDiv.appendChild(styleLabel);
+            // Input
+            var styleInput = document.createElement('input');
+            styleInput.className = 'style-editor'
+            styleInput.attributes['element-style'] = styleName;
+            styleInput.attributes['type'] = 'text';
+            styleInput.attributes['value'] = value;
+            styleEditDiv.appendChild(styleInput);
+
+            // Bind Handler
+            function InputChangedHandler(evt) {
+                console.log('input changed.');
+                if (__selectObject !== null) {
+                    var elStyle = styleInput.attributes['element-style'];
+                    __selectObject.style[elStyle] = styleInput.value;
+                }
+                else {
+                }
+            }
+
+            styleInput.addEventListener('input', InputChangedHandler);
+
+            return styleEditDiv;
+        };
+
+        function loadElementPropertyEditors(containerId) {
+            var container = document.getElementById(containerId);
+            container.innerHTML = ''; // clear content.
+
+            var panel1 = createStyleEditorGroup('Font', 'fontGroup');
+            container.appendChild(panel1);
+
+            var content1 = document.getElementById('fontGroup');
+            content1.appendChild(createStyleEditor('Family', 'fontFamily', ''));
+            content1.appendChild(createStyleEditor('Size', 'fontSize', ''));
+            content1.appendChild(createStyleEditor('Color', 'color', ''));
+
+
+            var panel2 = createStyleEditorGroup('Background', 'backgroundGroup');
+            container.appendChild(panel2);
+
+            var content2 = document.getElementById('backgroundGroup');
+            content2.appendChild(createStyleEditor('Color', 'backgroundColor', ''));
+            content2.appendChild(createStyleEditor('Image', 'backgroundImage', ''));
+        };
+
+        function selectObject(elem) {
+            var result = '';
+            var tagName = elem.tagName.toLowerCase();
+
+            switch (tagName) {
+                case 'p':
+                case 'ul':
+                case 'li':
+                    __selectObject = elem;
+                    break;
+                default:
+                    __selectObject = null;
+                    break;
+            }
+
+            var lb = document.getElementById('selectedElement');
+            var styleInputs = document.getElementsByClassName('style-editor');
+
+            if (__selectObject !== null) {
+                lb.innerHTML = 'Element : ' + __selectObject.tagName;                
+            }
+            else {
+                lb.innerHTML = 'Element : -';
+            }
+            for (var i = 0; i < styleInputs.length; ++i) {
+                var styleName = styleInputs[i].attributes['element-style'];
+                if (__selectObject !== null) {
+                    styleInputs[i].value = __selectObject.style[styleName];
+                }
+                else styleInputs[i].value = 'undefined';
+            }
+        };
+
+        ;(function() {            
+            loadElementPropertyEditors('propertyEditor');
+            var designer = document.getElementById('designerArea');
+            designer.addEventListener('click', function(evt) {
+                selectObject(evt.target);                
+                evt.preventDefault();
+                evt.stopPropagation();
+            });
+        })();
+    </script>
+</body>
+
+</html>

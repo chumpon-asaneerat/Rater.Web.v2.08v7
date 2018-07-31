@@ -1,0 +1,6 @@
+{
+    "links": [
+        { "text": "ลงทะเบียน", "url": "/register", "active": "", "type": "font", "src": "user-plus" },
+        { "text": "เข้าใช้งาน", "url": "/signin", "active": "", "type": "font", "src": "user-circle" }
+    ]
+}

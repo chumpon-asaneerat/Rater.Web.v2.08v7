@@ -1,0 +1,103 @@
+/*
+---------------------
+ Dock Layout constants.
+--------------------- 
+*/
+/* 
+---------------------
+ Dock Layout classes.
+--------------------- 
+*/
+.dock-layout {
+  display: block;
+  position: absolute;
+  margin: 2px;
+  padding: 2px;
+  left: 1px;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  overflow: auto;
+  /* border: 1px dashed dimgray; */
+}
+
+.dock-top {
+  display: block;
+  position: absolute;
+  margin: 2px;
+  padding: 2px;
+  left: 1px;
+  right: 1px;
+  top: 1px;
+  height: 50px;
+  overflow: auto;
+  border: 1px dashed darkblue;
+  /* 
+    background: rgba(22, 255, 99, 0.3);
+    */
+}
+
+.dock-bottom {
+  display: block;
+  position: absolute;
+  margin: 2px;
+  padding: 2px;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  height: 50px;
+  overflow: auto;
+  border: 1px dotted #12AA99;
+  /*
+    background: rgba(122, 122, 255, 0.3);
+    */
+}
+
+.dock-left {
+  display: block;
+  position: absolute;
+  margin: 2px;
+  padding: 2px;
+  left: 1px;
+  top: 1px;
+  bottom: 1px;
+  width: 420px;
+  overflow: auto;
+  border: 1px dotted saddlebrown;
+  /*
+    background: rgba(12, 12, 255, 0.3);
+    */
+}
+
+.dock-right {
+  display: block;
+  position: absolute;
+  margin: 2px;
+  padding: 2px;
+  right: 1px;
+  top: 1px;
+  bottom: 1px;
+  width: 420px;
+  overflow: auto;
+  border: 1px dotted #AA22AA;
+  /*
+    background: rgba(202, 10, 228, 0.5);
+    */
+}
+
+.dock-client {
+  display: block;
+  position: absolute;
+  margin: 2px;
+  padding: 2px;
+  left: 1px;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  overflow: auto;
+  border: 1px dotted #234567;
+  /*
+    background: rgba(33, 166, 123, 0.3);
+    */
+}
+/*# sourceMappingURL=web-docking.css.map */

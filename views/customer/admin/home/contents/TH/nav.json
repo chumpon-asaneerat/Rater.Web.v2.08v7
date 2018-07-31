@@ -1,0 +1,9 @@
+{
+    "links": [],
+    "signout": {
+        "type": "font",
+        "src": "sign-out-alt",
+        "text": "ออกจากระบบ",
+        "url": "javascript:void(0);"
+    }
+}

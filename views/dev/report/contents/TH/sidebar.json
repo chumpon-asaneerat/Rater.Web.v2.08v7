@@ -1,0 +1,6 @@
+{
+    "items": [
+        { "text": "หน้าหลัก", "url": "/dev", "active": "", "type": "font", "src": "home" },
+        { "text": "รายงาน", "url": "javascript:void(0);", "active": "true", "type": "font", "src": "chart-bar" }
+    ]
+}

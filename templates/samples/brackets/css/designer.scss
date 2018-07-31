@@ -1,0 +1,231 @@
+$defaultDockMargin: 2px;
+$defaultDockPadding: 2px;
+
+$defaultDockPosition: 1px;
+$defaultDockWidth: 220px;
+$defaultDockHeight: 50px;
+
+$defaultToolBoxMargin: 2px;
+$defaultToolBoxPadding: 2px;
+
+$defaultToolBoxItemMargin: 2px;
+$defaultToolBoxItemPadding: 5px;
+$defaultToolBoxItemBorderRadius: 5px;
+$defaultToolBoxItemWidth: 100px;
+
+$defaultPropertyEditMargin: 2px;
+$defaultPropertyEditPadding: 5px;
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: $defaultDockMargin;
+    padding: $defaultDockPadding;
+}
+
+.dock-layout {
+    display: block;
+    position: absolute;
+
+    margin: $defaultDockMargin;
+    padding: $defaultDockPadding;
+
+    left: 1px;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+
+    overflow: auto;
+    /* border: 1px dashed dimgray; */
+}
+
+.dock-top {
+    display: block;
+    position: absolute;
+
+    margin: $defaultDockMargin;
+    padding: $defaultDockPadding;
+
+    left: $defaultDockPosition;
+    top: $defaultDockPosition;
+    right: $defaultDockPosition;
+    height: $defaultDockHeight;
+
+    overflow: auto;
+    /* border: 1px dashed darkblue; */
+}
+
+.dock-bottom {
+    display: block;    
+    position: absolute;
+
+    margin: $defaultDockMargin;
+    padding: $defaultDockPadding;
+
+    left: $defaultDockPosition;
+    right: $defaultDockPosition;
+    bottom: $defaultDockPosition;
+    height: $defaultDockHeight;
+
+    overflow: auto;
+    /* border: 1px dotted #12AA99; */
+}
+
+.dock-left {
+    display: block;
+    position: absolute;
+
+    margin: $defaultDockMargin;
+    padding: $defaultDockPadding;
+    
+    left: $defaultDockPosition;
+    top: $defaultDockPosition;
+    bottom: $defaultDockPosition;
+    width: $defaultDockWidth;
+
+    overflow: auto;
+    /*
+    border: 1px dotted saddlebrown;
+    background: rgba(12, 12, 255, 0.3);
+    */
+}
+
+.dock-right {
+    display: block;
+    position: absolute;
+
+    margin: $defaultDockMargin;
+    padding: $defaultDockPadding;
+
+    right: $defaultDockPosition;
+    top: $defaultDockPosition;
+    bottom: $defaultDockPosition;
+    width: $defaultDockWidth;
+    
+    overflow: auto;
+    /*
+    border: 1px dotted #AA22AA;
+    background: rgba(202, 10, 228, 0.5);
+    */
+}
+
+.dock-client {
+    display: block;
+    position: absolute;
+
+    margin: $defaultDockMargin;
+    padding: $defaultDockPadding;
+
+    left: $defaultDockPosition;
+    top: $defaultDockPosition;
+    right: $defaultDockPosition;
+    bottom: $defaultDockPosition;
+
+    overflow: auto;
+    border: 1px dotted #234567;
+    background: rgba(33, 166, 123, 0.3);
+}
+
+.toolbox-full {
+    display: block;
+    position: absolute;
+
+    margin: $defaultToolBoxMargin;
+    padding: $defaultToolBoxPadding;
+
+    left: 1px;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+
+    background: rgb(250, 250, 250);
+}
+
+.toolbox-full a {
+    /*
+    display: inline-block;
+    position: relative;
+    */
+    float: left;
+
+    margin: $defaultToolBoxItemMargin;
+    padding: $defaultToolBoxItemPadding;
+
+    min-width: $defaultToolBoxItemWidth;
+    max-width: $defaultToolBoxItemWidth;
+    width: $defaultToolBoxItemWidth;
+
+    text-align: left;
+    text-decoration : none;
+
+    border: 1px solid dimgray;
+    border-radius: $defaultToolBoxItemBorderRadius;
+    
+    color: whitesmoke;
+    background: linear-gradient(180deg, #000000, #444444);
+    background: -webkit-linear-gradient(180deg, #000000, #444444);
+}
+
+.toolbox-full a:hover {
+    color: yellow;
+    background: linear-gradient(180deg, #444444, #888888);
+    background: -webkit-linear-gradient(180deg, #444444, #888888);
+}
+
+.property-edit {
+    display: block;
+    position: absolute;
+    margin: $defaultPropertyEditMargin;
+    padding: $defaultPropertyEditPadding;
+    left: 1px;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    background: rgb(250, 250, 250);
+}
+
+.property-edit .inline {
+    display: block;
+    position: relative;
+    font-size: 0.8em;
+}
+
+.property-edit .inline label:first-child {
+    margin: 1px;
+    padding: 1px;
+    width: 70px;
+    text-align: right;
+}
+
+.property-edit .inline input {
+    margin: 1px;
+    padding: 1px;
+    width: 70px;
+}
+
+.property-edit .inline label:last-child {
+    margin: 1px;
+    padding: 1px;
+    width: 50px;
+}
+
+.designer {
+    position: absolute;
+    width: 1024px;
+    height: 768px;
+    background-color: whitesmoke;
+}
+
+.designer .design-obj {
+    margin: 1px;
+    padding: 1px;
+    position: absolute;
+}
+
+.design-obj:hover {
+    cursor: pointer;
+    border: 1px dashed pink;
+}
+
+.design-obj.selected {
+    cursor: move;
+    border: 1px dashed black;
+}

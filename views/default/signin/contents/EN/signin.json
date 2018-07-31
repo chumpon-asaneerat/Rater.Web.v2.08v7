@@ -1,0 +1,13 @@
+{
+    "label": {
+        "title": "Sign In",
+        "userName": "User Name:",
+        "passWord": "Password:",
+        "signIn": "Sign In",
+        "chooseCompany": "Please Choose Company."
+    },
+    "hint": {
+        "userName": "Enter E-Mail address as User Name",
+        "passWord": "Enter Password"
+    }
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example 13 : Designer 3.</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../favicon.ico" rel="shortcut icon">
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/designer3.css" rel="stylesheet" type="text/css">
+    <link href="css/example-012.css" rel="stylesheet" type="text/css">
+    <style>
+        * { 
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: -moz-none;
+            -o-user-select: none;
+            user-select: none; 
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            display: inline-block;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .slide {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            padding: 5px;
+            width: 1024px;
+            height: 640px;
+            background: #fff;
+        }
+
+        .slides.list {
+            padding: 15px 5px 0px 5px;
+            width: 100%;
+            
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-flex-wrap: wrap;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            background: #EEEEEE;
+            position: absolute;
+            clip: rect(0, auto, auto, 0);
+        }
+
+        .slides.list .slide {
+            display: inline;
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            /* For scale .15 */
+            /*
+            margin: 0 -874px -525px 25px;
+            -webkit-transform: scale(.15);
+            transform: scale(.15);
+            */
+
+            /* For scale .20 */
+            
+            /*
+            margin: 0 -815px -485px 25px;
+            -webkit-transform: scale(.20);
+            transform: scale(.20);
+            */
+            
+            /* For scale .25 */    
+            margin: 0px -835px -525px 15px;
+            -webkit-transform: scale(.15);
+            transform: scale(.15);
+
+            border-radius: 2px;
+            -webkit-box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .3);
+        }
+
+        em {
+            color: red;
+        }
+
+        .slide.selected {
+            border: 5px solid red;
+        }
+
+        #template-slides {
+            width: 200px;
+        }
+
+        #template-slides.slides.list {
+            overflow: auto;
+        }
+        
+        #edit-slides {
+            left: 200px;
+            right: 200px;
+            bottom: 0px;
+            width: calc(100% - 400px);
+            height: 150px;
+        }
+
+        #edit-slides.slides.list {
+            overflow: auto;
+        }
+
+        #edit-slide {
+            position: absolute;
+            padding: 5px;
+            left: 200px;
+            top: 0px;
+            right: 200px;
+            bottom: 150px;
+            border: 5px solid red;
+        }
+
+        #edit-slide.slides {
+            clip: rect(0, auto, auto, 0);
+            overflow: auto;
+        }
+
+        #edit-slide.slides.slide {
+            position: relative;
+            /*
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            transform: scale(1);
+            */
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+    <div class="dock-layout">
+        <div class="dock-left">
+
+        </div>
+        <div class="dock-right">
+        
+        </div>
+        <div class="dock-top">
+        
+        </div>
+        <div class="dock-bottom">
+        
+        </div>
+        <div class="dock-client">
+        
+        </div>
+    </div>
+    -->
+    <div id="template-slides" class="slides list">
+        <div class="slide selected">
+            <div>
+                <img src="./images/Bass_logo.svg.png">
+                <h2>Please Enter Your Question.</h2>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur
+                <a href="#4">adipisicing</a> elit, des do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                <em>!!quis!! nostrud</em> exercitation ullamco laboris
+                <strong>nisi ut aliquip</strong> ex ea commodo consequat. Duis aute irure
+                <i>dolor</i> in reprehenderit in voluptate velit esse cillum
+                <b>dolore</b> eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                <code>&lt;culpa&gt;</code> qui officia deserunt mollit anim id est laborum.</p>
+                <ol>
+                    <li>Built on HTML, CSS and vanilla JavaScript</li>
+                    <li>Works in all modern browsers</li>
+                    <li>Themes are separated from engine</li>
+                    <li>Modular and extensible</li>
+                    <li>Fully keyboard accessible</li>
+                    <li>Printable to PDF</li>
+                    <li>Other 1</li>
+                    <li>Other 2</li>
+                    <li>Other 3</li>
+                    <li>Other 4</li>
+                </ol>
+                <p class="note">Shower ['ʃəuə] noun. A person or thing that shows.</p>
+        </div>
+
+        <div class="slide">
+            <h2 contenteditable="true">Plain text on your slides</h2>
+            <p contenteditable="true">Lorem ipsum dolor sit amet, consectetur
+                <a href="#4">adipisicing</a> elit, des do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                <em>!!quis!! nostrud</em> exercitation ullamco laboris
+                <strong>nisi ut aliquip</strong> ex ea commodo consequat. Duis aute irure
+                <i>dolor</i> in reprehenderit in voluptate velit esse cillum
+                <b>dolore</b> eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+                <code>&lt;culpa&gt;</code> qui officia deserunt mollit anim id est laborum.</p>
+                <ol contenteditable="true">
+                    <li>Built on HTML, CSS and vanilla JavaScript</li>
+                    <li>Works in all modern browsers</li>
+                    <li>Themes are separated from engine</li>
+                    <li>Modular and extensible</li>
+                    <li>Fully keyboard accessible</li>
+                    <li>Printable to PDF</li>
+                    <li>Other 1</li>
+                    <li>Other 2</li>
+                    <li>Other 3</li>
+                    <li>Other 4</li>
+                </ol>
+                <p class="note">Shower ['ʃəuə] noun. A person or thing that shows.</p>
+        </div>
+    </div>
+    <div id="edit-slides" class="slides list">
+
+    </div>
+
+    <div id="edit-slide" class="slides">
+    
+    </div>
+    
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/nlib3.js"></script>
+    <script type="text/javascript" src="js/example-012.js"></script>
+    <script>
+        var desecect = function(slides) {
+            for (var i = 0; i < slides.length; ++i) {
+                $(slides[i]).removeClass('selected');
+            }    
+        };
+
+        var setEditSlide = function ($elem) {
+            var $slideEditor = $('#edit-slide');
+            $slideEditor.html('');
+            var html = '<div class="slide">' + $elem.html() + '</div>';
+            $slideEditor.append(html);
+        };
+
+        var addTemplate = function($elem) {
+            var $templateSlides = $('#template-slides .slide');
+            var $editSlides = $('#edit-slides .slide');
+
+            desecect($templateSlides);
+            desecect($editSlides);
+
+            $elem.addClass('selected');
+            // append child
+            var html = '<div class="slide selected">' + $elem.html() + '</div>';
+
+            var $editSlidesContainer = $('#edit-slides');
+            $editSlidesContainer.append(html);
+
+            // init click event
+            $editSlides = $('#edit-slides .slide'); // reload DOM.
+            for (var i = 0; i < $editSlides.length; ++i) {
+                if ($($editSlides[i].classList.contains('selected'))) {
+                    console.log($editSlides[i]);
+                    $($editSlides[i]).on('click', function (evt) {
+                        var $slides = $('#edit-slides .slide');
+                        desecect($slides);
+                        var $slide = $(evt.currentTarget);
+                        $slide.addClass('selected');
+                        // Show in Editor.
+                        setEditSlide($slide);
+                    });
+                }
+            }
+        };
+
+        var initTemplateDblClick = function() {
+            var $templateSlides = $('#template-slides .slide');
+            var $templateSlide;
+
+            for (var i = 0; i < $templateSlides.length; ++i) {
+                $templateSlide = $($templateSlides[i]);
+                $templateSlide.on('dblclick', function (evt) {
+                    var $current = $(evt.currentTarget);
+                    addTemplate($current);
+                });
+            };
+        };
+
+        initTemplateDblClick();
+    </script>
+</body>
+
+</html>

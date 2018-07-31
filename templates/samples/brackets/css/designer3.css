@@ -1,0 +1,87 @@
+/* Constant */
+/* IDE Style */
+.ide-style-property {
+  display: block;
+  font-size: 0.75em;
+}
+
+.ide-style-property label {
+  min-width: 70px;
+  text-align: right;
+}
+
+.design-object {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/*
+.design-object:hover {
+    background: rgba(40, 85, 220, 0.8);
+}
+*/
+.design-object .hs-nw {
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 9px;
+  height: 9px;
+  background: royalblue;
+  border: 1px dotted cornflowerblue;
+  border-radius: 50%;
+  cursor: nw-resize;
+  z-index: 50;
+}
+
+.design-object .hs-ne {
+  position: absolute;
+  right: -4px;
+  top: -4px;
+  width: 9px;
+  height: 9px;
+  background: royalblue;
+  border: 1px dotted cornflowerblue;
+  border-radius: 50%;
+  cursor: ne-resize;
+  z-index: 50;
+}
+
+.design-object .hs-sw {
+  position: absolute;
+  left: -4px;
+  bottom: -4px;
+  width: 9px;
+  height: 9px;
+  background: royalblue;
+  border: 1px dotted cornflowerblue;
+  border-radius: 50%;
+  cursor: sw-resize;
+  z-index: 50;
+}
+
+.design-object .hs-se {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 9px;
+  height: 9px;
+  background: royalblue;
+  border: 1px dotted cornflowerblue;
+  border-radius: 50%;
+  cursor: se-resize;
+  z-index: 50;
+}
+
+.design-object .hs-select {
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px dotted red;
+  cursor: pointer;
+  z-index: 40;
+}
+/*# sourceMappingURL=designer3.css.map */

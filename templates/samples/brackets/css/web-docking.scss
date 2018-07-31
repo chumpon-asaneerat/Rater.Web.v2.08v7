@@ -1,0 +1,119 @@
+/*
+---------------------
+ Dock Layout constants.
+--------------------- 
+*/
+
+// Margin and Padding.
+$dock-margin: 2px;
+$dock-padding: 2px;
+// Position
+$dock-position: 1px;
+// Width and Height.
+$dock-width: 420px;
+$dock-height: 50px;
+
+/* 
+---------------------
+ Dock Layout classes.
+--------------------- 
+*/
+
+// define the container is supports dock layout.
+.dock-layout {
+    display: block;
+    position: absolute;
+    margin: $dock-margin;
+    padding: $dock-padding;
+    left: 1px;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    overflow: auto;
+    /* border: 1px dashed dimgray; */
+}
+
+// set container to dock at top of dock layout.
+.dock-top {
+    display: block;
+    position: absolute;
+    margin: $dock-margin;
+    padding: $dock-padding;
+    left: $dock-position;
+    right: $dock-position;
+    top: $dock-position;
+    height: $dock-height;
+    overflow: auto;
+    border: 1px dashed darkblue;
+    /* 
+    background: rgba(22, 255, 99, 0.3);
+    */
+}
+
+// set container to dock at bottom of dock layout.
+.dock-bottom {
+    display: block;
+    position: absolute;
+    margin: $dock-margin;
+    padding: $dock-padding;
+    left: $dock-position;
+    right: $dock-position;
+    bottom: $dock-position;
+    height: $dock-height;
+    overflow: auto;
+    border: 1px dotted #12AA99;
+    /*
+    background: rgba(122, 122, 255, 0.3);
+    */
+}
+
+// set container to dock at left of dock layout.
+.dock-left {
+    display: block;
+    position: absolute;
+    margin: $dock-margin;
+    padding: $dock-padding;
+    left: $dock-position;
+    top: $dock-position;
+    bottom: $dock-position;
+    width: $dock-width;
+    overflow: auto;
+    border: 1px dotted saddlebrown;
+    /*
+    background: rgba(12, 12, 255, 0.3);
+    */
+}
+
+// set container to dock at right of dock layout.
+.dock-right {
+    display: block;
+    position: absolute;
+    margin: $dock-margin;
+    padding: $dock-padding;
+    right: $dock-position;
+    top: $dock-position;
+    bottom: $dock-position;
+    width: $dock-width;
+    overflow: auto;
+    border: 1px dotted #AA22AA;
+    /*
+    background: rgba(202, 10, 228, 0.5);
+    */
+}
+
+// set container to dock to fill remains area of dock layout.
+.dock-client {
+    display: block;
+    position: absolute;
+    margin: $dock-margin;
+    padding: $dock-padding;
+    left: $dock-position;
+    top: $dock-position;
+    right: $dock-position;
+    bottom: $dock-position;
+    overflow: auto;
+    border: 1px dotted #234567;
+    /*
+    background: rgba(33, 166, 123, 0.3);
+    */
+}

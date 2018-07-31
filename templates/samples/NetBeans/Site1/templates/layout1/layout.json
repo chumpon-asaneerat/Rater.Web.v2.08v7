@@ -1,0 +1,6 @@
+{
+    "name": "layout1",
+    "url": "templates//layout1",
+    "cssFiles" : ["layout.css"],
+    "templateFiles" : ["layout.html"]
+}

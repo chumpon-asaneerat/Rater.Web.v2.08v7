@@ -1,0 +1,110 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+section, h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+.slides {
+    display: none;    
+}
+
+.slide {
+    border: 1px dashed cornflowerblue;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    border: 1px dashed rgb(220, 20, 60);
+    top: 0;
+    width: calc(100% - 2px);
+    height: 70px;
+}
+
+h1, h2, h3, h4, h5, section, p, div {
+    margin: 0;
+    padding: 0;
+}
+
+.slide-preview-pane {
+    margin: 5px auto;
+    padding: 5px;
+    border: 1px dashed darkgreen;
+    /* display: block; */
+    position: relative;
+    max-width: 640px;
+    max-height: 480px;
+    width: 640px;
+    height: 480px;
+}
+
+.slide-preview-pane-area {
+    /* position: absolute; */
+    /* left: 50%; */
+    margin: 0;
+    padding: 0;
+}
+
+.slide-preview-pane-content {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    /* left: -50%; */
+    max-width: 640px;
+    max-height: 480px;
+    width: 640px;
+    height: 480px;
+
+    /* transform: scale(0.8); */
+}
+
+.slide-thumbnails-pane {
+    border: 1px dashed rgb(220, 20, 60);
+    display: inline-flex;
+    width: calc(100% - 2px);
+    height: 150px;
+    margin: 1px;
+    padding: 1px;
+
+    overflow: auto;
+}
+
+.slide-thumbnail-area {
+    border: 2px dashed rgb(220, 20, 60);
+    margin: 2px;
+    padding: 2px;
+
+    display: block;
+    width: 200px;
+    height: 150px;
+    min-width: 200px;
+    min-height: 150;
+
+    overflow: hidden;
+}
+
+.slide-thumbnail {
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    /* display: block; */
+    width: 200px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.blue-item { 
+    background: blue; 
+}
+.red-item {
+    background: red;
+}
+.green-item {
+    background: green;
+}

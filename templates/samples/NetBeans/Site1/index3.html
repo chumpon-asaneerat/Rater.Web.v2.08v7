@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Single Page Template Designer.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="container" id="container1">
+            Choose Ticket class:
+            <select data-bind="options: tickets,
+                    optionsCaption: 'Choose...',
+                    optionsText: 'name',
+                    value: chosenTicket"></select>
+            <button data-bind="enable: chosenTicket,
+                    click: resetTicket">Clear</button>
+            <p data-bind="with : chosenTicket">
+                You has chosen <b data-bind="text: name"></b>
+                ($<span data-bind="text: price"></span>)
+            </p>
+        </div>
+        <br>
+        <div class="container" id="container2">
+            <p>First name: <input data-bind="value: firstName" /></p>
+            <p>Last name: <input data-bind="value: lastName" /></p>
+
+            <button data-bind="click: capitalizeLastName">Go caps</button>
+
+            <p>First name: <strong data-bind="text: firstName"></strong></p>
+            <p>Last name: <strong data-bind="text: lastName"></strong></p>
+            <p>Full name: <strong data-bind="text: fullName"></strong></p>
+        </div>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/knockout.min.js"></script>
+        <script>
+            function TicketsViewModel() {
+                this.tickets = [
+                    { name: 'Economy', price: 199.95 },
+                    { name: 'Business', price: 499.22 },
+                    { name: 'First Class', price: 1199.99 }
+                ];
+                this.chosenTicket = ko.observable();
+                this.resetTicket = function() { 
+                    this.chosenTicket(null);
+                };
+            }
+            ko.applyBindings(new TicketsViewModel(), document.getElementById('container1'));
+
+            function AppViewModel() {
+                this.firstName = ko.observable("Bert");
+                this.lastName = ko.observable("Bertington");
+
+                this.fullName = ko.computed(function() {
+                    return this.firstName() + " " + this.lastName();    
+                }, this);
+
+                this.capitalizeLastName = function() {
+                    var currentVal = this.lastName();        // Read the current value
+                    this.lastName(currentVal.toUpperCase()); // Write back a modified value
+                };
+            }
+            // Activates knockout.js
+            ko.applyBindings(new AppViewModel(), document.getElementById('container2'));
+    </script>
+    </body>
+</html>

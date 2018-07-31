@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test Link Manager.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+        <style>
+            a {
+                display: block;
+            }
+        </style>            
+    </head>
+    <body>
+        <div>
+            <a href="#" nlib-manager="linkManager" nlib-execute="onClick" nlib-parameter="0">
+                <label>Method 0.</label>
+            </a>
+            <a href="#" nlib-manager="linkManager" nlib-execute="onClick" nlib-parameter="1">
+                <label>Method 1.</label>
+            </a>
+            <a href="#" nlib-manager="linkManager" nlib-execute="onClick" nlib-parameter="2">
+                <label>Method 2.</label>
+            </a>
+            <a href="#" nlib-manager="linkManager" nlib-execute="onClick" nlib-parameter="3">
+                <label>Method 3.</label>
+            </a>
+            <a href="#" nlib-manager="linkManager" nlib-execute="onClick" nlib-parameter="">
+                <label>Method 4 (undefined parameter).</label>
+            </a>
+        </div>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/knockout.min.js"></script>
+        <script type="text/javascript" src="js/nlib-client-core.js"></script>
+        <script>
+            let linkManager = {
+              onClick: function(evt) {
+                  evt.preventDefault()
+                  let val = $(evt.currentTarget).attr('nlib-parameter');
+                  if (!val) {
+                      console.log('value is null or undefined.');
+                      return;
+                  }                      
+                  console.log('you click: ', val);
+              },
+              onClick1: function(evt) {
+                  evt.preventDefault()
+                  console.log('onClick1', evt);
+              },
+              onClick2: function(evt) {
+                  evt.preventDefault()
+                  console.log('onClick2', evt);
+              },
+              onClick3: function(evt) {
+                  evt.preventDefault()
+                  console.log('onClick3', evt);
+              }
+            };
+            
+            let links = $("a[nlib-manager='linkManager']");
+            $.each(links, (index, value) => {
+                let method = $(value).attr("nlib-execute");
+                $(value).on("click", linkManager[method]);
+            });
+        </script>            
+    </body>
+</html>

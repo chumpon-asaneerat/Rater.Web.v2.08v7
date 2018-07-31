@@ -1,0 +1,7 @@
+{
+    "userIsNull": "user is null.",
+    "userNameRequired": "Please Enter User Name.",
+    "userNameIsNotEmail": "User Name is not valid email address.",
+    "passWordRequired": "Please Enter Password.",
+    "userNotFound": "User not found."
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>reveal Sample.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+        <link href="favicon.ico" rel="shortcut icon">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="css/emojisymbol.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+        <link href="css/reveal.css" rel="stylesheet" type="text/css">
+        <link href="css/theme/sky.css" rel="stylesheet" type="text/css">
+        <style>
+            a.btn-4 {
+                padding: 5px;
+                min-width: 200px;
+                border-radius: 25px;
+                border: 2px solid #73AD21;
+                background: #73AD21;
+            }
+            a.btn-4:hover {
+                border-radius: 25px;
+                border: 2px solid #17ff2e;
+                background: #f7ecb5;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="viewer" class="reveal">
+        </div>
+        
+        <script id="qt01" type="text/x-handlebars-template">
+            <div class="slides">
+                {{#slides}}
+                <section>
+                    <h2>{{question.text}}</h2>
+                    <table>
+                        <tr>
+                            {{#question.choices}}
+                            <td>
+                                <a class="btn text-center btn-4" onclick="ChoiceClick('{{QId}}', {{value}});">
+                                    <span class="emoji emo-3x {{iconId}}"></span>
+                                    <br/>
+                                    {{text}}
+                                </a>
+                            </td>
+                            {{/question.choices}}
+                        </tr>
+                    </table>
+                </section>
+                {{/slides}}
+                <section>
+                    <h2>Thank You</h2>
+                </section>
+            </div>
+        </script>
+
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+
+        <script type="text/javascript" src="js/handlebars.min.js"></script>
+        <script type="text/javascript" src="js/jquery-handlebars.min.js"></script>
+        
+        <script type="text/javascript" src="js/reveal.js"></script>
+
+        <script type="text/javascript" src="js/howler.min.js"></script>
+
+        <script type="text/javascript" src="js/knockout.min.js"></script>
+        <script>
+            var sound = new Howl({
+                src: ['Asset/thankyou.mp3'],
+                autoplay: false,
+                loop: false,
+                onend: function() {
+                    Reveal.slide(0);
+                }
+            });                                                
+            function ChoiceClick(qId, val) {
+                //alert('Question ' + qId.toString() + ' - Choice ' + val.toString() + ' click.');
+                if (qId === 'Q1') {
+                    Reveal.next();
+                }
+                else if (qId === 'Q2') {
+                    Reveal.next();
+                    sound.play();
+                }
+            };
+            var qSet = {};
+            qSet.slides = [];
+            qSet.slides.push({
+                question: {                     
+                    text: 'Do you think about our service?.',
+                    choices: [
+                        { QId: 'Q1', text: 'Poor', value: 1, iconId: 'emoji34' },
+                        { QId: 'Q1', text: 'Fair', value: 2, iconId: 'emoji56' },
+                        { QId: 'Q1', text: 'Good', value: 3, iconId: 'emoji5' },
+                        { QId: 'Q1', text: 'Excellent', value: 4, iconId: 'emoji15' }
+                    ]
+                }
+            }); 
+            qSet.slides.push({
+                question: {
+                    text: 'Do you think about our food teste?.',
+                    choices: [
+                        { QId: 'Q2', text: 'Poor', value: 1, iconId: 'emoji34' },
+                        { QId: 'Q2', text: 'Fair', value: 2, iconId: 'emoji56' },
+                        { QId: 'Q2', text: 'Good', value: 3, iconId: 'emoji5' },
+                        { QId: 'Q2', text: 'Excellent', value: 4, iconId: 'emoji15' }
+                    ]
+                }
+            }); 
+            var $viewer = $('#viewer');
+            $viewer.handlebars('add', '#qt01', qSet);
+            
+            Reveal.initialize({
+                    controls: false,
+                    progress: false,
+                    history: false,
+                    center: true,
+                    transition: 'slide' // none/fade/slide/convex/concave/zoom
+            });
+        </script>
+    </body>
+</html>

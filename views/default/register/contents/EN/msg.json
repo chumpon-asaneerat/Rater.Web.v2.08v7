@@ -1,0 +1,9 @@
+{
+    "customerIsNull": "customer is null.",
+    "customerNameRequired": "Please Enter Customer Name.",
+    "userNameRequired": "Please Enter User Name.",
+    "userNameIsNotEmail": "User Name is not valid email address.",
+    "passWordRequired": "Please Enter Password.",
+    "confirmPasswordRequired": "Please Enter Confirm Password.",
+    "confirmPasswordMismatch": "The Confirm Password not match Password."
+}

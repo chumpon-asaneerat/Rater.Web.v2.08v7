@@ -1,0 +1,15 @@
+{
+    "label": {
+        "title": "Register",
+        "customerName": "Customer Name:",
+        "userName": "User Name:",
+        "passWord": "Password:",
+        "confirmPassWord": "Confirm Password:",
+        "signUp": "Sign Up"
+    },
+    "hint": {
+        "customerName": "Enter Customer Name",
+        "userName": "Enter E-Mail address as User Name",
+        "passWord": "Enter Password"
+    }
+}

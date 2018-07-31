@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Knockout Template Layout.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="main-container">
+            
+        </div>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/knockout.min.js"></script>
+        <script>
+            function loadFile(url, on_success) {
+                let success_fn = (data) => { 
+                    if (on_success) 
+                        on_success(data); 
+                };
+                let fail_fn = (jqxhr, settings, exception) => { 
+                    console.log(exception); 
+                };
+                $.get(url).done(success_fn).fail(fail_fn);
+            }
+
+            function loadLayout() {
+                let url = 'templates/layout1/layout.json';
+                let layout_def = null;
+                let template_url = null;
+                let cssFiles = [];
+                let tmplFiles = [];
+
+                let loadCssFile = (file) => {
+                    let cssUrl = template_url + '\\' + file, get_tmpl_file;
+                    $('head').append('<link href="' + cssUrl + '" rel="stylesheet" type="text/css">');
+                };
+
+                let loadTemplateFile = (file) => {
+                    let get_tmpl_file = (data) => {
+                        $('#main-container').append(data);
+                    };
+                    loadFile(template_url + '\\' + file, get_tmpl_file);
+                };
+
+                let get_def = (data) => { 
+                    layout_def = data; 
+                    if (!layout_def) {
+                        console.log('definition undefined or template url is undefined.');
+                        return;
+                    }
+                    template_url = layout_def.url;
+                    cssFiles = layout_def.cssFiles;
+                    tmplFiles = layout_def.templateFiles;
+                                        
+                    $.each(cssFiles, (index, value) => { 
+                        loadCssFile(value); 
+                    });
+                    $.each(tmplFiles, (index, value) => { 
+                        loadTemplateFile(value); 
+                    });
+                };
+                loadFile(url, get_def);                
+            };
+            
+            loadLayout();
+            // document ready.
+            $(function() {                
+            });
+        </script>
+    </body>
+</html>

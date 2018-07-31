@@ -1,0 +1,33 @@
+{
+    "items": [
+        { "text": "Home", "url": "javascript:void(0);", "active": "true", "type": "font", "src": "home" },
+        { "text": "Report", "url": "/dev/report", "active": "", "type": "font", "src": "chart-bar" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "wrench" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "user" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "phone" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "copy" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "battery-full" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "address-card" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "binoculars" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "box-open" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "book" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "camera" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "cart-plus" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "chart-pie" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "chart-bar" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "chart-area" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "chart-line" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "cog" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "comments" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "database" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "edit" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "exclamation-circle" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "fax" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "headphones" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "user-plus" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "user-times" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "tasks" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "tablet-alt" },
+        { "text": "Sample", "url": "javascript:void(0);", "active": "", "type": "font", "src": "tags" }
+    ]
+}

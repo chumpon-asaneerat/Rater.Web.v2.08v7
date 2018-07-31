@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Example 15 :Designer implements 3.</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../favicon.ico" rel="shortcut icon">
+    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../css/web-docking.css" rel="stylesheet" type="text/css">
+    <link href="../css/designer3.css" rel="stylesheet" type="text/css">
+    <link href="css/example-015.css" rel="stylesheet" type="text/css">
+    <style>
+        .IDE-Tools { width: 200px; }
+        .IDE-PropertyBox { width: 270px; }
+        .IDE-SlidePreviewBox { height: 140px; }
+
+        #ideCommand {
+            height: 30px;
+        }
+        #toolBox {
+            
+        }
+        #propertyEditBox {
+
+        }
+        #designer {
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dock-layout">
+        <div class="IDE-Tools dock-left dock-layout">
+            <div id="ideCommand" class="dock-top">
+            </div>
+            <div id="toolBox" class="dock-client">
+            </div>
+        </div>
+        <div class="IDE-PropertyBox dock-right">
+            <div id="propertyEditBox" class="dock-client">
+            </div>
+        </div>
+        <div class="dock-client dock-layout">
+            <div class="IDE-SlidePreviewBox dock-bottom">
+                <div id="slidePreviewer">
+
+                </div>
+            </div>
+            <div id="designer" class="dock-client">
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/nlib2.js"></script>
+    <script type="text/javascript" src="../js/web-docking.js"></script>
+    <script type="text/javascript" src="../js/designer3.js"></script>
+    <script type="text/javascript" src="js/example-015.js"></script>
+    <script>
+        // Init IDE
+        ;(function() {
+            var ide = new SlideIDE('designer', 'propertyEditBox', 'toolBox');
+            ide.designer.addText('h3', 'obj1', 'TEXT');
+            ide.designer.addImage('obj2', '../assets/images/youtube.png');
+            //ide.designer.addImage('obj2');
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test JavaScript from NetBeans.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+        <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
+        <style>
+            button {
+                width: 75px;
+                padding-right: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Test JavaScript from NetBeans.</h1>
+            <div style="display : inline;">
+                <button id="btnAdd" onclick="onAdd()">Append</button>
+                <button id="btnCls" onclick="onClear()">Clear</button>
+            </div>
+            
+            <form>
+                <!-- Without Row-Column Single Input Group. -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="exampleInputFile">Email : </label>
+                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+
+                        <label for="exampleInputText">Text : </label>
+                        <input type="text" class="form-control" id="exampleInputText1" placeholder="Text">
+
+                        <label for="exampleInputPassword">Password : </label>
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                </div>
+                <!-- Without Row-Column Multiple Input Group -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="exampleInputFile">Email : </label>
+                        <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Email">
+                    </div>
+                    <div class="input-group">
+                        <label for="exampleInputText">Text : </label>
+                        <input type="text" class="form-control" id="exampleInputText2" placeholder="Text">
+                    </div>
+                    <div class="input-group">
+                        <label for="exampleInputPassword">Password : </label>
+                        <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+                    </div>
+                </div>
+                <!-- With Single Row-Fixed Column Single Input Group. -->
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="row">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label for="exampleInputFile">Email : </label>
+                                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label for="exampleInputText">Text : </label>
+                                <input type="text" class="form-control" id="exampleInputText3" placeholder="Text">
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label for="exampleInputPassword">Password : </label>
+                                <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label for="exampleInputDateTime">DateTime : </label>
+                                <input type="text" class="form-control" id="exampleInputDateTime3" placeholder="DateTime">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        
+                    </div>
+                    <div class="input-group">
+                        
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        
+                    </div>
+                    <div class="input-group">
+                        
+                    </div>
+                </div>
+            </form>
+            
+            <div id="output">
+                
+            </div>
+        </div>
+                
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/knockout.min.js"></script>
+        <script type="text/javascript" src="js/underscore.min.js"></script>
+        <script type="text/javascript" src="js/moment.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+        <script type="text/javascript" src="js/nlib-client-core.js"></script>
+        <script type="text/javascript" src="js/models.js"></script>
+        <script type="text/javascript">
+            $('#exampleInputDateTime').datetimepicker();
+
+            var iCnt = 1;
+            //var logger = new logger('#output');
+            
+            function onAdd() {
+                //logger.log('Add some log ' + iCnt++);
+                console.log('Add some log ' + iCnt++);
+            };
+            
+            function onClear() {
+                //logger.clear();
+                console.clear();
+            };
+            
+            var pres1 = new presentation();
+            
+            var slide1 = new slide('id-001', 'slide1');
+            var slide2 = new slide('id-001', 'slide2');
+            
+            pres1.add('id-001', slide1);
+            pres1.add('id-001', slide2);
+            pres1.showAll();
+        </script>            
+    </body>
+</html>

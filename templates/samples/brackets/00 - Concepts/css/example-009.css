@@ -1,0 +1,21 @@
+.right-panel {
+    display: block;
+    float: right;
+    margin: 0px auto;
+    margin-right: 5px;
+    padding: 10px;
+    width: 600px;
+    border: 1px dotted cornflowerblue;
+}
+
+.fit-parent {
+    display: block;
+    overflow: none;
+    overflow: auto;
+}
+
+.code-box-size {
+    display: block;
+    width: calc(300px - 50px);
+    height: 500px;
+}

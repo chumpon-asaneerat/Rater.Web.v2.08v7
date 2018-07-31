@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Codeply preview</title>
+
+    <base target="_self">
+    <meta name="description" content="Codeply is a free online editor for Web developers and designers with code sample snippets." />
+    <meta name="google" value="notranslate">
+
+    <link rel="shortcut icon" type="image/png" href="images/favicon.ico" />
+    
+    <!--stylesheets / link tags loaded here-->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+
+        .wrapper {
+            height: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .row-offcanvas {
+            position: relative;
+            margin-left: 0;
+            margin-right: 0;
+            height: 100%;
+        }
+
+        #sidebar {
+            background-color: #eee;
+            min-height: 100%;
+            padding: 15px;
+            overflow: hidden;
+            -webkit-transition: width 0.3s ease-in;
+            -moz-transition: width 0.3s ease-in;
+            transition: width 0.3s ease-in;
+            z-index: 1;
+        }
+
+        #sidebar span.collapse.in {
+            display: inline;
+        }
+
+        #sidebar .nav .nav-item .nav-link {
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #main {
+            padding: 15px;
+            left: 0;
+        }
+
+        /*
+ * off canvas sidebar
+ * --------------------------------------------------
+ */
+
+        @media screen and (max-width: 34em) {
+            #sidebar {
+                min-width: 43px;
+                -webkit-transition: all 0.4s ease-in-out;
+                -moz-transition: all 0.4s ease-in-out;
+                transition: all 0.4s ease-in-out;
+            }
+
+            #main {
+                width: 60%;
+            }
+
+            .row-offcanvas-left.active .sidebar-offcanvas span.collapse {
+                display: inline !important;
+            }
+
+            .row-offcanvas-left.active {
+                left: 40%;
+            }
+
+            .row-offcanvas-left.active .sidebar-offcanvas {
+                left: -40%;
+                position: absolute;
+                top: 0;
+                width: 40%;
+            }
+
+            .row-offcanvas-left.active #main {
+                width: 60%;
+            }
+
+            /* sidebar link text always visible when active */
+            .row-offcanvas-left.active .sidebar-offcanvas span.collapse.in {
+                display: inline !important;
+            }
+
+        }
+
+
+        @media screen and (min-width: 34em) {
+            .row-offcanvas-left.active {
+                left: 43px;
+                width: 97%;
+                width: calc(100% - 43px);
+            }
+
+            .row-offcanvas-left.active .sidebar-offcanvas {
+                left: -43px;
+                position: absolute;
+                top: 0;
+                width: 43px;
+                text-align: center;
+                min-width: 43px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="wrapper container-fluid">
+        <div class="row row-offcanvas row-offcanvas-left">
+            <!-- sidebar -->
+            <div class="col-sm-3 col-xs-1 sidebar-offcanvas" id="sidebar">
+                <ul class="nav nav-stacked" id="menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-list-alt"></i>
+                            <span class="collapse in hidden-xs-down">Link 1</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-list"></i>
+                            <span class="collapse in hidden-xs-down">Link 2</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-paperclip"></i>
+                            <span class="collapse in hidden-xs-down">Saved</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-refresh"></i>
+                            <span class="collapse in hidden-xs-down">Refresh</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-toggle="offcanvas-in">
+                        <a class="nav-link" href data-target="#item1" data-toggle="collapse">
+                            <i class="fa fa-list"></i>
+                            <span class="collapse in hidden-xs-down">Menu
+                                <span class="caret"></span>
+                            </span>
+                        </a>
+                        <ul class="nav nav-stacked collapse left-submenu" id="item1">
+                            <li class="nav-item">
+                                <a class="nav-link" href="">View One</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="">View Two</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item" data-toggle="offcanvas-in">
+                        <a class="nav-link" href data-target="#item2" data-toggle="collapse">
+                            <i class="fa fa-list"></i>
+                            <span class="collapse in hidden-xs-down">Menu
+                                <span class="caret"></span>
+                            </span>
+                        </a>
+                        <ul class="nav nav-stacked collapse" id="item2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">View One</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">View Two</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">View Three</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <i class="glyphicon glyphicon-list-alt"></i>
+                            <span class="collapse in hidden-xs-down">Link</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /sidebar -->
+
+            <!-- main right col -->
+            <div class="col-sm-9 col-xs-11" id="main">
+                <a href="#" data-toggle="offcanvas">
+                    <i class="fa fa-navicon fa-lg"></i>
+                </a>
+                <hr>
+                <h3>Bootstrap 4 Responsive Sidebar Example</h3>
+                <p>
+                    Page content here...
+                </p>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="card card-block">Card</div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card card-block">Card</div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="card card-block">Card</div>
+                    </div>
+                </div>
+            </div>
+            <!-- /main -->
+        </div>
+    </div>
+
+    <script>
+        // sandbox disable popups
+        if (window.self !== window.top && window.name != "view1") {
+            ;
+            window.alert = function () {/*disable alert*/ };
+            window.confirm = function () {/*disable confirm*/ };
+            window.prompt = function () {/*disable prompt*/ };
+            window.open = function () {/*disable open*/ };
+        }
+
+        // prevent href=# click jump
+        document.addEventListener("DOMContentLoaded", function () {
+            var links = document.getElementsByTagName("A");
+            for (var i = 0; i < links.length; i++) {
+                if (links[i].href.indexOf('#') != -1) {
+                    links[i].addEventListener("click", function (e) {
+                        console.debug("prevent href=# click");
+                        if (this.hash) {
+                            if (this.hash == "#") {
+                                e.preventDefault();
+                                return false;
+                            }
+                            else {
+                                /*
+                                var el = document.getElementById(this.hash.replace(/#/, ""));
+                                if (el) {
+                                  el.scrollIntoView(true);
+                                }
+                                */
+                            }
+                        }
+                        return false;
+                    })
+                }
+            }
+        }, false);
+    </script>
+
+    <!--scripts loaded here-->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+
+
+
+    <script>
+        /* off-canvas sidebar toggle */
+        $('[data-toggle=offcanvas]').click(function () {
+            $('.row-offcanvas').toggleClass('active');
+            $('span.collapse').toggleClass('in');
+        });
+
+        $('[data-toggle=offcanvas-in]').click(function () {
+            $('.row-offcanvas').addClass('active');
+            $('span.collapse').addClass('in');
+        });
+    </script>
+
+</body>
+
+</html>

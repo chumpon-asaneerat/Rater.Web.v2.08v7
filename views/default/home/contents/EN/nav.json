@@ -1,0 +1,6 @@
+{
+    "links": [
+        { "text": "Register", "url": "/register", "active": "", "type": "font", "src": "user-plus" },
+        { "text": "Sign In", "url": "/signin", "active": "", "type": "font", "src": "user-circle" }
+    ]
+}

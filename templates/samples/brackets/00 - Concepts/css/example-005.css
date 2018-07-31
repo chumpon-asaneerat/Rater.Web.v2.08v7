@@ -1,0 +1,40 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.main,
+.sidebar {
+    /* padding: 1px; */
+    float: none;
+    vertical-align: top;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.header {
+    /* overflow: auto; */
+    /* padding: 1px; */
+    overflow: auto;
+}
+
+.area {
+    display: block;
+    overflow: none;
+    overflow: auto;
+}
+
+.main {
+    width: auto;
+    background-color: LightSlateGrey;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: Tomato;
+    display: block;
+    float: right;
+}

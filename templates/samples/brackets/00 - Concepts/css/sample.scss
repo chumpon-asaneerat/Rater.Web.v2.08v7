@@ -1,0 +1,16 @@
+$borderColor: red;
+
+@mixin displayBlock() {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+@mixin border-radius($radius) {
+    border-color: $borderColor;
+    border-radius: $radius;
+}
+
+.box {
+    @include border-radius(10px);
+}

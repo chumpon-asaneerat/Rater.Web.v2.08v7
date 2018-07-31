@@ -1,0 +1,125 @@
+.design-area {
+    position: absolute;
+    background: white;
+}
+
+.design-object {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: #efb73e;
+}
+
+.design-selection {
+    position: absolute;
+    border-style: dotted;
+    z-index: 10;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.HS-TL {
+    position: absolute;
+    background: white;
+    border: solid 1px black;
+    width: 10px;
+    height: 10px;
+    cursor: nw-resize;
+    z-index: 10;
+    /* display: none; */
+}
+
+.HS-TM {
+    position: absolute;
+    background: white;
+    border: solid 1px black;
+    width: 10px;
+    height: 10px;
+    cursor: n-resize;
+    z-index: 10;
+    /* display: none; */
+}
+
+.HS-TR {
+    position: absolute;
+    background: white;
+    border: solid 1px black;
+    width: 10px;
+    height: 10px;
+    cursor: ne-resize;
+    z-index: 10;
+    /* display: none; */
+}
+
+.HS-CL {
+    position: absolute;
+    background: white;
+    border: solid 1px black;
+    width: 10px;
+    height: 10px;
+    cursor: w-resize;
+    z-index: 10;
+    /* display: none; */
+}
+
+.HS-CM {
+    position: absolute;
+    background: white;
+    border: solid 1px black;
+    width: 10px;
+    height: 10px;
+    cursor: grab;
+    z-index: 10;
+    /* display: none; */
+}
+
+.HS-CR {
+    position: absolute;
+    background: white;
+    border: solid 1px black;
+    width: 10px;
+    height: 10px;
+    cursor: e-resize;
+    z-index: 10;
+    /* display: none; */
+}
+
+.HS-BL {
+    position: absolute;
+    background: white;
+    border: solid 1px black;
+    width: 10px;
+    height: 10px;
+    cursor: sw-resize;
+    z-index: 10;
+    /* display: none; */
+}
+
+.HS-BM {
+    position: absolute;
+    background: white;
+    border: solid 1px black;
+    width: 10px;
+    height: 10px;
+    cursor: s-resize;
+    z-index: 10;
+    /* display: none; */
+}
+
+.HS-BR {
+    position: absolute;
+    background: white;
+    border: solid 1px black;
+    width: 10px;
+    height: 10px;
+    cursor: se-resize;
+    z-index: 10;
+    /* display: none; */
+}

@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>Edit-Scale</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon">
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
+        <link href="css/designer2.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="source">
+            <input id="source_txtName" type="text" data-bind="value: deviceName" />
+        </div>
+        <div id="target">
+            <input id="target_txtName" type="text" data-bind="value: deviceName" />
+        </div>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/knockout.min.js"></script>
+        <script type="text/javascript" src="js/designer2.js"></script>
+        <script>
+            function DeviceModel() {
+                this.deviceName = ko.observable();
+            };
+            // Activates knockout.js
+            var model = new DeviceModel();
+            ko.applyBindings(model, document.getElementById('source'));
+            ko.applyBindings(model, document.getElementById('target'));
+        </script>
+    </body>
+</html>

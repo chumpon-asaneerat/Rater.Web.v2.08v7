@@ -1,0 +1,7 @@
+{
+    "userIsNull": "ไม่มีข้อมูลผู้ใช้",
+    "userNameRequired": "กรุณาบันทึกชื่อบัญชี",
+    "userNameIsNotEmail": "ชื่อบัญชีต้องเป็นอีเมล์เท่านั้น",
+    "passWordRequired": "กรุณาบันทึกรหัสผ่าน",
+    "userNotFound": "ไม่พบข้อมูลผู้ใช้"
+}

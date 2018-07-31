@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test CSS and Js.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="favicon.ico" rel="shortcut icon">
+        <style>
+            .common {
+                display: inline-block;
+                background: #003eff;
+                width: 100px;
+                height: 100px;
+                margin: 5px;
+            };
+        </style>
+    </head>
+    <body>
+        <div id="div1" class="common" onclick="ElementClick(event);"></div>
+        <h1 id="h1" onclick="ElementClick(event);">Sample H1 element.</h1>
+        <div id="div2" class="common" onclick="ElementClick(event);"></div>
+        
+        
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script>
+            function ElementClick(evt) {
+                console.log(evt.target.id + ' is clicked.');
+            };
+        </script>
+    </body>
+</html>

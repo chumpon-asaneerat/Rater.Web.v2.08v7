@@ -1,0 +1,28 @@
+.design-object {
+    display: block;
+    position: relative;
+}
+
+.obj1 {
+    background: red;
+    left: 100px;
+    top: 100px;
+    width: 100px;
+    height: 100px;
+}
+
+.obj2 {
+    background: green;
+    left: 300px;
+    top: 100px;
+    width: 100px;
+    height: 100px;
+}
+
+.obj3 {
+    background: blue;
+    left: 500px;
+    top: 100px;
+    width: 100px;
+    height: 100px;
+}
