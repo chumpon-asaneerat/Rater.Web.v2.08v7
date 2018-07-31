@@ -34,8 +34,10 @@
     "moment": "^2.22.0",
     "morgan": "^1.9.0",
     "mssql": "^3.3.0",
+    "nib": "^1.1.2",
     "riot": "^3.9.1",
     "serve-favicon": "^2.5.0",
-    "serve-static": "^1.13.2"
+    "serve-static": "^1.13.2",
+    "stylus": "^0.54.5"
   }
 }
