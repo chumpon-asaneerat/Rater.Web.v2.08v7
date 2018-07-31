@@ -1,0 +1,19 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveErrorMsgML",
+        "inputs": [
+            { "name": "errCode", "sqlType": "int", "default": null },
+            { "name": "langId", "sqlType": "nvarchar(3)", "default": null },
+            { "name": "message", "sqlType": "nvarchar(MAX)", "default": null }
+        ],
+        "outputs": [
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

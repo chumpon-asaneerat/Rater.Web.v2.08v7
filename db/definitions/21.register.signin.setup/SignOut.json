@@ -1,0 +1,17 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SignOut",
+        "inputs": [
+            { "name": "accessId", "sqlType": "nvarchar(30)", "default": null }
+        ],
+        "outputs": [
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }
+}

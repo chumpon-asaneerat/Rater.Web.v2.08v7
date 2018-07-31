@@ -1,0 +1,25 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "GetVoteSummaries",
+        "inputs": [
+            { "name": "langId", "sqlType": "nvarchar(3)", "default": null },
+            { "name": "customerId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "qSetId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "qSeq", "sqlType": "int", "default": null },
+            { "name": "beginDate", "sqlType": "datetime", "default": null },
+            { "name": "endDate", "sqlType": "datetime", "default": null },
+            { "name": "orgId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "deviceId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "userId", "sqlType": "nvarchar(30)", "default": null }
+        ],
+        "outputs": [
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

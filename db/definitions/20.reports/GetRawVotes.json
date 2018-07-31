@@ -1,0 +1,26 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "GetRawVotes",
+        "inputs": [
+            { "name": "langId", "sqlType": "nvarchar(3)", "default": null },
+            { "name": "customerId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "qSetId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "qSeq", "sqlType": "int", "default": null },
+            { "name": "beginDate", "sqlType": "datetime", "default": null },
+            { "name": "endDate", "sqlType": "datetime", "default": null }
+        ],
+        "outputs": [
+            { "name": "pageNum", "sqlType": "int", "default": 1 },
+            { "name": "rowsPerPage", "sqlType": "int", "default": 10 },
+            { "name": "totalRecords", "sqlType": "int", "default": 0 },
+            { "name": "maxPage", "sqlType": "int", "default": 0 },
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

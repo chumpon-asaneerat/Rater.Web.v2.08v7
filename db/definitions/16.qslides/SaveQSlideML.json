@@ -1,0 +1,21 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveQSlideML",
+        "inputs": [
+            { "name": "customerId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "qSetId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "qSeq", "sqlType": "int", "default": null },
+            { "name": "langId", "sqlType": "nvarchar(3)", "default": null },
+            { "name": "qText", "sqlType": "nvarchar(MAX)", "default": null }
+        ],
+        "outputs": [
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

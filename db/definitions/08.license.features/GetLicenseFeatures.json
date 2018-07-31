@@ -1,0 +1,14 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "GetLicenseFeatures",
+        "inputs": [
+            { "name": "langId", "sqlType": "nvarchar(3)", "default": null },
+            { "name": "licenseTypeId", "sqlType": "int", "default": null }
+        ]
+    }    
+}

@@ -1,0 +1,21 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveDevice",
+        "inputs": [
+            { "name": "customerId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "deviceTypeId", "sqlType": "int", "default": null },
+            { "name": "deviceName", "sqlType": "nvarchar(80)", "default": null },
+            { "name": "location", "sqlType": "nvarchar(150)", "default": null }
+        ],
+        "outputs": [
+            { "name": "deviceId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

@@ -1,0 +1,26 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveVote",
+        "inputs": [
+            { "name": "customerId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "orgId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "deviceId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "qSetId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "qSeq", "sqlType": "int", "default": null },
+            { "name": "userId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "voteDate", "sqlType": "datetime", "default": null },
+            { "name": "voteValue", "sqlType": "int", "default": null },
+            { "name": "remark", "sqlType": "nvarchar(100)", "default": null }
+        ],
+        "outputs": [
+            { "name": "voteSeq", "sqlType": "int", "default": null },
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }
+}

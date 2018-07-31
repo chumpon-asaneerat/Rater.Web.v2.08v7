@@ -1,0 +1,18 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SavePeriodUnit",
+        "inputs": [
+            { "name": "periodUnitId", "sqlType": "int", "default": null },
+            { "name": "descriptionEN", "sqlType": "nvarchar(50)", "default": null }
+        ],
+        "outputs": [
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

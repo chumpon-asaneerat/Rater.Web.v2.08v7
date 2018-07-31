@@ -1,0 +1,21 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveUserInfoML",
+        "inputs": [
+            { "name": "userId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "langId", "sqlType": "nvarchar(3)", "default": null },
+            { "name": "prefix", "sqlType": "nvarchar(10)", "default": null },
+            { "name": "firstName", "sqlType": "nvarchar(40)", "default": null },
+            { "name": "lastName", "sqlType": "nvarchar(50)", "default": null }
+        ],
+        "outputs": [
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

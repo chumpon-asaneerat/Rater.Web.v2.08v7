@@ -1,0 +1,16 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "GetRandomHexCode",
+        "inputs": [
+            { "name": "length", "sqlType": "int", "default": 6 }
+        ],
+        "outputs": [
+            { "name": "RandomString", "sqlType": "nvarchar(20)", "default": null }
+        ]
+    }    
+}

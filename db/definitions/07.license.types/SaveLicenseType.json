@@ -1,0 +1,24 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveLicenseType",
+        "inputs": [
+            { "name": "description", "sqlType": "nvarchar(100)", "default": null },
+            { "name": "adText", "sqlType": "nvarchar(MAX)", "default": null },
+            { "name": "periodUnitId", "sqlType": "int", "default": null },
+            { "name": "numberOfUnit", "sqlType": "int", "default": null },
+            { "name": "price", "sqlType": "decimal(18, 2)", "default": null },
+            { "name": "currSymbol", "sqlType": "nvarchar(5)", "default": null },
+            { "name": "currText", "sqlType": "nvarchar(20)", "default": null }
+        ],
+        "outputs": [
+            { "name": "licenseTypeId", "sqlType": "int", "default": null },
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

@@ -1,0 +1,24 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveQSet",
+        "inputs": [
+            { "name": "customerId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "description", "sqlType": "nvarchar(MAX)", "default": null },
+            { "name": "hasRemark", "sqlType": "bit", "default": 0 },
+            { "name": "displayMode", "sqlType": "tinyint", "default": 0 },
+            { "name": "isDefault", "sqlType": "bit", "default": 0 },
+            { "name": "beginDate", "sqlType": "datetime", "default": null },
+            { "name": "endDate", "sqlType": "datetime", "default": null }
+        ],
+        "outputs": [
+            { "name": "qSetId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

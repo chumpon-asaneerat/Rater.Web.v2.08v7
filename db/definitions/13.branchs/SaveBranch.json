@@ -1,0 +1,19 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveBranch",
+        "inputs": [
+            { "name": "customerId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "branchName", "sqlType": "nvarchar(80)", "default": null }
+        ],
+        "outputs": [
+            { "name": "branchId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

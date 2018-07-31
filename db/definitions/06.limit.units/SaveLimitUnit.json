@@ -1,0 +1,19 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveLimitUnit",
+        "inputs": [
+            { "name": "limitUnitId", "sqlType": "int", "default": null },
+            { "name": "descriptionEN", "sqlType": "nvarchar(50)", "default": null },
+            { "name": "unitTextEN", "sqlType": "nvarchar(20)", "default": null }
+        ],
+        "outputs": [
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

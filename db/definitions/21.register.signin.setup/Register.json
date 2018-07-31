@@ -1,0 +1,23 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "Register",
+        "inputs": [
+            { "name": "customerName", "sqlType": "nvarchar(50)", "default": null },
+            { "name": "userName", "sqlType": "nvarchar(50)", "default": null },
+            { "name": "passWord", "sqlType": "nvarchar(20)", "default": null }
+        ],
+        "outputs": [
+            { "name": "customerId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "memberId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "branchId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "orgId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }
+}

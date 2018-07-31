@@ -1,0 +1,19 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "CheckUsers",
+        "inputs": [
+            { "name": "langId", "sqlType": "nvarchar(3)", "default": null },
+            { "name": "userName", "sqlType": "nvarchar(50)", "default": null },
+            { "name": "passWord", "sqlType": "nvarchar(20)", "default": null }
+        ],
+        "outputs": [
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }
+}

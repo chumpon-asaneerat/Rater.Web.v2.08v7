@@ -1,0 +1,21 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveOrg",
+        "inputs": [
+            { "name": "customerId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "parentId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "branchId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "orgName", "sqlType": "nvarchar(80)", "default": null }
+        ],
+        "outputs": [
+            { "name": "orgId", "sqlType": "nvarchar(30)", "default": null },
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

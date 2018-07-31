@@ -1,0 +1,18 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "GetAccessUser",
+        "inputs": [
+            { "name": "langId", "sqlType": "nvarchar(3)", "default": null },
+            { "name": "accessId", "sqlType": "nvarchar(30)", "default": null }
+        ],
+        "outputs": [
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }
+}

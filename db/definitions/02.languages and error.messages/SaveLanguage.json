@@ -1,0 +1,22 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "SaveLanguage",
+        "inputs": [
+            { "name": "langId", "sqlType": "nvarchar(3)", "default": null },
+            { "name": "flagId", "sqlType": "nvarchar(3)", "default": null },
+            { "name": "descriptionEN", "sqlType": "nvarchar(50)", "default": null },
+            { "name": "descriptionNative", "sqlType": "nvarchar(50)", "default": null },            
+            { "name": "sortOrder", "sqlType": "int", "default": null },
+            { "name": "enabled", "sqlType": "bit", "default": null }
+        ],
+        "outputs": [
+            { "name": "errNum", "sqlType": "int", "default": null },
+            { "name": "errMsg", "sqlType": "nvarchar(max)", "default": null }
+        ]
+    }    
+}

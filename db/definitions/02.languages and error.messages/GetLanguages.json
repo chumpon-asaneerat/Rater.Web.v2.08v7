@@ -1,0 +1,13 @@
+{
+    "schema": {
+        "type": "database",
+        "version": "1.0.0"
+    },
+    "definition": {
+        "mode": "sp",
+        "name": "GetLanguages",
+        "inputs": [
+            { "name": "enabled", "sqlType": "bit", "default": null }
+        ]
+    }    
+}
