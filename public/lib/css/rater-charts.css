@@ -1,0 +1,51 @@
+/*
+@import 'https://code.highcharts.com/css/highcharts.css';
+*/
+
+/*
+.highcharts-color-0 {
+    fill: indigo;
+    stroke: #f45b5b;
+}
+*/
+
+.highcharts-background {
+    fill: transparent;
+    stroke: silver;
+    stroke-width: 2px;
+}
+
+/* Titles */
+
+.highcharts-title {
+    fill: black;
+    font-size: 12px;
+    font-weight: bold;
+    width: 94%;
+    padding: 0px 10px;
+    border: 1px solid cornflowerblue;
+    border-radius: 5px;
+    background-color: cornflowerblue;
+}
+
+.lhsTitle {
+    float:left;
+    color: white;
+}
+
+.rhsTitle {
+    float:right;
+    color: white;
+}
+
+.bar-chart {
+    /*
+    position: relative;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    */
+    margin: 0 auto;
+    padding: 10px;
+}

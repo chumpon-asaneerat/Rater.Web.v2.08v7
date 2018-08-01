@@ -92,7 +92,8 @@ body {
 }
 
 .content,
-.dashboard-content {
+.dashboard-content,
+.search-content {
     position: absolute;
     top: 5px;
     bottom: 5px;
@@ -104,6 +105,16 @@ body {
     /* background: whitesmoke; */
     z-index: 1;
     overflow: hidden;
+}
+
+.count-info {
+    padding: 2px;
+    color: gainsboro;
+    font-size: 1.9em;
+    text-align: center;
+    background: #ff7c00;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 800px) {
@@ -131,7 +142,8 @@ body {
         display: block;
     }
     .content,
-    .dashboard-content {
+    .dashboard-content,
+    .search-content {
         /* margin-left: 150px; */
         left: 155px;
     }
@@ -161,7 +173,8 @@ body {
         display: none;
     }
     .content,
-    .dashboard-content {
+    .dashboard-content,
+    .search-content {
         /* margin-left: 55px; */
         left: 60px;
     }

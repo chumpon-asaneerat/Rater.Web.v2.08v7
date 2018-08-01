@@ -20,12 +20,21 @@
     <link href="/dist/css/emojisymbol.min.css" rel="stylesheet" type="text/css" />
     <link href="/dist/css/animate.min.css" rel="stylesheet" type="text/css" />
     <link href="/dist/css/simplebar.min.css" rel="stylesheet" type="text/css" />
+
+    <!--
+    <link href="/dist/css/highcharts.css" rel="stylesheet" type="text/css" />
+    -->
     <!-- css for rater-client (browser) -->
     <link href="/lib/css/rater-client.css" rel="stylesheet" type="text/css" />
+    <!--
+    <link href="/lib/css/rater-charts.css" rel="stylesheet" type="text/css" />
+    -->
 </head>
 <body>
     <div data-is="admin-page">
-        <div data-is="admin-home-dashboard" />
+        <div data-is="admin-home-dashboard">
+            <canvas id="myChart" width="400" height="200" style="margin 5px; border:1px solid #000000;"></canvas>
+        </div>        
     </div>
 
     <script src="/dist/js/jquery.min.js"></script>
@@ -36,8 +45,16 @@
     <script src="/dist/js/client.min.js"></script>
     <script src="/dist/js/moment.min.js"></script>
     <script src="/dist/js/simplebar.min.js"></script>
+    <script src="/dist/js/chart.min.js"></script>
+
+    <!--
+    <script src="/dist/js/highcharts.js"></script>
+    <script src="/dist/js/modules/exporting.js"></script>
+    <script src="/dist/js/modules/export-data.js"></script>
+    -->
 
     <script src="/dist/js/riot.min.js"></script>
+
 
     <script src="/lib/js/nlib.js"></script>
     <script src="/lib/js/api.js"></script>
@@ -45,5 +62,8 @@
     <script src="/lib/js/tags.js"></script>
     <script src="{{baseUrl}}/js/model.js"></script>
     <script src="{{baseUrl}}/js/app.js"></script>
+
+    <script>
+    </script>
 </body>
 </html>

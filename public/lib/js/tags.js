@@ -41,6 +41,8 @@ riot.tag2('page-nav-bar', '<div class="navbar navbar-expand-sm fixed-top navbar-
             e.preventUpdate = true;
         };
 });
+riot.tag2('search-content', '<yield></yield>', '', 'class="search-content"', function(opts) {
+});
 riot.tag2('sidebars', '<virtual if="{(page.model.sidebar && page.model.sidebar.items && page.model.sidebar.items.length > 0)}"> <ul> <virtual each="{item in page.model.sidebar.items}"> <li class="{(item.active === \'active\' || item.active === \'true\') ? \'active\' : \'\'}"> <a href="{item.url}"> <virtual if="{item.type === \'font\'}"> <span class="fas fa-{item.src}"></span> <label>{item.text}</label> </virtual> <virtual if="{item.type === \'image\'}"> <img riot-src="{item.src}"> <label>{item.text}</label> </virtual> </a> </li> </virtual> </ul> </virtual>', '', 'class="sidebar"', function(opts) {
 
         let self = this;
@@ -50,6 +52,8 @@ riot.tag2('sidebars', '<virtual if="{(page.model.sidebar && page.model.sidebar.i
 });
 
 riot.tag2('admin-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
+});
+riot.tag2('votesummary-page', '<div data-is="sidebars" data-simplebar></div> <div data-is="search-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
 });
 riot.tag2('admin-page', '<div data-is="page-nav-bar"></div> <div data-is="page-content-absolute" data-simplebar> <yield></yield> </div> <div data-is="page-footer"></div>', '', '', function(opts) {
 });
