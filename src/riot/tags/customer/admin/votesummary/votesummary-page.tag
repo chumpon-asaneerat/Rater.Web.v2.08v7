@@ -62,8 +62,49 @@
             color:red;
             transition: all 0.1s linear;
         }
+        .autocomplete-items {
+            position: absolute;
+            border: 1px solid #d4d4d4;
+            border-bottom: none;
+            border-top: none;
+            z-index: 99;
+            /*position the autocomplete items to be the same width as the container:*/
+            top: 100%;
+            left: 0;
+            right: 0;
+        }
+        .autocomplete-items div {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #fff; 
+            border-bottom: 1px solid #d4d4d4; 
+        }
+        .autocomplete-items div:hover {
+            /*when hovering an item:*/
+            background-color: #e9e9e9; 
+        }
+        .autocomplete-active {
+            /*when navigating through the items using the arrow keys:*/
+            background-color: DodgerBlue !important; 
+            color: #ffffff; 
+        }
     </style>
     <script>
+        let self = this;
+        this.sources = [];
+
+        this.initSource = () => {
+            /*
+            var $root = $(self.root);
+            console.log($root);
+            var $inputs = $root.find('.search-content .tags-input .search-input')[0];
+            console.log($inputs);
+            */
+           //var $inputs = $(".tags-input");
+           var tagsDIV = $(".tags-input", self.root)[0];
+           console.log(tagsDIV);
+        };
+
         /*
         [].forEach.call(document.getElementsByClassName('tags-input'), function (el) {
             let hiddenInput = document.createElement('input'),
@@ -140,6 +181,22 @@
             function filterTag(tag) {
                 return tag.replace(/[^\w -]/g, '').trim().replace(/\W+/g, '-');
             }
+        });
+        */
+
+        this.on('mount', function () {
+            //console.log('mount....');
+            self.initSource();
+        });
+        /*
+        this.on('update', function () {
+            console.log('update....');
+            self.initSource();
+        });
+
+        this.on('updated', function () {
+            console.log('updated....');
+            self.initSource();
         });
         */
     </script>
