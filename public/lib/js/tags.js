@@ -53,20 +53,34 @@ riot.tag2('sidebars', '<virtual if="{(page.model.sidebar && page.model.sidebar.i
 
 riot.tag2('admin-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
 });
-riot.tag2('votesummary-page', '<div data-is="sidebars" data-simplebar></div> <div data-is="search-content" data-simplebar> <div class="tags-input" data-name="tag-input"> <span class="tag">ชุดคำถามที่ 1<span class="close"></span></span> <span class="tag">ชุดคำถามที่ 2<span class="close"></span></span> <span class="tag">ชุดคำถามที่ 3<span class="close"></span></span> <input class="search-input" type="text"> <span class="clear-input"></span> </div> <div id="container1" class="bar-chart"></div> </div>', 'votesummary-page .tags-input,[data-is="votesummary-page"] .tags-input{ margin: 0 auto; padding: 1px; border: 1px solid #333; display: inline-block; font-size: 0.5em; } votesummary-page .tags-input .tag,[data-is="votesummary-page"] .tags-input .tag{ margin: 3px auto; padding: 5px; display: inline-block; color:white; background-color: cornflowerblue; cursor: pointer; } votesummary-page .tags-input .tag:hover,[data-is="votesummary-page"] .tags-input .tag:hover{ color:yellow; background-color: dimgray; transition: all 0.1s linear; } votesummary-page .tags-input .tag .close::after,[data-is="votesummary-page"] .tags-input .tag .close::after{ content: \'x\'; font-weight: bold; display: inline-block; transform: scale(0.5) translateY(-5px); margin-left: 3px; color: white; } votesummary-page .tags-input .tag .close:hover::after,[data-is="votesummary-page"] .tags-input .tag .close:hover::after{ color:red; transition: all 0.1s linear; } votesummary-page .tags-input .search-input,[data-is="votesummary-page"] .tags-input .search-input{ border: 0; outline: 0; padding: 1px; } votesummary-page .tags-input .clear-input::after,[data-is="votesummary-page"] .tags-input .clear-input::after{ margin: 5px auto; margin-top: 0px; margin-right: 10px; content: \'x\'; font-weight: bold; display: inline-block; color: black; cursor: pointer; } votesummary-page .tags-input .clear-input:hover::after,[data-is="votesummary-page"] .tags-input .clear-input:hover::after{ color:red; transition: all 0.1s linear; } votesummary-page .autocomplete-items,[data-is="votesummary-page"] .autocomplete-items{ position: absolute; border: 1px solid #d4d4d4; border-bottom: none; border-top: none; z-index: 99; top: 100%; left: 0; right: 0; } votesummary-page .autocomplete-items div,[data-is="votesummary-page"] .autocomplete-items div{ padding: 10px; cursor: pointer; background-color: #fff; border-bottom: 1px solid #d4d4d4; } votesummary-page .autocomplete-items div:hover,[data-is="votesummary-page"] .autocomplete-items div:hover{ background-color: #e9e9e9; } votesummary-page .autocomplete-active,[data-is="votesummary-page"] .autocomplete-active{ background-color: DodgerBlue !important; color: #ffffff; }', '', function(opts) {
+riot.tag2('votesummary-search-box', '<div> <textarea ref="jsonSearch" riot-value="{value}"></textarea> <button onclick="{onXXX}">Search</button> </div>', 'votesummary-search-box,[data-is="votesummary-search-box"]{ margin: 0 auto; padding: 15px; font-size: 12pt; } votesummary-search-box textarea,[data-is="votesummary-search-box"] textarea{ width: 85%; height: 100px; } votesummary-search-box button,[data-is="votesummary-search-box"] button{ margin: 10px, 0 auto; padding: 2px 15px; vertical-align: top; }', '', function(opts) {
         let self = this;
-        this.sources = [];
 
-        this.initSource = () => {
+        this.value = JSON.stringify(JSON.parse(`{
+            "LangId": "TH",
+            "CustomerID": "EDL-C2018080001",
+            "QSetId": "QS00001",
+            "QSeq": "1",
+            "OrgId": "O0011",
+            "BeginDate": "2018-08-01",
+            "EndDate": "2018-08-01"
+        }`), null, 4);
 
-           var tagsDIV = $(".tags-input", self.root)[0];
-           console.log(tagsDIV);
+        let onModelLoaded = (sender, evtData) => {
+
+            self.update();
         };
+        page.modelLoaded.add(onModelLoaded);
 
-        this.on('mount', function () {
+        this.onXXX = (e) => {
+            e.preventDefault();
+            var $jsonInput = $(this.refs['jsonSearch']);
+            var criteria = JSON.parse($jsonInput.val());
 
-            self.initSource();
-        });
+        };
+});
+riot.tag2('votesummary-search-page', '<div data-is="sidebars" data-simplebar></div> <div data-is="search-content" data-simplebar> <yield></yield> </div>', 'votesummary-search-page .tags-input,[data-is="votesummary-search-page"] .tags-input{ margin: 0 auto; padding: 1px; border: 1px solid #333; display: inline-block; font-size: 0.5em; } votesummary-search-page .tags-input .tag,[data-is="votesummary-search-page"] .tags-input .tag{ margin: 3px auto; padding: 5px; display: inline-block; color:white; background-color: cornflowerblue; cursor: pointer; } votesummary-search-page .tags-input .tag:hover,[data-is="votesummary-search-page"] .tags-input .tag:hover{ color:yellow; background-color: dimgray; transition: all 0.1s linear; } votesummary-search-page .tags-input .tag .close::after,[data-is="votesummary-search-page"] .tags-input .tag .close::after{ content: \'x\'; font-weight: bold; display: inline-block; transform: scale(0.5) translateY(-5px); margin-left: 3px; color: white; } votesummary-search-page .tags-input .tag .close:hover::after,[data-is="votesummary-search-page"] .tags-input .tag .close:hover::after{ color:red; transition: all 0.1s linear; } votesummary-search-page .tags-input .search-input,[data-is="votesummary-search-page"] .tags-input .search-input{ border: 0; outline: 0; padding: 1px; } votesummary-search-page .tags-input .clear-input::after,[data-is="votesummary-search-page"] .tags-input .clear-input::after{ margin: 5px auto; margin-top: 0px; margin-right: 10px; content: \'x\'; font-weight: bold; display: inline-block; color: black; cursor: pointer; } votesummary-search-page .tags-input .clear-input:hover::after,[data-is="votesummary-search-page"] .tags-input .clear-input:hover::after{ color:red; transition: all 0.1s linear; } votesummary-search-page .autocomplete-items,[data-is="votesummary-search-page"] .autocomplete-items{ position: absolute; border: 1px solid #d4d4d4; border-bottom: none; border-top: none; z-index: 99; top: 100%; left: 0; right: 0; } votesummary-search-page .autocomplete-items div,[data-is="votesummary-search-page"] .autocomplete-items div{ padding: 10px; cursor: pointer; background-color: #fff; border-bottom: 1px solid #d4d4d4; } votesummary-search-page .autocomplete-items div:hover,[data-is="votesummary-search-page"] .autocomplete-items div:hover{ background-color: #e9e9e9; } votesummary-search-page .autocomplete-active,[data-is="votesummary-search-page"] .autocomplete-active{ background-color: DodgerBlue !important; color: #ffffff; }', '', function(opts) {
+        let self = this;
 
 });
 riot.tag2('admin-page', '<div data-is="page-nav-bar"></div> <div data-is="page-content-absolute" data-simplebar> <yield></yield> </div> <div data-is="page-footer"></div>', '', '', function(opts) {
