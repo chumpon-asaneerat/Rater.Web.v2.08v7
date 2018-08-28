@@ -341,6 +341,88 @@ class LanguageService {
 
 //#endregion
 
+//#region ReportService
+
+class ReportService {
+    constructor() {
+        //this._criteria = null;
+        this._onSearch = new EventHandler();
+    };
+
+    search(criteria) {
+        let self = this;
+        //self._criteria = criteria;
+        //self._onSearch.invoke(self, EventArgs.Empty);
+        self._onSearch.invoke(self, criteria);
+    };
+    /*
+    get criteria() {
+        return this._criteria;
+    };
+    */
+
+    get onSearch() {
+        return this._onSearch;
+    };
+}
+
+; (function () {
+    //console.log('Init language service...');
+    window.report = window.report || new ReportService();
+})();
+
+//#endregion
+
+//#region Finder
+
+class Finder {
+    constructor() {
+        this._result = null;
+        this._searchCompleted = new EventHandler();
+    };
+
+    search(criteria) {
+        let self = this;
+        let param = {
+            "LangId": lang.langId,
+            "CustomerID": criteria.CustomerID,
+            "QSetId": criteria.QSetId,
+            "QSeq": criteria.QSeq,
+            "OrgId": criteria.OrgId,
+            "BeginDate": criteria.BeginDate,
+            "EndDate": criteria.EndDate
+        };
+        let fn = api.report.getVoteSummary(param);
+        $.when(fn).then((r) => {
+            if (!r || !r.errors) {
+                //console.log('No data returns.');
+                self._result = null;
+            }
+            if (r.errors.hasError) {
+                //console.log(r.errors); 
+                self._result = null;
+            }
+            if (!r.data || r.data.length <= 0) {
+                //console.log('No data found.'); 
+                self._result = null;
+            }
+            //console.log(r.data);
+            self._result = r.data;
+            self._searchCompleted.invoke(self, EventArgs.Empty);
+        });
+    };
+
+    get result() {
+        return this._result;
+    };
+
+    get searchCompleted() {
+        return this._searchCompleted;
+    };
+};
+
+//#endregion
+
 //#region RaterPage
 
 class RaterPage {

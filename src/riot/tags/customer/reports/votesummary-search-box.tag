@@ -1,13 +1,20 @@
 <votesummary-search-box>
     <div>
+        <label>Search</label>
         <textarea ref="jsonSearch" value="{value}"></textarea>
-        <button onclick="{onXXX}">Search</button>
+        <button onclick="{onSearch}">Search</button>
     </div>
     <style>
         :scope {
             margin: 0 auto;
             padding: 15px;
             font-size: 12pt;
+        }
+
+        label {
+            display: block;
+            font-size: 14pt;
+            color: green;
         }
 
         textarea {
@@ -25,7 +32,6 @@
         let self = this;
 
         this.value = JSON.stringify(JSON.parse(`{
-            "LangId": "TH",
             "CustomerID": "EDL-C2018080001",
             "QSetId": "QS00001",
             "QSeq": "1",
@@ -40,11 +46,12 @@
         };
         page.modelLoaded.add(onModelLoaded);
 
-        this.onXXX = (e) => {
+        this.onSearch = (e) => {
             e.preventDefault();
             var $jsonInput = $(this.refs['jsonSearch']);
             var criteria = JSON.parse($jsonInput.val());
             //console.log(criteria);
+            report.search(criteria);
         };
     </script>
 </votesummary-search-box>

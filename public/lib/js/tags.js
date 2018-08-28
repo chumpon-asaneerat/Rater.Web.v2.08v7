@@ -53,7 +53,23 @@ riot.tag2('sidebars', '<virtual if="{(page.model.sidebar && page.model.sidebar.i
 
 riot.tag2('admin-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
 });
-riot.tag2('votesummary-search-box', '<div> <textarea ref="jsonSearch" riot-value="{value}"></textarea> <button onclick="{onXXX}">Search</button> </div>', 'votesummary-search-box,[data-is="votesummary-search-box"]{ margin: 0 auto; padding: 15px; font-size: 12pt; } votesummary-search-box textarea,[data-is="votesummary-search-box"] textarea{ width: 85%; height: 100px; } votesummary-search-box button,[data-is="votesummary-search-box"] button{ margin: 10px, 0 auto; padding: 2px 15px; vertical-align: top; }', '', function(opts) {
+riot.tag2('votesummary-search-page', '<div data-is="sidebars" data-simplebar></div> <div data-is="search-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
+});
+riot.tag2('admin-page', '<div data-is="page-nav-bar"></div> <div data-is="page-content-absolute" data-simplebar> <yield></yield> </div> <div data-is="page-footer"></div>', '', '', function(opts) {
+});
+riot.tag2('device-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
+});
+riot.tag2('device-page', '<div data-is="page-nav-bar"></div> <div data-is="page-content-absolute" data-simplebar> <yield></yield> </div> <div data-is="page-footer"></div>', '', '', function(opts) {
+});
+riot.tag2('exclusive-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
+});
+riot.tag2('exclusive-page', '<div data-is="page-nav-bar"></div> <div data-is="page-content-absolute" data-simplebar> <yield></yield> </div> <div data-is="page-footer"></div>', '', '', function(opts) {
+});
+riot.tag2('question-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
+});
+riot.tag2('question-page', '<div data-is="page-nav-bar"></div> <div data-is="page-content-absolute" data-simplebar> <yield></yield> </div> <div data-is="page-footer"></div>', '', '', function(opts) {
+});
+riot.tag2('rawvote-search-box', '<div> <textarea ref="jsonSearch" riot-value="{value}"></textarea> <button onclick="{onSearch}">Search</button> </div>', 'rawvote-search-box,[data-is="rawvote-search-box"]{ margin: 0 auto; padding: 15px; font-size: 12pt; } rawvote-search-box textarea,[data-is="rawvote-search-box"] textarea{ width: 85%; height: 100px; } rawvote-search-box button,[data-is="rawvote-search-box"] button{ margin: 10px, 0 auto; padding: 2px 15px; vertical-align: top; } rawvote-search-box .tags-input,[data-is="rawvote-search-box"] .tags-input{ margin: 0 auto; padding: 1px; border: 1px solid #333; display: inline-block; font-size: 0.5em; } rawvote-search-box .tags-input .tag,[data-is="rawvote-search-box"] .tags-input .tag{ margin: 3px auto; padding: 5px; display: inline-block; color:white; background-color: cornflowerblue; cursor: pointer; } rawvote-search-box .tags-input .tag:hover,[data-is="rawvote-search-box"] .tags-input .tag:hover{ color:yellow; background-color: dimgray; transition: all 0.1s linear; } rawvote-search-box .tags-input .tag .close::after,[data-is="rawvote-search-box"] .tags-input .tag .close::after{ content: \'x\'; font-weight: bold; display: inline-block; transform: scale(0.5) translateY(-5px); margin-left: 3px; color: white; } rawvote-search-box .tags-input .tag .close:hover::after,[data-is="rawvote-search-box"] .tags-input .tag .close:hover::after{ color:red; transition: all 0.1s linear; } rawvote-search-box .tags-input .search-input,[data-is="rawvote-search-box"] .tags-input .search-input{ border: 0; outline: 0; padding: 1px; } rawvote-search-box .tags-input .clear-input::after,[data-is="rawvote-search-box"] .tags-input .clear-input::after{ margin: 5px auto; margin-top: 0px; margin-right: 10px; content: \'x\'; font-weight: bold; display: inline-block; color: black; cursor: pointer; } rawvote-search-box .tags-input .clear-input:hover::after,[data-is="rawvote-search-box"] .tags-input .clear-input:hover::after{ color:red; transition: all 0.1s linear; } rawvote-search-box .autocomplete-items,[data-is="rawvote-search-box"] .autocomplete-items{ position: absolute; border: 1px solid #d4d4d4; border-bottom: none; border-top: none; z-index: 99; top: 100%; left: 0; right: 0; } rawvote-search-box .autocomplete-items div,[data-is="rawvote-search-box"] .autocomplete-items div{ padding: 10px; cursor: pointer; background-color: #fff; border-bottom: 1px solid #d4d4d4; } rawvote-search-box .autocomplete-items div:hover,[data-is="rawvote-search-box"] .autocomplete-items div:hover{ background-color: #e9e9e9; } rawvote-search-box .autocomplete-active,[data-is="rawvote-search-box"] .autocomplete-active{ background-color: DodgerBlue !important; color: #ffffff; }', '', function(opts) {
         let self = this;
 
         this.value = JSON.stringify(JSON.parse(`{
@@ -72,30 +88,261 @@ riot.tag2('votesummary-search-box', '<div> <textarea ref="jsonSearch" riot-value
         };
         page.modelLoaded.add(onModelLoaded);
 
-        this.onXXX = (e) => {
+        this.onSearch = (e) => {
             e.preventDefault();
             var $jsonInput = $(this.refs['jsonSearch']);
             var criteria = JSON.parse($jsonInput.val());
 
         };
 });
-riot.tag2('votesummary-search-page', '<div data-is="sidebars" data-simplebar></div> <div data-is="search-content" data-simplebar> <yield></yield> </div>', 'votesummary-search-page .tags-input,[data-is="votesummary-search-page"] .tags-input{ margin: 0 auto; padding: 1px; border: 1px solid #333; display: inline-block; font-size: 0.5em; } votesummary-search-page .tags-input .tag,[data-is="votesummary-search-page"] .tags-input .tag{ margin: 3px auto; padding: 5px; display: inline-block; color:white; background-color: cornflowerblue; cursor: pointer; } votesummary-search-page .tags-input .tag:hover,[data-is="votesummary-search-page"] .tags-input .tag:hover{ color:yellow; background-color: dimgray; transition: all 0.1s linear; } votesummary-search-page .tags-input .tag .close::after,[data-is="votesummary-search-page"] .tags-input .tag .close::after{ content: \'x\'; font-weight: bold; display: inline-block; transform: scale(0.5) translateY(-5px); margin-left: 3px; color: white; } votesummary-search-page .tags-input .tag .close:hover::after,[data-is="votesummary-search-page"] .tags-input .tag .close:hover::after{ color:red; transition: all 0.1s linear; } votesummary-search-page .tags-input .search-input,[data-is="votesummary-search-page"] .tags-input .search-input{ border: 0; outline: 0; padding: 1px; } votesummary-search-page .tags-input .clear-input::after,[data-is="votesummary-search-page"] .tags-input .clear-input::after{ margin: 5px auto; margin-top: 0px; margin-right: 10px; content: \'x\'; font-weight: bold; display: inline-block; color: black; cursor: pointer; } votesummary-search-page .tags-input .clear-input:hover::after,[data-is="votesummary-search-page"] .tags-input .clear-input:hover::after{ color:red; transition: all 0.1s linear; } votesummary-search-page .autocomplete-items,[data-is="votesummary-search-page"] .autocomplete-items{ position: absolute; border: 1px solid #d4d4d4; border-bottom: none; border-top: none; z-index: 99; top: 100%; left: 0; right: 0; } votesummary-search-page .autocomplete-items div,[data-is="votesummary-search-page"] .autocomplete-items div{ padding: 10px; cursor: pointer; background-color: #fff; border-bottom: 1px solid #d4d4d4; } votesummary-search-page .autocomplete-items div:hover,[data-is="votesummary-search-page"] .autocomplete-items div:hover{ background-color: #e9e9e9; } votesummary-search-page .autocomplete-active,[data-is="votesummary-search-page"] .autocomplete-active{ background-color: DodgerBlue !important; color: #ffffff; }', '', function(opts) {
+riot.tag2('votesummary-bar-chart', '', '', '', function(opts) {
         let self = this;
 
+        this.renderChart = (result) => {
+            let chartSetup = {
+                backgroundColor: '#FCFFC5',
+                type: 'column'
+            };
+
+            let chartTitle = {
+
+                useHTML: true,
+                text: '<div class="lhsTitle">My custom title</div><div class="rhsTitle">Right content</div>',
+                align: 'left',
+                x: 10
+            };
+            let chartSubTitle = {
+
+            };
+            let chartXAxis = {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                crosshair: true
+            };
+            let chartYAxis = {
+                min: 0,
+                max: 4,
+                title: {
+                    text: 'Average'
+                }
+            };
+            let chartToolTip = {
+
+                shared: true
+            };
+
+            let chartSeries = [{
+                name: 'EDL',
+                data: [2.34, 3.42, 2.61, 3.19, 2.98, 2.56, 2.87, 2.43, 3.34, 3.33, 2.75, 3.41]
+            }, {
+                name: 'Marketting',
+                data: [3.34, 2.42, 3.61, 1.19, 3.98, 3.56, 3.87, 3.45, 3.34, 1.33, 3.75, 1.41]
+            }, {
+                name: 'Supports',
+                data: [2.34, 3.42, 2.61, 2.19, 2.98, 2.56, 2.87, 2.41, 1.34, 3.33, 2.75, 2.41]
+            }, {
+                name: 'Engineering',
+                data: [3.11, 2.11, 3.11, 2.11, 3.11, 2.11, 3.11, 3.11, 2.11, 3.11, 2.11, 3.11]
+            }];
+
+            let chartInfo = {
+                chart: chartSetup,
+                title: chartTitle,
+                subtitle: chartSubTitle,
+                xAxis: chartXAxis,
+                yAxis: chartYAxis,
+                tooltip: chartToolTip,
+                series: chartSeries
+            };
+
+            let $outChart = $(this.refs['output-chart']);
+
+            Highcharts.chart($outChart[0], chartInfo);
+        };
 });
-riot.tag2('admin-page', '<div data-is="page-nav-bar"></div> <div data-is="page-content-absolute" data-simplebar> <yield></yield> </div> <div data-is="page-footer"></div>', '', '', function(opts) {
+riot.tag2('votesummary-pie-chart', '<div ref="output-chart" class="bar-chart"></div>', '', 'class="col-4"', function(opts) {
+        let self = this;
+        this.finder = new Finder();
+
+        let onModelLoaded = (sender, evtData) => {
+
+            self.search();
+            self.update();
+        };
+        page.modelLoaded.add(onModelLoaded);
+
+        let onSearchCompleted = (sender, evtData) => {
+
+            self.renderChart(self.finder.result);
+        };
+        this.finder.searchCompleted.add(onSearchCompleted);
+
+        this.on('mount', function () {
+
+            self.search();
+        });
+
+        this.search = () => {
+            let criteria = {
+                CustomerID: opts.customerId,
+                QSetId: opts.qsetId,
+                QSeq: opts.qseq,
+                OrgId: opts.orgId,
+                BeginDate: opts.beginDate,
+                EndDate: opts.endDate
+            };
+
+            self.finder.search(criteria);
+        };
+
+        this.renderChart = (result) => {
+            let row0 = null;
+            if (!result || result.length <= 0) {
+                console.log('No result found.');
+            }
+            else {
+                row0 = result[0]
+            }
+            let orgName = (row0) ? row0.OrgNameNative : 'Not found';
+            let branchName = (row0) ? row0.BranchNameNative : '-';
+
+            let chartSetup = {
+                backgroundColor: '#FCFFC5',
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            };
+
+            let chartTitle = {
+                useHTML: true,
+                text: '<div class="lhsTitle">' + orgName + ' (' + branchName + ')' + '</div>',
+                align: 'left',
+                x: 10
+            };
+
+            let chartToolTip = {
+
+                pointFormat: '<b>{point.percentage:.2f}%</b>',
+                shared: true
+            };
+
+            let chartPlotOpts = {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b><br/>{point.percentage:.2f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            };
+
+            let items = [];
+            if (result) {
+                result.forEach(row => {
+                    let item = {
+                        name: 'Choice ' + row.Choice,
+                        y: row.Pct
+                    };
+                    items.push(item);
+                });
+            }
+
+            let chartSeries = [{
+                name: orgName,
+                data: items
+            }];
+
+            let chartInfo = {
+                chart: chartSetup,
+                title: chartTitle,
+                plotOptions: chartPlotOpts,
+                tooltip: chartToolTip,
+                series: chartSeries
+            };
+
+            let $outChart = $(this.refs['output-chart']);
+
+            Highcharts.chart($outChart[0], chartInfo);
+        };
 });
-riot.tag2('device-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
+riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row"> <yield></yield> </div>', '', 'class="container-fluid"', function(opts) {
+        let self = this;
+        this.tags = [];
+
+        let onModelLoaded = (sender, evtData) => {
+
+            self.update();
+        };
+        page.modelLoaded.add(onModelLoaded);
+
+        let onSearch = (sender, evtData) => {
+
+            let orgs = [];
+            let criteria = evtData;
+            if (criteria.OrgId && criteria.OrgId instanceof Array && criteria.OrgId.length > 0) {
+
+                orgs = criteria.OrgId;
+            }
+            else if (criteria.OrgId && criteria.OrgId.trim().length > 0) {
+
+                orgs = criteria.OrgId.split(",");
+            }
+            else {
+
+                orgs.push('');
+            }
+
+            let $container = $(this.refs['chart-container']);
+
+            orgs.forEach(item => {
+                criteria.OrgId = item.trim();
+
+                let elChart = document.createElement('div');
+                elChart.setAttribute(`data-is`, `votesummary-pie-chart`)
+                elChart.setAttribute(`customer-id`, criteria.CustomerID);
+                elChart.setAttribute(`qset-id`, criteria.QSetId);
+                elChart.setAttribute(`qseq`, criteria.QSeq);
+                elChart.setAttribute(`org-Id`, criteria.OrgId);
+                elChart.setAttribute(`begin-date`, criteria.BeginDate);
+                elChart.setAttribute(`end-date`, criteria.EndDate);
+
+                $container.append(elChart);
+
+                riot.mount(elChart, 'votesummary-pie-chart');
+            });
+        };
+        report.onSearch.add(onSearch);
+
 });
-riot.tag2('device-page', '<div data-is="page-nav-bar"></div> <div data-is="page-content-absolute" data-simplebar> <yield></yield> </div> <div data-is="page-footer"></div>', '', '', function(opts) {
-});
-riot.tag2('exclusive-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
-});
-riot.tag2('exclusive-page', '<div data-is="page-nav-bar"></div> <div data-is="page-content-absolute" data-simplebar> <yield></yield> </div> <div data-is="page-footer"></div>', '', '', function(opts) {
-});
-riot.tag2('question-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
-});
-riot.tag2('question-page', '<div data-is="page-nav-bar"></div> <div data-is="page-content-absolute" data-simplebar> <yield></yield> </div> <div data-is="page-footer"></div>', '', '', function(opts) {
+riot.tag2('votesummary-search-box', '<div> <label>Search</label> <textarea ref="jsonSearch" riot-value="{value}"></textarea> <button onclick="{onSearch}">Search</button> </div>', 'votesummary-search-box,[data-is="votesummary-search-box"]{ margin: 0 auto; padding: 15px; font-size: 12pt; } votesummary-search-box label,[data-is="votesummary-search-box"] label{ display: block; font-size: 14pt; color: green; } votesummary-search-box textarea,[data-is="votesummary-search-box"] textarea{ width: 85%; height: 100px; } votesummary-search-box button,[data-is="votesummary-search-box"] button{ margin: 10px, 0 auto; padding: 2px 15px; vertical-align: top; }', '', function(opts) {
+        let self = this;
+
+        this.value = JSON.stringify(JSON.parse(`{
+            "CustomerID": "EDL-C2018080001",
+            "QSetId": "QS00001",
+            "QSeq": "1",
+            "OrgId": "O0011",
+            "BeginDate": "2018-08-01",
+            "EndDate": "2018-08-01"
+        }`), null, 4);
+
+        let onModelLoaded = (sender, evtData) => {
+
+            self.update();
+        };
+        page.modelLoaded.add(onModelLoaded);
+
+        this.onSearch = (e) => {
+            e.preventDefault();
+            var $jsonInput = $(this.refs['jsonSearch']);
+            var criteria = JSON.parse($jsonInput.val());
+
+            report.search(criteria);
+        };
 });
 riot.tag2('staff-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
 });

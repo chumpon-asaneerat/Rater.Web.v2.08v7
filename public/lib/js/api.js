@@ -130,6 +130,29 @@ class ModelAPI extends API {
 
 //#endregion
 
+//#region Report API class
+
+class ReportAPI extends API {
+    constructor() {
+        super();
+    };
+
+    get functions() {
+        return [
+            // reports related functions.
+            { name: "getRawVotes", url: "/api/reports/raw-votes/search" },
+            { name: "getVoteSummary", url: "/api/reports/vote-summaries/search" }
+        ];
+    };
+};
+
+; (function () {
+    // Init in api namespace.
+    window.api.report = window.api.report || new ReportAPI();
+})();
+
+//#endregion
+
 ; (function () {
 
 })();
