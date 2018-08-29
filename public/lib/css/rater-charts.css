@@ -11,8 +11,11 @@
 
 .highcharts-background {
     fill: transparent;
+    /* hide border */
+    /*
     stroke: silver;
     stroke-width: 2px;
+    */
 }
 
 /* Titles */
@@ -29,12 +32,12 @@
 }
 
 .lhsTitle {
-    float:left;
+    float: left;
     color: white;
 }
 
 .rhsTitle {
-    float:right;
+    float: right;
     color: white;
 }
 
@@ -47,5 +50,20 @@
     bottom: 0;
     */
     margin: 0 auto;
-    padding: 10px;
+    padding: 2px;
+}
+
+.pie-chart {
+    margin: 0 auto;
+    padding: 2px;
+}
+
+.qslide-text {
+    margin: 2px auto;
+    padding: 5px;
+    font-size: 14px;
+    word-wrap: break-word;
+    color: navy;
+    border-width: 0px;
+    border-radius: 5px;
 }

@@ -1,13 +1,22 @@
-<votesummary-pie-chart class="col-4">
-    <div ref="output-chart" class="bar-chart"></div>
+<votesummary-pie-chart class="col-xl-4 col-lg-6 col-md-12 col-sm-12 p-1">
+    <div class="m-1 p-1 m-auto r-border">
+        <div class="qslide-text">{QSlideText}</div>
+        <div ref="output-chart" class="pie-chart"></div>
+    </div>
+    <style>
+        .r-border {
+            border: 1px solid cornflowerblue;
+            border-radius: 5px;
+        }
+    </style>
     <script>
         let self = this;
         this.finder = new Finder();
+        this.QSlideText = '';
 
         let onModelLoaded = (sender, evtData) => {
             //console.log('model load...');
-            self.search();
-            self.update();
+            self.search();            
         };
         page.modelLoaded.add(onModelLoaded);
 
@@ -54,6 +63,8 @@
             }
             let orgName = (row0) ? row0.OrgNameNative : 'Not found';
             let branchName = (row0) ? row0.BranchNameNative : '-';
+            //let qslidetext = (row0) ? row0.QSlideTextNative : 'Not found';
+            self.QSlideText = (row0) ? row0.QSlideTextNative : 'Not found';
             
             let chartSetup = {
                 backgroundColor: '#FCFFC5', // if include css change .highcharts-background instead.
@@ -68,6 +79,15 @@
                 text: '<div class="lhsTitle">' + orgName + ' (' + branchName + ')' + '</div>',
                 align: 'left',
                 x: 10
+            };
+
+            let chartSubTitle = {
+                /*
+                useHTML: true,
+                text: '<div class="qslide-text">' + qslidetext + '</div>',
+                align: 'center',
+                x: 10
+                */
             };
 
             let chartToolTip = {
@@ -94,7 +114,7 @@
             if (result) {
                 result.forEach(row => {
                     let item = {
-                        name: 'Choice ' + row.Choice,
+                        name: row.QItemTextNative,
                         y: row.Pct
                     };
                     items.push(item);
@@ -109,6 +129,7 @@
             let chartInfo = {
                 chart: chartSetup,
                 title: chartTitle,
+                subtitle: chartSubTitle,
                 plotOptions: chartPlotOpts,
                 tooltip: chartToolTip,
                 series: chartSeries
@@ -117,6 +138,8 @@
             let $outChart = $(this.refs['output-chart']);
             
             Highcharts.chart($outChart[0], chartInfo);
+
+            self.update();
         };
     </script>
 </votesummary-pie-chart>
