@@ -43,7 +43,7 @@
 
                 let elChart = document.createElement('div');
                 elChart.setAttribute(`data-is`, `votesummary-pie-chart`)
-                elChart.setAttribute(`customer-id`, criteria.CustomerID);
+                //elChart.setAttribute(`customer-id`, criteria.CustomerID);
                 elChart.setAttribute(`qset-id`, criteria.QSetId);
                 elChart.setAttribute(`qseq`, criteria.QSeq);
                 elChart.setAttribute(`org-Id`, criteria.OrgId);

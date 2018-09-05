@@ -32,7 +32,6 @@
         let self = this;
 
         this.value = JSON.stringify(JSON.parse(`{
-            "CustomerID": "EDL-C2018080001",
             "QSetId": "QS00001",
             "QSeq": "1",
             "OrgId": "O0011",

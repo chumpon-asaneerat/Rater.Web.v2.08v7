@@ -385,7 +385,7 @@ class Finder {
         let self = this;
         let param = {
             "LangId": lang.langId,
-            "CustomerID": criteria.CustomerID,
+            "CustomerID": secure.current.CustomerId,
             "QSetId": criteria.QSetId,
             "QSeq": criteria.QSeq,
             "OrgId": criteria.OrgId,

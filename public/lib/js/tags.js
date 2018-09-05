@@ -183,7 +183,6 @@ riot.tag2('votesummary-pie-chart', '<div class="m-1 p-1 m-auto r-border"> <div c
 
         this.search = () => {
             let criteria = {
-                CustomerID: opts.customerId,
                 QSetId: opts.qsetId,
                 QSeq: opts.qseq,
                 OrgId: opts.orgId,
@@ -312,7 +311,7 @@ riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row">
 
                 let elChart = document.createElement('div');
                 elChart.setAttribute(`data-is`, `votesummary-pie-chart`)
-                elChart.setAttribute(`customer-id`, criteria.CustomerID);
+
                 elChart.setAttribute(`qset-id`, criteria.QSetId);
                 elChart.setAttribute(`qseq`, criteria.QSeq);
                 elChart.setAttribute(`org-Id`, criteria.OrgId);
@@ -331,7 +330,6 @@ riot.tag2('votesummary-search-box', '<div> <label>Search</label> <textarea ref="
         let self = this;
 
         this.value = JSON.stringify(JSON.parse(`{
-            "CustomerID": "EDL-C2018080001",
             "QSetId": "QS00001",
             "QSeq": "1",
             "OrgId": "O0011",

@@ -42,7 +42,6 @@
 
         this.search = () => {
             let criteria = {
-                CustomerID: opts.customerId,
                 QSetId: opts.qsetId,
                 QSeq: opts.qseq,
                 OrgId: opts.orgId,
