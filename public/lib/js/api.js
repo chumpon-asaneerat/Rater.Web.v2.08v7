@@ -139,6 +139,8 @@ class ReportAPI extends API {
 
     get functions() {
         return [
+            // filter realted functions.
+            { name: "getCustomerQSets", url: "/api/reports/qsets/search" },
             // reports related functions.
             { name: "getRawVotes", url: "/api/reports/raw-votes/search" },
             { name: "getVoteSummary", url: "/api/reports/vote-summaries/search" }
