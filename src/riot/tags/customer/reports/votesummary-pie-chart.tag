@@ -1,6 +1,8 @@
-<votesummary-pie-chart class="col-xl-4 col-lg-6 col-md-12 col-sm-12 p-1">
+<votesummary-pie-chart class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 p-1">
     <div class="m-1 p-1 m-auto r-border">
+        <!--
         <div class="qslide-text">{QSlideText}</div>
+        -->
         <div ref="output-chart" class="pie-chart"></div>
     </div>
     <style>
@@ -70,7 +72,12 @@
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false,
-                type: 'pie'
+                type: 'pie',
+                height: 210
+            };
+
+            let chartCredits = {
+                enabled: false
             };
 
             let chartTitle = {
@@ -127,6 +134,7 @@
 
             let chartInfo = {
                 chart: chartSetup,
+                credits: chartCredits,
                 title: chartTitle,
                 subtitle: chartSubTitle,
                 plotOptions: chartPlotOpts,

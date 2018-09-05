@@ -1,5 +1,5 @@
 <votesummary-result-content class="container-fluid">
-    <div ref="chart-container" class="row">
+    <div ref="chart-container" class="row h-100">
         <yield />
     </div>
     <script>

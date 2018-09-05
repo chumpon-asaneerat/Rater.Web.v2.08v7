@@ -159,7 +159,7 @@ riot.tag2('votesummary-bar-chart', '', '', '', function(opts) {
             Highcharts.chart($outChart[0], chartInfo);
         };
 });
-riot.tag2('votesummary-pie-chart', '<div class="m-1 p-1 m-auto r-border"> <div class="qslide-text">{QSlideText}</div> <div ref="output-chart" class="pie-chart"></div> </div>', 'votesummary-pie-chart .r-border,[data-is="votesummary-pie-chart"] .r-border{ border: 1px solid cornflowerblue; border-radius: 5px; }', 'class="col-xl-4 col-lg-6 col-md-12 col-sm-12 p-1"', function(opts) {
+riot.tag2('votesummary-pie-chart', '<div class="m-1 p-1 m-auto r-border"> <div ref="output-chart" class="pie-chart"></div> </div>', 'votesummary-pie-chart .r-border,[data-is="votesummary-pie-chart"] .r-border{ border: 1px solid cornflowerblue; border-radius: 5px; }', 'class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 p-1"', function(opts) {
         let self = this;
         this.finder = new Finder();
         this.QSlideText = '';
@@ -211,7 +211,12 @@ riot.tag2('votesummary-pie-chart', '<div class="m-1 p-1 m-auto r-border"> <div c
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
                 plotShadow: false,
-                type: 'pie'
+                type: 'pie',
+                height: 210
+            };
+
+            let chartCredits = {
+                enabled: false
             };
 
             let chartTitle = {
@@ -263,6 +268,7 @@ riot.tag2('votesummary-pie-chart', '<div class="m-1 p-1 m-auto r-border"> <div c
 
             let chartInfo = {
                 chart: chartSetup,
+                credits: chartCredits,
                 title: chartTitle,
                 subtitle: chartSubTitle,
                 plotOptions: chartPlotOpts,
@@ -277,7 +283,7 @@ riot.tag2('votesummary-pie-chart', '<div class="m-1 p-1 m-auto r-border"> <div c
             self.update();
         };
 });
-riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row"> <yield></yield> </div>', '', 'class="container-fluid"', function(opts) {
+riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row h-100"> <yield></yield> </div>', '', 'class="container-fluid"', function(opts) {
         let self = this;
         this.tags = [];
 
