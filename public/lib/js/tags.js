@@ -77,7 +77,7 @@ riot.tag2('rawvote-search-box', '<div> <textarea ref="jsonSearch" riot-value="{v
             "CustomerID": "EDL-C2018080001",
             "QSetId": "QS00001",
             "QSeq": "1",
-            "OrgId": "O0011",
+            "OrgId": ["O0001", "O0003", "O0005"],
             "BeginDate": "2018-08-01",
             "EndDate": "2018-08-01"
         }`), null, 4);
@@ -95,29 +95,76 @@ riot.tag2('rawvote-search-box', '<div> <textarea ref="jsonSearch" riot-value="{v
 
         };
 });
-riot.tag2('votesummary-bar-chart', '', '', '', function(opts) {
+riot.tag2('votesummary-bar-chart', '<div class="m-1 p-1 m-auto r-border"> <div ref="output-chart" class="pie-chart"></div> </div>', 'votesummary-bar-chart .r-border,[data-is="votesummary-bar-chart"] .r-border{ border: 1px solid cornflowerblue; border-radius: 5px; }', '', function(opts) {
         let self = this;
+        this.finder = new Finder();
+        this.QSlideText = '';
+
+        let onModelLoaded = (sender, evtData) => {
+
+            self.search();
+        };
+        page.modelLoaded.add(onModelLoaded);
+
+        let onSearchCompleted = (sender, evtData) => {
+
+            self.renderChart(self.finder.result);
+        };
+        this.finder.searchCompleted.add(onSearchCompleted);
+
+        this.on('mount', function () {
+            self.search();
+        });
+
+        this.search = () => {
+            let criteria = {
+                QSetId: opts.qsetId,
+                QSeq: opts.qseq,
+                OrgId: opts.orgId,
+                BeginDate: opts.beginDate,
+                EndDate: opts.endDate
+            };
+
+            self.finder.search(criteria);
+        };
 
         this.renderChart = (result) => {
+            let row0 = null;
+            if (!result || result.length <= 0) {
+                console.log('No result found.');
+            }
+            else {
+                row0 = result[0]
+            }
+            let orgName = (row0) ? row0.OrgNameNative : 'Not found';
+            let branchName = (row0) ? row0.BranchNameNative : '-';
+
+            self.QSlideText = (row0) ? row0.QSlideTextNative : 'Not found';
+
             let chartSetup = {
                 backgroundColor: '#FCFFC5',
-                type: 'column'
+                type: 'column',
+                height: 210
+            };
+
+            let chartCredits = {
+                enabled: false
             };
 
             let chartTitle = {
-
                 useHTML: true,
-                text: '<div class="lhsTitle">My custom title</div><div class="rhsTitle">Right content</div>',
+                text: '<div class="lhsTitle">Vote summary ' + orgName + ' (' + branchName + ')' + '</div>',
                 align: 'left',
                 x: 10
             };
-            let chartSubTitle = {
 
-            };
+            let chartSubTitle = { };
+
             let chartXAxis = {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 crosshair: true
             };
+
             let chartYAxis = {
                 min: 0,
                 max: 4,
@@ -125,10 +172,22 @@ riot.tag2('votesummary-bar-chart', '', '', '', function(opts) {
                     text: 'Average'
                 }
             };
+
             let chartToolTip = {
 
                 shared: true
             };
+
+            let items = [];
+            if (result) {
+                result.forEach(row => {
+                    let item = {
+                        name: row.QItemTextNative,
+                        y: row.Pct
+                    };
+                    items.push(item);
+                });
+            }
 
             let chartSeries = [{
                 name: 'EDL',
@@ -146,6 +205,7 @@ riot.tag2('votesummary-bar-chart', '', '', '', function(opts) {
 
             let chartInfo = {
                 chart: chartSetup,
+                credits: chartCredits,
                 title: chartTitle,
                 subtitle: chartSubTitle,
                 xAxis: chartXAxis,
@@ -157,9 +217,11 @@ riot.tag2('votesummary-bar-chart', '', '', '', function(opts) {
             let $outChart = $(this.refs['output-chart']);
 
             Highcharts.chart($outChart[0], chartInfo);
+
+            self.update();
         };
 });
-riot.tag2('votesummary-pie-chart', '<div class="m-1 p-1 m-auto r-border"> <div ref="output-chart" class="pie-chart"></div> </div>', 'votesummary-pie-chart .r-border,[data-is="votesummary-pie-chart"] .r-border{ border: 1px solid cornflowerblue; border-radius: 5px; }', 'class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12 p-1"', function(opts) {
+riot.tag2('votesummary-pie-chart', '<div class="m-1 p-1 m-auto r-border"> <div ref="output-chart" class="pie-chart"></div> </div> <div class="v-space">', 'votesummary-pie-chart .r-border,[data-is="votesummary-pie-chart"] .r-border{ border: 1px solid cornflowerblue; border-radius: 5px; } votesummary-pie-chart .v-space,[data-is="votesummary-pie-chart"] .v-space{ min-height: 5px; height: 5px; }', 'class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12"', function(opts) {
         let self = this;
         this.finder = new Finder();
         this.QSlideText = '';
@@ -283,13 +345,12 @@ riot.tag2('votesummary-pie-chart', '<div class="m-1 p-1 m-auto r-border"> <div r
             self.update();
         };
 });
-riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row h-100"> <yield></yield> </div>', '', 'class="container-fluid"', function(opts) {
+riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row"> <yield></yield> </div>', '', 'class="container-fluid"', function(opts) {
         let self = this;
         this.tags = [];
 
         let onModelLoaded = (sender, evtData) => {
 
-            self.update();
         };
         page.modelLoaded.add(onModelLoaded);
 
@@ -312,33 +373,78 @@ riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row h
 
             let $container = $(this.refs['chart-container']);
 
-            orgs.forEach(item => {
-                criteria.OrgId = item.trim();
+            let qsetmaps = (report.qModel) ?
+                report.qModel.map((item) => { return item.QSetId; }) : null;
+            let index = (qsetmaps) ? qsetmaps.indexOf(criteria.QSetId) : -1;
+            if (index === -1) {
+                console.log('cannot find QSetId.');
+                return;
+            }
 
-                let elChart = document.createElement('div');
-                elChart.setAttribute(`data-is`, `votesummary-pie-chart`)
+            let qSet = report.qModel[index];
+            if (qSet) {
 
-                elChart.setAttribute(`qset-id`, criteria.QSetId);
-                elChart.setAttribute(`qseq`, criteria.QSeq);
-                elChart.setAttribute(`org-Id`, criteria.OrgId);
-                elChart.setAttribute(`begin-date`, criteria.BeginDate);
-                elChart.setAttribute(`end-date`, criteria.EndDate);
+                qSet.slides.forEach(slide => {
+                    let elPanelDiv = document.createElement('div');
+                    elPanelDiv.setAttribute(`data-is`, `votesummary-result-panel`);
+                    elPanelDiv.setAttribute(`qset-id`, qSet.QSetId);
+                    elPanelDiv.setAttribute(`qseq`, slide.QSeq);
+                    $container.append(elPanelDiv);
 
-                $container.append(elChart);
+                    riot.mount(elPanelDiv, `votesummary-result-panel`);
 
-                riot.mount(elChart, 'votesummary-pie-chart');
-            });
+                    orgs.forEach(item => {
+                        criteria.OrgId = item.trim();
+
+                        let elChart = document.createElement('div');
+                        elChart.setAttribute(`data-is`, `votesummary-pie-chart`);
+
+                        elChart.setAttribute(`qset-id`, qSet.QSetId);
+                        elChart.setAttribute(`qseq`, slide.QSeq);
+                        elChart.setAttribute(`org-Id`, criteria.OrgId);
+                        elChart.setAttribute(`begin-date`, criteria.BeginDate);
+                        elChart.setAttribute(`end-date`, criteria.EndDate);
+
+                        $container.append(elChart);
+
+                        riot.mount(elChart, 'votesummary-pie-chart');
+                    });
+
+                    $container.append(document.createElement('br'));
+                });
+            }
         };
         report.onSearch.add(onSearch);
 
+});
+riot.tag2('votesummary-result-panel', '<div class="row"> <virtual if="{slide !== null}"> <div class="col-12"> <label class="QText"><b>{slide.No}. {slide.QSlideTextNative}</b></label> </div> <virtual if="{slide.items !== null}"> <virtual each="{item in slide.items}"> <div class="col-5 offset-1 m-auto p-0"> <label class="CText">{item.No}. {item.QItemTextNative}</label> </div> </virtual> </virtual> </virtual> </div>', 'votesummary-result-panel .QText,[data-is="votesummary-result-panel"] .QText{ display: block; padding-left: 5px; padding-right: 5px; font-size: 1rem; border: 1px solid cornflowerblue; border-radius: 5px; color: whitesmoke; background-color: cornflowerblue; } votesummary-result-panel .CText,[data-is="votesummary-result-panel"] .CText{ margin: 0; padding: 0; font-size: 1rem; }', 'class="container-fluid mt-1"', function(opts) {
+        let self = this;
+        this.QSetId = opts.qsetId;
+        this.QSeq = opts.qseq;
+        this.slide = null;
+
+        let onQModelChanged = (sender, evtData) => {
+            self.refreshQModel();
+        };
+        window.report.onQModelChanged.add(onQModelChanged);
+
+        this.on('mount', function () {
+            self.refreshQModel();
+        });
+
+        this.refreshQModel = () => {
+
+            self.slide = report.getSlide(this.QSetId, this.QSeq);
+
+            self.update();
+        };
 });
 riot.tag2('votesummary-search-box', '<div> <label>Search</label> <textarea ref="jsonSearch" riot-value="{value}"></textarea> <button onclick="{onSearch}">Search</button> </div>', 'votesummary-search-box,[data-is="votesummary-search-box"]{ margin: 0 auto; padding: 15px; font-size: 12pt; } votesummary-search-box label,[data-is="votesummary-search-box"] label{ display: block; font-size: 14pt; color: green; } votesummary-search-box textarea,[data-is="votesummary-search-box"] textarea{ width: 85%; height: 100px; } votesummary-search-box button,[data-is="votesummary-search-box"] button{ margin: 10px, 0 auto; padding: 2px 15px; vertical-align: top; }', '', function(opts) {
         let self = this;
 
         this.value = JSON.stringify(JSON.parse(`{
             "QSetId": "QS00001",
-            "QSeq": "1",
-            "OrgId": "O0011",
+            "OrgId": ["O0001", "O0003", "O0005", "O0007", "O0009"],
             "BeginDate": "2018-08-01",
             "EndDate": "2018-08-01"
         }`), null, 4);

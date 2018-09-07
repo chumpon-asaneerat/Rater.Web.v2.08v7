@@ -129,7 +129,7 @@
             "CustomerID": "EDL-C2018080001",
             "QSetId": "QS00001",
             "QSeq": "1",
-            "OrgId": "O0011",
+            "OrgId": ["O0001", "O0003", "O0005"],
             "BeginDate": "2018-08-01",
             "EndDate": "2018-08-01"
         }`), null, 4);

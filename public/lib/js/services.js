@@ -347,6 +347,86 @@ class ReportService {
     constructor() {
         //this._criteria = null;
         this._onSearch = new EventHandler();
+        this._onQModelChanged = new EventHandler();
+
+        this._qmodel = null;
+
+        let self = this;
+        let oncurrentUserChanged = (sender, evtData) => {
+            self.loadQModel();
+        };
+        secure.currentUserChanged.add(oncurrentUserChanged);
+
+        let onLanguageChanged = (sender, evtData) => {
+            self.loadQModel();
+        };
+        lang.currentChanged.add(onLanguageChanged);
+    };
+
+    loadQModel() {
+        let self = this;
+        if (!secure.current)
+            return;
+        let param = {
+            "langId": lang.langId,
+            "customerID": secure.current.CustomerId
+        };
+        //console.log(param);
+        let fn = api.report.getCustomerQSets(param);
+        $.when(fn).then((r) => {
+            if (!r || !r.errors) {
+                //console.log('No data returns.');
+                this._qmodel = null;
+            }
+            if (r.errors.hasError) {
+                //console.log(r.errors);
+                self._qmodel = null;
+            }
+            if (!r.data || r.data.length <= 0) {
+                //console.log('No data found.');
+                self._qmodel = null;
+            }
+            else {
+                //console.log(r.data);
+                self._qmodel = r.data;
+            }
+            self._onQModelChanged.invoke(self, EventArgs.Empty);
+        });
+    };
+
+    getSlides(qSetId) {
+        if (!this._qmodel) {
+            return [];
+        }
+        else {
+            let qsetmaps = (this._qmodel) ?
+                this._qmodel.map((item) => { return item.QSetId; }) : null;
+            let index = (qsetmaps) ? qsetmaps.indexOf(qSetId) : -1;
+            if (index === -1) {
+                console.log('cannot find QSetId.');
+                return;
+            }
+
+            let qSet = this._qmodel[index];
+            return (qSet) ? qSet.slides : [];
+        }
+    };
+
+    getSlide(qSetId, qSeq) {
+        if (!this._qmodel) {
+            return null;
+        }
+        else {
+            let slides = this.getSlides(qSetId);
+            let slideMaps = slides.map((slide) => { return String(slide.QSeq); });
+            let index = slideMaps.indexOf(String(qSeq));
+            if (index === -1) {
+                return null;
+            }
+            else {
+                return slides[index];
+            }
+        }
     };
 
     search(criteria) {
@@ -355,14 +435,17 @@ class ReportService {
         //self._onSearch.invoke(self, EventArgs.Empty);
         self._onSearch.invoke(self, criteria);
     };
-    /*
-    get criteria() {
-        return this._criteria;
+
+    get qModel() {
+        return this._qmodel;
     };
-    */
 
     get onSearch() {
         return this._onSearch;
+    };
+
+    get onQModelChanged() {
+        return this._onQModelChanged;
     };
 }
 
@@ -431,7 +514,7 @@ class RaterPage {
         this._modelLoaded = new EventHandler();
 
         let self = this;
-        let onLanguageChanted = (sender, evtData) => {
+        let onLanguageChanged = (sender, evtData) => {
             let LId = lang.langId;
             let fnX = api.model.getModelNames();
             $.when(fnX).then((r) => {
@@ -463,7 +546,7 @@ class RaterPage {
             });
         };
 
-        lang.currentChanged.add(onLanguageChanted);
+        lang.currentChanged.add(onLanguageChanged);
     };
 
     update(langId, modelType, obj) {

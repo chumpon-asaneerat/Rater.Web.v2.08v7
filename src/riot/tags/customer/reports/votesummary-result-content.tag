@@ -1,5 +1,5 @@
 <votesummary-result-content class="container-fluid">
-    <div ref="chart-container" class="row h-100">
+    <div ref="chart-container" class="row">
         <yield />
     </div>
     <script>
@@ -8,13 +8,7 @@
 
         let onModelLoaded = (sender, evtData) => {
             //console.log('model load...');
-            /*
-            self.tags.forEach(tag => {
-                riot.unmount(elChart);
-            });
-            */
-
-            self.update();
+            //self.update();
         };
         page.modelLoaded.add(onModelLoaded);
 
@@ -38,24 +32,48 @@
 
             let $container = $(this.refs['chart-container']);
 
-            orgs.forEach(item => {
-                criteria.OrgId = item.trim();
+            let qsetmaps = (report.qModel) ? 
+                report.qModel.map((item) => { return item.QSetId; }) : null;
+            let index = (qsetmaps) ? qsetmaps.indexOf(criteria.QSetId) : -1;
+            if (index === -1) {
+                console.log('cannot find QSetId.');
+                return;
+            }
 
-                let elChart = document.createElement('div');
-                elChart.setAttribute(`data-is`, `votesummary-pie-chart`)
-                //elChart.setAttribute(`customer-id`, criteria.CustomerID);
-                elChart.setAttribute(`qset-id`, criteria.QSetId);
-                elChart.setAttribute(`qseq`, criteria.QSeq);
-                elChart.setAttribute(`org-Id`, criteria.OrgId);
-                elChart.setAttribute(`begin-date`, criteria.BeginDate);
-                elChart.setAttribute(`end-date`, criteria.EndDate);
+            let qSet = report.qModel[index];
+            if (qSet) {
+                //console.log(qSet);
+                qSet.slides.forEach(slide => {
+                    let elPanelDiv = document.createElement('div');
+                    elPanelDiv.setAttribute(`data-is`, `votesummary-result-panel`);
+                    elPanelDiv.setAttribute(`qset-id`, qSet.QSetId);
+                    elPanelDiv.setAttribute(`qseq`, slide.QSeq);
+                    $container.append(elPanelDiv);
 
-                $container.append(elChart);
+                    riot.mount(elPanelDiv, `votesummary-result-panel`);
 
-                //self.tags.push(elChart);
+                    orgs.forEach(item => {
+                        criteria.OrgId = item.trim();
 
-                riot.mount(elChart, 'votesummary-pie-chart');
-            });
+                        let elChart = document.createElement('div');
+                        elChart.setAttribute(`data-is`, `votesummary-pie-chart`);
+                        //elChart.setAttribute(`customer-id`, criteria.CustomerID);
+                        elChart.setAttribute(`qset-id`, qSet.QSetId);
+                        elChart.setAttribute(`qseq`, slide.QSeq);
+                        elChart.setAttribute(`org-Id`, criteria.OrgId);
+                        elChart.setAttribute(`begin-date`, criteria.BeginDate);
+                        elChart.setAttribute(`end-date`, criteria.EndDate);
+
+                        $container.append(elChart);
+
+                        //self.tags.push(elChart);
+
+                        riot.mount(elChart, 'votesummary-pie-chart');
+                    });
+
+                    $container.append(document.createElement('br'));
+                });
+            }
         };
         report.onSearch.add(onSearch);
 
