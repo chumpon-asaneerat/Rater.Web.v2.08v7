@@ -678,6 +678,7 @@ class ReportService {
     };
 };
 
+/*
 class ReportService2 {
     constructor() {
         //this._criteria = null;
@@ -783,6 +784,7 @@ class ReportService2 {
         return this._onQModelChanged;
     };
 }
+*/
 
 ; (function () {
     //console.log('Init language service...');

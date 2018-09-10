@@ -3,8 +3,4 @@
     <div data-is="search-content" data-simplebar>
         <yield />
     </div>
-    <style>
-    </style>
-    <script>
-    </script>
 </votesummary-search-page>
