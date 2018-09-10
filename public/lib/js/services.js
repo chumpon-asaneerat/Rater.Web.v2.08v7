@@ -341,9 +341,344 @@ class LanguageService {
 
 //#endregion
 
+//#region QSetModelLoader
+
+class QSetModelLoader {
+    constructor() {
+        let self = this;
+        this._models = null;
+        this._model = null;
+
+        this._ModelChanged = new EventHandler();
+
+        let oncurrentUserChanged = (sender, evtData) => {
+            self.loadmodels();
+        };
+        secure.currentUserChanged.add(oncurrentUserChanged);
+
+        let onLanguageChanged = (sender, evtData) => {
+            self.loadmodels();
+        };
+        lang.currentChanged.add(onLanguageChanged);
+    };
+
+    loadmodels(refresh) {
+        let self = this;
+        if (!secure.current) {
+            self._models = null;
+            self._model = null;
+            return;
+        }
+        if (!self._models || refresh) {
+            // not load or required refresh.
+            self._models = null;
+            self._model = null;
+
+            let param = {
+                CustomerId: secure.current.CustomerId
+            };
+
+            let fn = api.report.getCustomerQSets(param);
+            $.when(fn).then((r) => {
+                if (!r || !r.errors) {
+                    console.log('No data returns.');
+                }
+                if (r.errors.hasError) {
+                    console.log(r.errors);
+                }
+                if (!r.data || r.data.length <= 0) {
+                    console.log('No data found.');
+                }
+                else {
+                    //console.log(r.data);
+                    self._models = r.data;
+                }
+                self.loadmodel();
+            });
+        }
+    };
+
+    loadmodel() {
+        //console.log('load qset model.');
+        if (!lang) {
+            console.log('lang obj is null.');
+        }
+
+        let langId = lang.langId;
+        //console.log(langId);
+        if (!langId) {
+            //console.log('current language not set.');
+            this._model = null;
+            return;
+        }
+
+        if (!this._models) {
+            console.log('Qset Models is null.');
+            this._model = null;
+            return;
+        }
+
+        // find model that match current language.
+        let langmaps = this._models.map((item) => { return item.LangId; });
+        let langIndex = langmaps.indexOf(langId);
+        if (langIndex === -1) {
+            console.log('No model match language. LangId:', langId);
+            this._model = null;
+            return;
+        }
+        let model = this._models[langIndex];
+        if (!model) {
+            console.log('Qset Model object is null.');
+            this._model = null;
+            return;
+        }
+        this._model = model;
+    };
+
+    get model() {
+        return this._model;
+    };
+
+    get ModelChanged() {
+        return this._ModelChanged
+    };
+};
+
+//#endregion
+
+//#region OrgModelLoader
+
+class OrgModelLoader {
+    constructor() {
+        let self = this;
+        this._models = null;
+        this._model = null;
+
+        this._ModelChanged = new EventHandler();
+
+        let oncurrentUserChanged = (sender, evtData) => {
+            self.loadmodels();
+        };
+        secure.currentUserChanged.add(oncurrentUserChanged);
+
+        let onLanguageChanged = (sender, evtData) => {
+            self.loadmodels();
+        };
+        lang.currentChanged.add(onLanguageChanged);
+    };
+
+    loadmodels(refresh) {
+        let self = this;
+        if (!secure.current) {
+            self._models = null;
+            self._model = null;
+            return;
+        }
+        if (!self._models || refresh) {
+            // not load or required refresh.
+            self._models = null;
+            self._model = null;
+
+            let param = {
+                CustomerId: secure.current.CustomerId
+            };
+
+            let fn = api.report.getCustomerOrgs(param);
+            $.when(fn).then((r) => {
+                if (!r || !r.errors) {
+                    console.log('No data returns.');
+                }
+                if (r.errors.hasError) {
+                    console.log(r.errors);
+                }
+                if (!r.data || r.data.length <= 0) {
+                    console.log('No data found.');
+                }
+                else {
+                    //console.log(r.data);
+                    self._models = r.data;
+                }
+                self.loadmodel();
+            });
+        };
+    };
+
+    loadmodel() {
+        //console.log('load org model.');
+        if (!lang) {
+            console.log('lang obj is null.');
+        }
+
+        let langId = lang.langId;
+        //console.log(langId);
+        if (!langId) {
+            //console.log('current language not set.');
+            this._model = null;
+            return;
+        }
+
+        if (!this._models) {
+            console.log('Org Models is null.');
+            this._model = null;
+            return;
+        }
+        // find model that match current language.
+        let langmaps = this._models.map((item) => { return item.LangId; });
+        let langIndex = langmaps.indexOf(langId);
+        if (langIndex === -1) {
+            console.log('No model match language. LangId:', langId);
+            this._model = null;
+            return;
+        }
+        let model = this._models[langIndex];
+
+        if (!model) {
+            console.log('Org Model object is null.');
+            this._model = null;
+            return;
+        }
+        this._model = model;
+    };
+
+    get model() {
+        return this._model;
+    };
+
+    get ModelChanged() {
+        return this._ModelChanged
+    };
+};
+
+//#endregion
+
+//#region MemberModelLoader
+
+class MemberModelLoader {
+    constructor() {
+        let self = this;
+        this._models = null;
+        this._model = null;
+
+        this._ModelChanged = new EventHandler();
+
+        let oncurrentUserChanged = (sender, evtData) => {
+            self.loadmodels();
+        };
+        secure.currentUserChanged.add(oncurrentUserChanged);
+
+        let onLanguageChanged = (sender, evtData) => {
+            self.loadmodels();
+        };
+        lang.currentChanged.add(onLanguageChanged);
+    };
+
+    loadmodels(refresh) {
+        let self = this;
+        if (!secure.current) {
+            self._models = null;
+            self._model = null;
+            return;
+        }
+        if (!self._models || refresh) {
+            // not load or required refresh.
+            self._models = null;
+            self._model = null;
+
+            let param = {
+                CustomerId: secure.current.CustomerId
+            };
+
+            let fn = api.report.getCustomerMembers(param);
+            $.when(fn).then((r) => {
+                if (!r || !r.errors) {
+                    console.log('No data returns.');
+                }
+                if (r.errors.hasError) {
+                    console.log(r.errors);
+                }
+                if (!r.data || r.data.length <= 0) {
+                    console.log('No data found.');
+                }
+                else {
+                    //console.log(r.data);
+                    self._models = r.data;
+                }
+                self.loadmodel();
+            });
+        };
+    };
+
+    loadmodel() {
+        //console.log('load org model.');
+        if (!lang) {
+            console.log('lang obj is null.');
+        }
+
+        let langId = lang.langId;
+        //console.log(langId);
+        if (!langId) {
+            //console.log('current language not set.');
+            this._model = null;
+            return;
+        }
+
+        if (!this._models) {
+            console.log('Org Models is null.');
+            this._model = null;
+            return;
+        }
+        // find model that match current language.
+        let langmaps = this._models.map((item) => { return item.LangId; });
+        let langIndex = langmaps.indexOf(langId);
+        if (langIndex === -1) {
+            console.log('No model match language. LangId:', langId);
+            this._model = null;
+            return;
+        }
+        let model = this._models[langIndex];
+
+        if (!model) {
+            console.log('Org Model object is null.');
+            this._model = null;
+            return;
+        }
+        this._model = model;
+    };
+
+    get model() {
+        return this._model;
+    };
+
+    get ModelChanged() {
+        return this._ModelChanged
+    };
+};
+
+//#endregion
+
 //#region ReportService
 
 class ReportService {
+    constructor() {
+        this._qsetloader = new QSetModelLoader();
+        this._orgloader = new OrgModelLoader();
+        this._memberloader = new MemberModelLoader();
+    };
+    // org model loader.
+    get org() {
+        return this._orgloader;
+    };
+    // qset model loader.
+    get qset() {
+        return this._qsetloader;
+    };
+    // member model loader.
+    get member() {
+        return this._memberloader;
+    };
+};
+
+class ReportService2 {
     constructor() {
         //this._criteria = null;
         this._onSearch = new EventHandler();

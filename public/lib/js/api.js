@@ -141,9 +141,12 @@ class ReportAPI extends API {
         return [
             // filter realted functions.
             { name: "getCustomerQSets", url: "/api/reports/qsets/search" },
+            { name: "getCustomerOrgs", url: "/api/reports/orgs/search" },
+            { name: "getCustomerMembers", url: "/api/reports/members/search" },
             // reports related functions.
             { name: "getRawVotes", url: "/api/reports/raw-votes/search" },
-            { name: "getVoteSummary", url: "/api/reports/vote-summaries/search" }
+            { name: "getVoteSummary", url: "/api/reports/vote-summaries/search" },
+            { name: "getSummaryReport", url: "/api/reports/summaries/search" }
         ];
     };
 };
