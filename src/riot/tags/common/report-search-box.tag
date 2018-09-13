@@ -21,7 +21,6 @@
         <div class="tag-box">
             <a href="#"><span class="tag-clear"></span></a>
             <span class="tag-caption">Orgs</span>
-            <span class="tag-item">ทั้ง ๆ ที่รู้<span class="tag-close"></span></span>
             <span class="tag-item">Softbase<span class="tag-close"></span></span>
             <span class="tag-item">Marketing<span class="tag-close"></span></span>
             <span class="tag-item">Account<span class="tag-close"></span></span>

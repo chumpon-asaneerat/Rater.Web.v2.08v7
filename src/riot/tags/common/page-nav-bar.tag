@@ -15,7 +15,7 @@
                         <div class="d-inline-block m-0 p-0">
                             <span class="fas fa-{page.model.banner.src} navbar-text w-auto m-0 p-0">
                                 <virtual if={(page.model.banner.text !=='')} class="d-inline-block m-0 p-0">
-                                    <span class="rater-text w-auto m-0 p-0">
+                                    <span class="rater-text w-auto m-0 p-0 banner-text">
                                         &nbsp;&nbsp;{page.model.banner.text}&nbsp;&nbsp;
                                     </span>
                                 </virtual>
@@ -40,7 +40,7 @@
                                     <div class="d-inline-block m-0 p-0">
                                         <span class="fas fa-{page.model.nav.signout.src} navbar-text w-auto m-0 p-0">
                                             <virtual if={(page.model.nav.signout.text !=='')}>
-                                                <span class="d-inline-block rater-text w-auto m-0 p-0">
+                                                <span class="rater-text w-auto m-0 p-0 signout">
                                                     &nbsp;{page.model.nav.signout.text}&nbsp;
                                                 </span>
                                             </virtual>
@@ -57,7 +57,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle px-2 align-middle" data-toggle="dropdown" href="javascript:void(0);" id="nav-languages">
                         <span class="flag-icon flag-icon-{lang.current.flagId.toLowerCase()}"></span>
-                        &nbsp;&nbsp;{lang.current.DescriptionNative}&nbsp;&nbsp;
+                        <span class="lang-text">&nbsp;&nbsp;{lang.current.DescriptionNative}&nbsp;&nbsp;</span>
                         <span class="caret"></span>
                     </a>
                     <!-- ALL LANGUAGES DROP MENU LIST -->
@@ -66,16 +66,18 @@
                             <a class="dropdown-item {(lang.current.flagId === eachlang.flagId) ? 'active': ''}" href="javascript:void(0);"
                                langId="{eachlang.langId}" onclick="{onChangeLanguage}">
                                <span class="flag-icon flag-icon-{eachlang.flagId.toLowerCase()}"></span>
-                               &nbsp;&nbsp;{eachlang.DescriptionNative}&nbsp;&nbsp;
+                               <span class="">&nbsp;&nbsp;{eachlang.DescriptionNative}&nbsp;&nbsp;</span>
                             </a>
                         </virtual>
                     </div>
                 </li>
             </ul>
             <!-- Toggle Collapse Button -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <virtual if={(page.model && page.model.nav && page.model.nav.links && page.model.nav.links.length> 0)}>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </virtual>
         </div>
         <!-- Collapse Items -->
         <div class="collapse navbar-collapse m-0 p-0 order-3 order-sm-2 order-md-2 order-lg-2" id="collapsibleNavbar">
@@ -148,6 +150,36 @@
         a:hover .v-divider { border-color: white; }
         a:hover .fas { color: white; }
         a:hover .rater-text { color: white; }
+
+        .signout {
+            display: inline-block;
+        }
+        .banner-text {
+            display: inline-block;
+        }
+        .lang-text {
+            display: inline-block;
+        }
+
+        @media screen and (max-width: 800px) {
+            .signout {
+                display: none;
+            }
+            .lang-text {
+                display: none;
+            }
+        }
+        @media screen and (max-width: 600px) {
+            .signout {
+                display: none;
+            }
+            .lang-text {
+                display: none;
+            }
+            .banner-text {
+                display: none;
+            }
+        }
     </style>
 
     <script>
