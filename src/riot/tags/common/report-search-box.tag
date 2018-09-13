@@ -1,50 +1,21 @@
 <report-search-box>
     <div>
         <div>
-            <input type="text">
+            <input ref="tag-input" type="text" onfocus="{onFocus}" oninput="{onInput}" onblur="{onBlur}">
+            <div ref="tag-dropdown" class="autocomplete-items">
+                <span class="autocomplete-item">Softbase</span>
+                <span class="autocomplete-item">Marketing</span>
+                <span class="autocomplete-item">Account</span>
+                <span class="autocomplete-item">Manufacture</span>
+                <span class="autocomplete-item">Supports</span>
+            </div>
         </div>
-        <!--
-        <div class="tag-box">
-            <a href="#"><span class="tag-clear"></span></a>
-            <span class="tag-caption">Question set</span>            
-            <span class="tag-item">Question set 1.<span class="tag-close"></span></span>
-        </div>
-        -->
-        <!--
-        <div class="tag-box">
-            <a href="#"><span class="tag-clear"></span></a>
-            <span class="tag-caption">Question</span>            
-            <span class="tag-item">1. What do you think about our service?<span class="tag-close"></span></span>
-            <span class="tag-item">3. What do you think about our food quality?<span class="tag-close"></span></span>            
-        </div>
-        -->
-        <div class="tag-box">
-            <a href="#"><span class="tag-clear"></span></a>
-            <span class="tag-caption">Orgs</span>
-            <span class="tag-item">Softbase<span class="tag-close"></span></span>
-            <span class="tag-item">Marketing<span class="tag-close"></span></span>
-            <span class="tag-item">Account<span class="tag-close"></span></span>
-            <span class="tag-item">Manufacture<span class="tag-close"></span></span>
-            <span class="tag-item">Support<span class="tag-close"></span></span>
-            <span class="tag-item">Finance<span class="tag-close"></span></span>
-            <span class="tag-item">Perchasing<span class="tag-close"></span></span>
-            <span class="tag-item">Audit<span class="tag-close"></span></span>
-            <span class="tag-item">PR<span class="tag-close"></span></span>
-            <span class="tag-item">Housekeeping<span class="tag-close"></span></span>
-            <span class="tag-item">Counter 1F<span class="tag-close"></span></span>
-            <span class="tag-item">Counter 2F<span class="tag-close"></span></span>
-            <span class="tag-item">Counter 3F<span class="tag-close"></span></span>
-            <span class="tag-item">Counter 4F<span class="tag-close"></span></span>
-        </div>
-        <div class="tag-box">
-            <a href="#"><span class="tag-clear"></span></a>
-            <span class="tag-caption">Staff</span>
-            <span class="tag-item">Mr. Administrator<span class="tag-close"></span></span>
-            <span class="tag-item">Mr. Chumpon Asaneerat<span class="tag-close"></span></span>
-            <!--
-            <span class="tag-item">Mr. Thana Phorchan<span class="tag-close"></span></span>
-            -->
-        </div>
+        <div data-is="report-qset-criteria-view" caption="QSets"></div>
+        <div data-is="report-date-criteria-view" caption="Date"></div>
+        <div data-is="report-question-criteria-view" caption="Questions"></div>
+        <div data-is="report-branch-criteria-view" caption="Branchs"></div>
+        <div data-is="report-org-criteria-view" caption="Orgs"></div>
+        <div data-is="report-staff-criteria-view" caption="Staffs"></div>
         <!--
         <div class="tag-box">
             <a href="#"><span class="tag-clear"></span></a>
@@ -66,75 +37,73 @@
             width: 100%;
         }
 
-        .tag-box {
-            display: block;
-            margin: 0 auto;
-            padding: 2px;
-        }
-
-        .tag-box .tag-caption {
-            display: inline-block;
+        .autocomplete-items {
+            display: none;
+            position: absolute;
             margin: 1px auto;
-            padding: 1px 8px;
-            color: whitesmoke;
-            background-color: cornflowerblue;
+            padding: 5px;
+            color: silver;
+            background-color: white;
+            border: 1px solid dimgray;
             border-radius: 5px;
-            width: 100px;
-            min-width: 100px;
-            text-align: right;
-            /* font-weight: bold; */
+            top: 43px; /* parent-height */
+            left: 15px;
+            right: 15px;
+            z-index: 100;
         }
 
-        .tag-box .tag-clear {
+        .autocomplete-items.show {
             display: inline-block;
-            box-sizing: border-box;
-            vertical-align: middle;
-            margin: 0 auto;
-            margin-top: -3px;
-            margin-left: 0.3em;
-            width: 15px;
-            height: 15px;
-            border-width: 3px;
-            border-style: solid;
-            border-color: red;
-            border-radius: 100%;
-            background: linear-gradient(-45deg, transparent 0%, transparent 46%, white 46%, white 56%, transparent 56%, transparent 100%), linear-gradient(45deg, transparent 0%, transparent 46%, white 46%, white 56%, transparent 56%, transparent 100%);
-            background-color: red;
-            box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
         }
 
-        .tag-box .tag-item {
-            display: inline-block;
-            margin: 2px auto;
-            padding: 1px 5px;
-            color: whitesmoke;
-            /* font-weight: bold; */
-            background-color: #119911;
-            border-radius: 5px;
-        }
-
-        .tag-box .tag-item .tag-close {
-            display: inline-block;
-            margin-top: 0px;
-            margin-left: 0.5em;
-            margin-right: 0.3em;
-            transform: scale(1, 0.8);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: whitesmoke;
-        }
-
-        .tag-box .tag-item .tag-close::after {
-            content: 'x';
-        }
-
-        .tag-box .tag-item .tag-close:hover {
+        .autocomplete-items .autocomplete-item {
+            position:relative;
+            padding: 2px;
+            display: block;
             cursor: pointer;
-            color: red;
+        }
+
+        .autocomplete-items .autocomplete-item:hover {
+            color: white;
+            background-color: cornflowerblue;
         }
     </style>
     <script>
         let self = this;
+
+        let tagdropdown = null;
+        
+        this.on('mount', () => {
+            tagdropdown = this.refs["tag-dropdown"];
+            //console.log(tagdropdown);
+        });
+
+        this.on('unmount', () => {
+            tagdropdown = null;
+        });
+
+        this.onFocus = (e) => {
+            //console.log('focus', e);
+            if (!tagdropdown) {
+                console.log('dropdown element not found.');
+                return;
+            }
+            let $tagdd = $(tagdropdown);
+            $tagdd.addClass('show');
+            //console.log($tagdd);
+        };
+        this.onInput = (e) => {
+            //console.log('input', e);
+        };
+        this.onBlur = (e) => {
+            //console.log('blur', e);
+            if (!tagdropdown) {
+                console.log('dropdown element not found.');
+                return;
+            }
+            let $tagdd = $(tagdropdown);
+            $tagdd.removeClass('show');
+            //console.log($tagdd);
+        };
     </script>
 </report-search-box>

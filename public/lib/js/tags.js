@@ -41,8 +41,226 @@ riot.tag2('page-nav-bar', '<div class="navbar navbar-expand-sm fixed-top navbar-
             e.preventUpdate = true;
         };
 });
-riot.tag2('report-search-box', '<div> <div> <input type="text"> </div> <div class="tag-box"> <a href="#"><span class="tag-clear"></span></a> <span class="tag-caption">Orgs</span> <span class="tag-item">Softbase<span class="tag-close"></span></span> <span class="tag-item">Marketing<span class="tag-close"></span></span> <span class="tag-item">Account<span class="tag-close"></span></span> <span class="tag-item">Manufacture<span class="tag-close"></span></span> <span class="tag-item">Support<span class="tag-close"></span></span> <span class="tag-item">Finance<span class="tag-close"></span></span> <span class="tag-item">Perchasing<span class="tag-close"></span></span> <span class="tag-item">Audit<span class="tag-close"></span></span> <span class="tag-item">PR<span class="tag-close"></span></span> <span class="tag-item">Housekeeping<span class="tag-close"></span></span> <span class="tag-item">Counter 1F<span class="tag-close"></span></span> <span class="tag-item">Counter 2F<span class="tag-close"></span></span> <span class="tag-item">Counter 3F<span class="tag-close"></span></span> <span class="tag-item">Counter 4F<span class="tag-close"></span></span> </div> <div class="tag-box"> <a href="#"><span class="tag-clear"></span></a> <span class="tag-caption">Staff</span> <span class="tag-item">Mr. Administrator<span class="tag-close"></span></span> <span class="tag-item">Mr. Chumpon Asaneerat<span class="tag-close"></span></span> </div> </div>', 'report-search-box,[data-is="report-search-box"]{ margin: 0 auto; padding: 15px; font-size: 14px; } report-search-box input[type=\'text\'],[data-is="report-search-box"] input[type=\'text\']{ display: inline-block; margin: 0 auto; width: 100%; } report-search-box .tag-box,[data-is="report-search-box"] .tag-box{ display: block; margin: 0 auto; padding: 2px; } report-search-box .tag-box .tag-caption,[data-is="report-search-box"] .tag-box .tag-caption{ display: inline-block; margin: 1px auto; padding: 1px 8px; color: whitesmoke; background-color: cornflowerblue; border-radius: 5px; width: 100px; min-width: 100px; text-align: right; } report-search-box .tag-box .tag-clear,[data-is="report-search-box"] .tag-box .tag-clear{ display: inline-block; box-sizing: border-box; vertical-align: middle; margin: 0 auto; margin-top: -3px; margin-left: 0.3em; width: 15px; height: 15px; border-width: 3px; border-style: solid; border-color: red; border-radius: 100%; background: linear-gradient(-45deg, transparent 0%, transparent 46%, white 46%, white 56%, transparent 56%, transparent 100%), linear-gradient(45deg, transparent 0%, transparent 46%, white 46%, white 56%, transparent 56%, transparent 100%); background-color: red; box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.5); transition: all 0.3s ease; } report-search-box .tag-box .tag-item,[data-is="report-search-box"] .tag-box .tag-item{ display: inline-block; margin: 2px auto; padding: 1px 5px; color: whitesmoke; background-color: #119911; border-radius: 5px; } report-search-box .tag-box .tag-item .tag-close,[data-is="report-search-box"] .tag-box .tag-item .tag-close{ display: inline-block; margin-top: 0px; margin-left: 0.5em; margin-right: 0.3em; transform: scale(1, 0.8); transition: all 0.3s ease; text-decoration: none; color: whitesmoke; } report-search-box .tag-box .tag-item .tag-close::after,[data-is="report-search-box"] .tag-box .tag-item .tag-close::after{ content: \'x\'; } report-search-box .tag-box .tag-item .tag-close:hover,[data-is="report-search-box"] .tag-box .tag-item .tag-close:hover{ cursor: pointer; color: red; }', '', function(opts) {
+riot.tag2('report-branch-criteria-view', '<virtual if="{(items !==null && items.length> 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{tag in items}"> <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-branch-criteria-view,[data-is="report-branch-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
         let self = this;
+        this.caption = this.opts.caption;
+        this.items = [
+            { id: '1', text: 'Bangkok' },
+            { id: '2', text: 'Nontaburi' },
+            { id: '3', text: 'Samutprakarn' }
+        ];
+
+        this.clearTagItems = (e) => {
+            if (self.items && self.items.length > 0) {
+                self.items.splice(0);
+
+                self.update();
+            }
+        };
+
+        this.removeTagItem = (e) => {
+            let target = e.item;
+            if (self.items && self.items.length > 0) {
+                let maps = self.items.map(item => { return item.id; });
+                let index = maps.indexOf(target.tag.id);
+                self.items.splice(index, 1);
+
+                self.update();
+            }
+        };
+});
+riot.tag2('report-date-criteria-view', '<virtual if="{(items !==null && items.length> 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{tag in items}"> <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-date-criteria-view,[data-is="report-date-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+        let self = this;
+        this.caption = this.opts.caption;
+        this.items = [
+            { id: '1', text: '2018-08-01' },
+            { id: '2', text: '2018-08-01' }
+        ];
+
+        this.clearTagItems = (e) => {
+            if (self.items && self.items.length > 0) {
+                self.items.splice(0);
+
+                self.update();
+            }
+        };
+
+        this.removeTagItem = (e) => {
+            let target = e.item;
+            if (self.items && self.items.length > 0) {
+                let maps = self.items.map(item => { return item.id; });
+                let index = maps.indexOf(target.tag.id);
+                self.items.splice(index, 1);
+
+                self.update();
+            }
+        };
+});
+riot.tag2('report-org-criteria-view', '<virtual if="{(items !==null && items.length> 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{tag in items}"> <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-org-criteria-view,[data-is="report-org-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+        let self = this;
+        this.caption = this.opts.caption;
+        this.items = [
+            { id: '1', text: 'Softbase' },
+            { id: '2', text: 'Marketing' },
+            { id: '3', text: 'Account' },
+            { id: '4', text: 'Manufacture' },
+            { id: '5', text: 'Support' },
+            { id: '6', text: 'Finance' },
+            { id: '7', text: 'Perchasing' },
+            { id: '8', text: 'Audit' },
+            { id: '9', text: 'PR' },
+            { id: '10', text: 'Housekeeping' },
+            { id: '11', text: 'Counter 1F' },
+            { id: '11', text: 'Counter 2F' },
+            { id: '11', text: 'Counter 3F' },
+            { id: '11', text: 'Counter 4F' }
+        ];
+
+        this.clearTagItems = (e) => {
+            if (self.items && self.items.length > 0) {
+                self.items.splice(0);
+
+                self.update();
+            }
+        };
+
+        this.removeTagItem = (e) => {
+            let target = e.item;
+            if (self.items && self.items.length > 0) {
+                let maps = self.items.map(item => { return item.id; });
+                let index = maps.indexOf(target.tag.id);
+                self.items.splice(index, 1);
+
+                self.update();
+            }
+        };
+});
+riot.tag2('report-qset-criteria-view', '<virtual if="{(criteria !== null && criteria.QSet !== null)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <span class="tag-item">{criteria.QSet.QSetDescription}<span class="tag-close" onclick="{removeTagItem}"></span></span> </div> </div> </div> </virtual>', 'report-qset-criteria-view,[data-is="report-qset-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+        let self = this;
+
+        this.caption = this.opts.caption;
+        this.criteria = report.search.current;
+
+        let modelchanged = (sender, evt) => {
+            self.update();
+        };
+        let qsetchanged = (sender, evt) => {
+            self.update();
+        };
+
+        this.on('mount', () => {
+            console.log('mount: add handers.');
+
+            self.criteria.QSetChanged.add(qsetchanged);
+        });
+
+        this.on('unmount', () => {
+            console.log('unmount: remove handers.');
+            self.criteria.QSetChanged.remove(qsetchanged);
+
+        });
+
+        this.clearTagItems = (e) => {
+            self.criteria.QSetId = null;
+        };
+
+        this.removeTagItem = (e) => {
+            self.criteria.QSetId = null;
+        };
+});
+riot.tag2('report-question-criteria-view', '<virtual if="{(items !==null && items.length> 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{tag in items}"> <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-question-criteria-view,[data-is="report-question-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+        let self = this;
+        this.caption = this.opts.caption;
+        this.items = [
+            { id: '1', text: '1. What do you think about our service?' },
+            { id: '2', text: '2. What do you think about our food taste?' },
+            { id: '3', text: '3. What do you think about our food quality?' }
+        ];
+
+        this.clearTagItems = (e) => {
+            if (self.items && self.items.length > 0) {
+                self.items.splice(0);
+
+                self.update();
+            }
+        };
+
+        this.removeTagItem = (e) => {
+            let target = e.item;
+            if (self.items && self.items.length > 0) {
+                let maps = self.items.map(item => { return item.id; });
+                let index = maps.indexOf(target.tag.id);
+                self.items.splice(index, 1);
+
+                self.update();
+            }
+        };
+});
+riot.tag2('report-search-box', '<div> <div> <input ref="tag-input" type="text" onfocus="{onFocus}" oninput="{onInput}" onblur="{onBlur}"> <div ref="tag-dropdown" class="autocomplete-items"> <span class="autocomplete-item">Softbase</span> <span class="autocomplete-item">Marketing</span> <span class="autocomplete-item">Account</span> <span class="autocomplete-item">Manufacture</span> <span class="autocomplete-item">Supports</span> </div> </div> <div data-is="report-qset-criteria-view" caption="QSets"></div> <div data-is="report-date-criteria-view" caption="Date"></div> <div data-is="report-question-criteria-view" caption="Questions"></div> <div data-is="report-branch-criteria-view" caption="Branchs"></div> <div data-is="report-org-criteria-view" caption="Orgs"></div> <div data-is="report-staff-criteria-view" caption="Staffs"></div> </div>', 'report-search-box,[data-is="report-search-box"]{ margin: 0 auto; padding: 15px; font-size: 14px; } report-search-box input[type=\'text\'],[data-is="report-search-box"] input[type=\'text\']{ display: inline-block; margin: 0 auto; width: 100%; } report-search-box .autocomplete-items,[data-is="report-search-box"] .autocomplete-items{ display: none; position: absolute; margin: 1px auto; padding: 5px; color: silver; background-color: white; border: 1px solid dimgray; border-radius: 5px; top: 43px; left: 15px; right: 15px; z-index: 100; } report-search-box .autocomplete-items.show,[data-is="report-search-box"] .autocomplete-items.show{ display: inline-block; } report-search-box .autocomplete-items .autocomplete-item,[data-is="report-search-box"] .autocomplete-items .autocomplete-item{ position:relative; padding: 2px; display: block; cursor: pointer; } report-search-box .autocomplete-items .autocomplete-item:hover,[data-is="report-search-box"] .autocomplete-items .autocomplete-item:hover{ color: white; background-color: cornflowerblue; }', '', function(opts) {
+        let self = this;
+
+        let tagdropdown = null;
+
+        this.on('mount', () => {
+            tagdropdown = this.refs["tag-dropdown"];
+
+        });
+
+        this.on('unmount', () => {
+            tagdropdown = null;
+        });
+
+        this.onFocus = (e) => {
+
+            if (!tagdropdown) {
+                console.log('dropdown element not found.');
+                return;
+            }
+            let $tagdd = $(tagdropdown);
+            $tagdd.addClass('show');
+
+        };
+        this.onInput = (e) => {
+
+        };
+        this.onBlur = (e) => {
+
+            if (!tagdropdown) {
+                console.log('dropdown element not found.');
+                return;
+            }
+            let $tagdd = $(tagdropdown);
+            $tagdd.removeClass('show');
+
+        };
+});
+riot.tag2('report-staff-criteria-view', '<virtual if="{(items !==null && items.length> 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{tag in items}"> <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-staff-criteria-view,[data-is="report-staff-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+        let self = this;
+        this.caption = this.opts.caption;
+        this.items = [
+            { id: '1', text: 'Mr. Administrator' },
+            { id: '2', text: 'Mr. Chumpon Asaneerat' },
+            { id: '3', text: 'Mr. Thana Phorchan' }
+        ];
+
+        this.clearTagItems = (e) => {
+            if (self.items && self.items.length > 0) {
+                self.items.splice(0);
+
+                self.update();
+            }
+        };
+
+        this.removeTagItem = (e) => {
+            let target = e.item;
+            if (self.items && self.items.length > 0) {
+                let maps = self.items.map(item => { return item.id; });
+                let index = maps.indexOf(target.tag.id);
+                self.items.splice(index, 1);
+
+                self.update();
+            }
+        };
 });
 riot.tag2('search-content', '<yield></yield>', '', 'class="search-content"', function(opts) {
 });

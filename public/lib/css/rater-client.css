@@ -117,6 +117,81 @@ body {
     border-radius: 5px;
 }
 
+/** TAG-Criteria **/
+
+.tag-box {
+    display: block;
+    margin: 0 auto;
+    padding: 2px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.tag-box .tag-clear {
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: middle;
+    margin: 0 auto;
+    margin-top: -3px;
+    margin-left: 0.3em;
+    width: 15px;
+    height: 15px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: red;
+    border-radius: 100%;
+    background: linear-gradient(-45deg, transparent 0%, transparent 46%, white 46%, white 56%, transparent 56%, transparent 100%), linear-gradient(45deg, transparent 0%, transparent 46%, white 46%, white 56%, transparent 56%, transparent 100%);
+    background-color: red;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.tag-box .tag-caption {
+    display: inline-block;
+    margin: 2px auto;
+    padding: 1px 8px;
+    color: whitesmoke;
+    background-color: cornflowerblue;
+    border-radius: 5px;
+    width: calc(100% - 25px);
+    /*
+            width: 100px;
+            min-width: 100px;
+            */
+    text-align: right;
+    /* font-weight: bold; */
+}
+
+.tag-box .tag-item {
+    display: inline-block;
+    margin: 2px auto;
+    padding: 1px 5px;
+    color: whitesmoke;
+    /* font-weight: bold; */
+    background-color: #119911;
+    border-radius: 5px;
+}
+
+.tag-box .tag-item .tag-close {
+    display: inline-block;
+    margin-top: 0px;
+    margin-left: 0.5em;
+    margin-right: 0.3em;
+    transform: scale(1, 0.8);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+.tag-box .tag-item .tag-close::after {
+    content: 'x';
+}
+
+.tag-box .tag-item .tag-close:hover {
+    cursor: pointer;
+    color: red;
+}
+
 @media screen and (max-width: 800px) {
     .sidebar {
         width: 150px;

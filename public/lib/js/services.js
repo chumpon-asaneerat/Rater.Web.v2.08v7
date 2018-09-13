@@ -362,6 +362,12 @@ class QSetModelLoader {
         lang.currentChanged.add(onLanguageChanged);
     };
 
+    raiseModelChangedEvent() {
+        if (this._ModelChanged) {
+            this._ModelChanged.invoke(self, EventArgs.Empty);
+        }
+    };
+
     loadmodels(refresh) {
         let self = this;
         if (!secure.current) {
@@ -393,12 +399,14 @@ class QSetModelLoader {
                     //console.log(r.data);
                     self._models = r.data;
                 }
-                self.loadmodel();
             });
         }
+        self.loadmodel();
     };
 
     loadmodel() {
+        let lastModel = this._model;
+
         //console.log('load qset model.');
         if (!lang) {
             console.log('lang obj is null.');
@@ -409,12 +417,20 @@ class QSetModelLoader {
         if (!langId) {
             //console.log('current language not set.');
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
 
         if (!this._models) {
             console.log('Qset Models is null.');
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
 
@@ -424,15 +440,27 @@ class QSetModelLoader {
         if (langIndex === -1) {
             console.log('No model match language. LangId:', langId);
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
         let model = this._models[langIndex];
         if (!model) {
             console.log('Qset Model object is null.');
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
         this._model = model;
+
+        if (lastModel != this._model) {
+            this.raiseModelChangedEvent();
+        }            
     };
 
     get model() {
@@ -467,6 +495,12 @@ class OrgModelLoader {
         lang.currentChanged.add(onLanguageChanged);
     };
 
+    raiseModelChangedEvent() {
+        if (this._ModelChanged) {
+            this._ModelChanged.invoke(self, EventArgs.Empty);
+        }
+    };
+
     loadmodels(refresh) {
         let self = this;
         if (!secure.current) {
@@ -498,12 +532,14 @@ class OrgModelLoader {
                     //console.log(r.data);
                     self._models = r.data;
                 }
-                self.loadmodel();
             });
         };
+        self.loadmodel();
     };
 
     loadmodel() {
+        let lastModel = this._model;
+
         //console.log('load org model.');
         if (!lang) {
             console.log('lang obj is null.');
@@ -514,12 +550,20 @@ class OrgModelLoader {
         if (!langId) {
             //console.log('current language not set.');
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
 
         if (!this._models) {
             console.log('Org Models is null.');
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
         // find model that match current language.
@@ -528,6 +572,10 @@ class OrgModelLoader {
         if (langIndex === -1) {
             console.log('No model match language. LangId:', langId);
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
         let model = this._models[langIndex];
@@ -535,9 +583,17 @@ class OrgModelLoader {
         if (!model) {
             console.log('Org Model object is null.');
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
         this._model = model;
+
+        if (lastModel != this._model) {
+            this.raiseModelChangedEvent();
+        }            
     };
 
     get model() {
@@ -572,6 +628,12 @@ class MemberModelLoader {
         lang.currentChanged.add(onLanguageChanged);
     };
 
+    raiseModelChangedEvent() {
+        if (this._ModelChanged) {
+            this._ModelChanged.invoke(self, EventArgs.Empty);
+        }
+    };
+
     loadmodels(refresh) {
         let self = this;
         if (!secure.current) {
@@ -603,12 +665,14 @@ class MemberModelLoader {
                     //console.log(r.data);
                     self._models = r.data;
                 }
-                self.loadmodel();
             });
         };
+        self.loadmodel();
     };
 
     loadmodel() {
+        let lastModel = this._model;
+
         //console.log('load org model.');
         if (!lang) {
             console.log('lang obj is null.');
@@ -619,12 +683,20 @@ class MemberModelLoader {
         if (!langId) {
             //console.log('current language not set.');
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
 
         if (!this._models) {
-            console.log('Org Models is null.');
+            console.log('Member Models is null.');
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
         // find model that match current language.
@@ -633,16 +705,28 @@ class MemberModelLoader {
         if (langIndex === -1) {
             console.log('No model match language. LangId:', langId);
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
         let model = this._models[langIndex];
 
         if (!model) {
-            console.log('Org Model object is null.');
+            console.log('Member Model object is null.');
             this._model = null;
+
+            if (lastModel != this._model) {
+                this.raiseModelChangedEvent();
+            }            
             return;
         }
         this._model = model;
+
+        if (lastModel != this._model) {
+            this.raiseModelChangedEvent();
+        }            
     };
 
     get model() {
@@ -656,6 +740,101 @@ class MemberModelLoader {
 
 //#endregion
 
+//#region ReportCriteria
+
+class ReportCriteria {
+    constructor(svr) {
+        // internal variables.
+        let self = this;
+
+        this._service = svr; // report service.
+        this._qsetId = ''; // selected qset
+        this._questions = []; // seleted questions
+
+        let qsetchanged = (sender, evt) => {
+            //console.log('qset changed.');
+            self.raiseQSetChangedEvent();
+        };
+
+        this._service.qset.ModelChanged.add(qsetchanged);
+
+        // event handler variables.
+        this._qsetChanged = new EventHandler();
+        this._questionsChanged = new EventHandler();
+    };
+
+    raiseQSetChangedEvent() {
+        if (this._qsetChanged) {
+            this._qsetChanged.invoke(self, EventArgs.Empty);
+        }
+    };
+
+    raiseQuestionsChangedEvent() {
+        if (this._questionsChanged) {
+            this._questionsChanged.invoke(self, EventArgs.Empty);
+        }
+    };
+
+    clearQSet() {
+        this._qsetId = null;
+        this.raiseQSetChangedEvent();
+        clearQuestions();
+    };
+
+    clearQuestions() {
+        this._questions = [];
+        raiseQuestionsChangedEvent();
+    };
+
+    get QSetId() { return this._qsetId; };
+    set QSetId(value) {
+        if (this._qsetId !== value) {
+            this._qsetId = value;
+            this.raiseQSetChangedEvent();
+        }
+    };
+
+    get QSet() {
+        if (!report.qset.model) {
+            //console.log('model is null.');
+            return null;
+        }
+        if (!this._qsetId || this._qsetId === '') {
+            //console.log('qsetid is null or empty string.');
+            return null;
+        }
+
+        let qsetMap = report.qset.model.qsets.map((item) => { return item.QSetId; });
+        let index = qsetMap.indexOf(this._qsetId);
+        if (index === -1) {
+            //console.log('Not found QSetId:', this._qsetId);
+        }
+        return report.qset.model.qsets[index];
+    };
+
+    get QSetChanged() { return this._qsetChanged; }
+    get QuestionsChanged() { return this._questionsChanged; }
+};
+
+//#endregion
+
+//#region SearchManager
+
+class SearchManager {
+    constructor(srv) {
+        this._service = srv; // report service.
+        this._current = new ReportCriteria(this._service);
+    };
+
+    newSearch() {
+        this._current = new ReportCriteria(this._service);
+    };
+
+    get current() { return this._current; };
+};
+
+//#endregion
+
 //#region ReportService
 
 class ReportService {
@@ -663,6 +842,7 @@ class ReportService {
         this._qsetloader = new QSetModelLoader();
         this._orgloader = new OrgModelLoader();
         this._memberloader = new MemberModelLoader();
+        this._searchManager = new SearchManager(this);
     };
     // org model loader.
     get org() {
@@ -675,6 +855,10 @@ class ReportService {
     // member model loader.
     get member() {
         return this._memberloader;
+    };
+    // search manager.
+    get search() {
+        return this._searchManager;
     };
 };
 
