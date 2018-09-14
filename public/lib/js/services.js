@@ -985,6 +985,9 @@ class DateCriteria extends BaseCriteria {
     constructor(parent) {
         super(parent);
 
+        this._beginDate = null;
+        this._endDate = null;
+
         this._changed = new EventHandler();
     };
 
@@ -994,7 +997,53 @@ class DateCriteria extends BaseCriteria {
         }
     };
 
-    clear() {        
+    __checkMinMax() {
+        if (!this._beginDate && !this._endDate) {
+            // no date.
+        }
+        else if (this._beginDate && !this._endDate) {
+            // has only begin date.
+        }
+        else if (!this._beginDate && this._endDate) {
+            // has only end date.
+        }
+        else {
+            // has both date.
+            if (this._beginDate > this._endDate) {
+                // swap.
+                let tmp = this._endDate;
+                this._endDate = this._beginDate;
+                this._beginDate = tmp;
+            }
+        }
+    };
+
+    clear() {
+        this._beginDate = null;
+        this._endDate = null;
+        this.raiseChangedEvent();
+    };
+
+    get beginDate() { 
+        return this._beginDate; 
+    };
+    set beginDate(value) {
+        if (this._beginDate != value) {
+            this._beginDate = value;
+            this.__checkMinMax();
+            this.raiseChangedEvent();
+        }
+    };
+
+    get endDate() {
+        return this._endDate;
+    };
+    set endDate(value) {
+        if (this._endDate != value) {
+            this._endDate = value;
+            this.__checkMinMax();
+            this.raiseChangedEvent();
+        }
     };
 
     get changed() { return this._changed; }

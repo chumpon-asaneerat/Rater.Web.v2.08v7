@@ -1,14 +1,22 @@
 <report-date-criteria-view>
-    <virtual if={(items !==null && items.length> 0)}>
+    <virtual if={(criteria !== null && criteria.date !== null && (criteria.date.beginDate !== null || criteria.date.endDate !== null))}>
         <div class="tag-box">
             <div class="row">
-                <div class="col-2 mr-0 pr-0">
+                <div class="tag-r-col mr-0 pr-0">
                     <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a>
                     <span class="tag-caption">{caption}</span>
                 </div>
-                <div class="col-10 ml-0 pl-0">
-                    <virtual each={tag in items}>
-                        <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span>
+                <div class="tag-c-col ml-0 pl-0">
+                    <virtual if={criteria.date.beginDate !== null && criteria.date.endDate === null}>
+                        <span class="tag-item">{criteria.date.beginDate}<span class="tag-close" onclick="{removeBeginDate}"></span></span>
+                    </virtual>
+                    <virtual if={criteria.date.beginDate === null && criteria.date.endDate !== null}>
+                        <span class="tag-item">{criteria.date.endDate}<span class="tag-close" onclick="{removeEndDate}"></span></span>
+                    </virtual>
+                    <virtual if={criteria.date.beginDate !== null && criteria.date.endDate !== null}>
+                        <span class="tag-item">{criteria.date.beginDate}<span class="tag-close" onclick="{removeBeginDate}"></span></span>
+                        <span>-</span>
+                        <span class="tag-item">{criteria.date.endDate}<span class="tag-close" onclick="{removeEndDate}"></span></span>
                     </virtual>
                 </div>
             </div>
@@ -22,29 +30,35 @@
     </style>
     <script>
         let self = this;
+
         this.caption = this.opts.caption;
-        this.items = [
-            { id: '1', text: '2018-08-01' },
-            { id: '2', text: '2018-08-01' }
-        ];
-        
-        this.clearTagItems = (e) => {
-            if (self.items && self.items.length > 0) {
-                self.items.splice(0);
-                // refresh
-                self.update();
-            }
+        this.criteria = report.search.current;
+
+        let datechanged = (sender, evt) => {
+            //console.log('qset changed.');
+            self.update();
         };
 
-        this.removeTagItem = (e) => {
-            let target = e.item;
-            if (self.items && self.items.length > 0) {
-                let maps = self.items.map(item => { return item.id; });            
-                let index = maps.indexOf(target.tag.id);
-                self.items.splice(index, 1);
-                // refresh
-                self.update();
-            }
+        this.on('mount', () => {
+            //console.log('mount: add handers.');
+            self.criteria.date.changed.add(datechanged);
+        });
+
+        this.on('unmount', () => {
+            //console.log('unmount: remove handers.');
+            self.criteria.date.changed.remove(datechanged);
+        });
+
+        this.clearTagItems = (e) => {
+            self.criteria.date.clear();
+        };
+
+        this.removeBeginDate = (e) => {
+            self.criteria.date.beginDate = null;
+        };
+
+        this.removeEndDate = (e) => {
+            self.criteria.date.endDate = null;
         };
     </script>
 </report-date-criteria-view>

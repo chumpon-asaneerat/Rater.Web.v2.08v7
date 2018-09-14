@@ -127,13 +127,21 @@ body {
     font-size: 14px;
 }
 
+.tag-r-col {
+    width: 120px;
+}
+
+.tag-c-col {
+    width: calc(100% - 120px);
+}
+
 .tag-box .tag-clear {
     display: inline-block;
     box-sizing: border-box;
     vertical-align: middle;
     margin: 0 auto;
-    margin-top: -3px;
-    margin-left: 0.3em;
+    margin-top: -20px;
+    margin-left: 0.3em;    
     width: 15px;
     height: 15px;
     border-width: 3px;
@@ -154,12 +162,11 @@ body {
     background-color: cornflowerblue;
     border-radius: 5px;
     width: calc(100% - 25px);
-    /*
-            width: 100px;
-            min-width: 100px;
-            */
     text-align: right;
-    /* font-weight: bold; */
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .tag-box .tag-item {

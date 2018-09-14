@@ -2,11 +2,11 @@
     <virtual if={(criteria !== null && criteria.question !== null && criteria.question.selectedItems != null && criteria.question.selectedItems.length > 0)}>
         <div class="tag-box">
             <div class="row">
-                <div class="col-2 mr-0 pr-0">
+                <div class="tag-r-col mr-0 pr-0">
                     <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a>
                     <span class="tag-caption">{caption}</span>
                 </div>
-                <div class="col-10 ml-0 pl-0">
+                <div class="tag-c-col ml-0 pl-0">
                     <virtual each={item in criteria.question.selectedItems}>
                         <span class="tag-item">{item.QSlideText}<span class="tag-close" onclick="{removeTagItem}"></span></span>
                     </virtual>
