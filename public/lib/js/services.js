@@ -364,7 +364,7 @@ class QSetModelLoader {
 
     raiseModelChangedEvent() {
         if (this._ModelChanged) {
-            this._ModelChanged.invoke(self, EventArgs.Empty);
+            this._ModelChanged.invoke(this, EventArgs.Empty);
         }
     };
 
@@ -399,9 +399,12 @@ class QSetModelLoader {
                     //console.log(r.data);
                     self._models = r.data;
                 }
+                self.loadmodel();
             });
         }
-        self.loadmodel();
+        else {
+            self.loadmodel();
+        }
     };
 
     loadmodel() {
@@ -497,7 +500,7 @@ class OrgModelLoader {
 
     raiseModelChangedEvent() {
         if (this._ModelChanged) {
-            this._ModelChanged.invoke(self, EventArgs.Empty);
+            this._ModelChanged.invoke(this, EventArgs.Empty);
         }
     };
 
@@ -532,9 +535,12 @@ class OrgModelLoader {
                     //console.log(r.data);
                     self._models = r.data;
                 }
+                self.loadmodel();
             });
-        };
-        self.loadmodel();
+        }
+        else {
+            self.loadmodel();
+        }
     };
 
     loadmodel() {
@@ -630,7 +636,7 @@ class MemberModelLoader {
 
     raiseModelChangedEvent() {
         if (this._ModelChanged) {
-            this._ModelChanged.invoke(self, EventArgs.Empty);
+            this._ModelChanged.invoke(this, EventArgs.Empty);
         }
     };
 
@@ -665,9 +671,12 @@ class MemberModelLoader {
                     //console.log(r.data);
                     self._models = r.data;
                 }
+                self.loadmodel();
             });
-        };
-        self.loadmodel();
+        }
+        else {
+            self.loadmodel();
+        }
     };
 
     loadmodel() {
@@ -748,54 +757,83 @@ class ReportCriteria {
         let self = this;
 
         this._service = svr; // report service.
-        this._qsetId = ''; // selected qset
-        this._questions = []; // seleted questions
+        this._qset = new QSetCriteria(this);
+        this._question = new QuestionCriteria(this);
+        this._date = new DateCriteria(this);
+        this._branch = new BranchCriteria(this);
+        this._org = new OrgCriteria(this);
+        this._member = new MemberCriteria(this);
+    };
 
-        let qsetchanged = (sender, evt) => {
-            //console.log('qset changed.');
-            self.raiseQSetChangedEvent();
+    // get report service.
+    get report() {
+        return this._service;
+    };
+
+    get qset() { return this._qset; }
+    get question() { return this._question; }
+    get date() { return this._date; }
+    get branch() { return this._branch; }
+    get org() { return this._org; }
+    get member() { return this._member; }
+};
+
+//#endregion
+
+//#region BaseCriteria
+
+class BaseCriteria {
+    constructor(p_parent) {
+        this._parent = p_parent;
+    };
+
+    get parent() {
+        return this._parent;
+    };
+
+    get report() {
+        return (this._parent) ? this._parent.report : null;
+    };
+}
+
+//#endregion
+
+//#region QSetCriteria
+
+class QSetCriteria extends BaseCriteria {
+    constructor(parent) {
+        super(parent);
+
+        this._qsetId = ''; // selected qsetid
+
+        let self = this;
+        let modelchanged = (sender, evt) => {
+            //console.log('qset model changed.');
+            self.raiseChangedEvent();
         };
+        this.report.qset.ModelChanged.add(modelchanged);
 
-        this._service.qset.ModelChanged.add(qsetchanged);
-
-        // event handler variables.
-        this._qsetChanged = new EventHandler();
-        this._questionsChanged = new EventHandler();
+        this._changed = new EventHandler();
     };
 
-    raiseQSetChangedEvent() {
-        if (this._qsetChanged) {
-            this._qsetChanged.invoke(self, EventArgs.Empty);
+    raiseChangedEvent() {
+        if (this._changed) {
+            this._changed.invoke(this, EventArgs.Empty);
         }
-    };
-
-    raiseQuestionsChangedEvent() {
-        if (this._questionsChanged) {
-            this._questionsChanged.invoke(self, EventArgs.Empty);
-        }
-    };
-
-    clearQSet() {
-        this._qsetId = null;
-        this.raiseQSetChangedEvent();
-        clearQuestions();
-    };
-
-    clearQuestions() {
-        this._questions = [];
-        raiseQuestionsChangedEvent();
     };
 
     get QSetId() { return this._qsetId; };
     set QSetId(value) {
         if (this._qsetId !== value) {
             this._qsetId = value;
-            this.raiseQSetChangedEvent();
+            // raise event when qsetid changed.
+            this.raiseChangedEvent();
         }
     };
 
     get QSet() {
-        if (!report.qset.model) {
+        //console.log(this._service);
+        if (!this.report.qset.model) {
             //console.log('model is null.');
             return null;
         }
@@ -803,17 +841,526 @@ class ReportCriteria {
             //console.log('qsetid is null or empty string.');
             return null;
         }
-
-        let qsetMap = report.qset.model.qsets.map((item) => { return item.QSetId; });
+        let model = this.report.qset.model;
+        let qsetMap = model.qsets.map((item) => { return item.QSetId; });
         let index = qsetMap.indexOf(this._qsetId);
         if (index === -1) {
             //console.log('Not found QSetId:', this._qsetId);
         }
-        return report.qset.model.qsets[index];
+        return model.qsets[index];
     };
 
-    get QSetChanged() { return this._qsetChanged; }
-    get QuestionsChanged() { return this._questionsChanged; }
+    get changed() { return this._changed; }
+};
+
+//#endregion
+
+//#region QuestionCriteria
+
+class QuestionCriteria extends BaseCriteria {
+    constructor(parent) {
+        super(parent);
+
+        // variables for source and map from master model.
+        this._items = null;
+        this._maps = null;
+
+        this._selectedItems = []; // variable selected items.
+
+        let self = this;
+
+        let qsetchanged = (sender, evt) => {
+            //console.log('qsetid changed.');
+            self.__loadslides();
+            self.raiseChangedEvent();
+        };
+        this.parent.qset.changed.add(qsetchanged);
+
+        this._changed = new EventHandler();
+    };
+
+    __loadslides() {
+        //console.log('build question`s slide and maps.');
+        this._items = null;
+        this._maps = null;
+
+        if (!this.parent.qset || !this.parent.qset.QSet) {
+            //console.log('The QSet is not selected.');
+            return;
+        };
+        // set reference for slide and map.
+        let qset = (this.parent.qset) ? this.parent.qset.QSet : null;
+        if (qset && qset.slides) {
+            this._items = qset.slides;
+            this._maps = this._items.map((item) => { return String(item.QSeq) });
+        }        
+        // update changed to selected items.
+        if (this._selectedItems && this._selectedItems.length > 0) {
+            let self = this;
+            let selmaps = this._selectedItems.map((item) => { return String(item.QSeq); });
+            this._selectedItems.splice(0); // remove all.
+            selmaps.forEach((qseq) => {
+                let sindex = self._maps.indexOf(qseq);
+                if (sindex !== -1) {
+                    self._selectedItems.push(self._items[sindex]);
+                }
+            });
+        }
+    };
+
+    clear() {
+        if (!this._selectedItems || this._selectedItems.length <= 0) {
+            return;
+        }        
+        this._selectedItems.splice(0);
+    };
+    
+    add(qseq) {
+        if (!this._selectedItems) {
+            this._selectedItems = [];
+        }
+        //console.log(this._maps);
+        if (this.indexOf(qseq) !== -1) {
+            //console.log('already exist.');
+            return;
+        }
+
+        let index = this._maps.indexOf(String(qseq));
+        if (index === -1) {
+            //console.log('Not found QSeq: ', qseq);
+            return;
+        }
+        let item = this._items[index];
+        //console.log('add item: ', item);
+        this._selectedItems.push(item);
+        this.raiseChangedEvent();
+    };
+
+    remove(index) {
+        if (!this._selectedItems || index < 0 || index >= this._selectedItems.length) {
+            return;
+        }
+        this._selectedItems.splice(index, 1);
+        this.raiseChangedEvent();
+    };
+
+    indexOf(qseq) {
+        if (!this._selectedItems) return -1;
+        let selmaps = this._selectedItems.map((item) => { return String(item.QSeq); });
+        let index = selmaps.indexOf(String(qseq));
+        return index;
+    };
+
+    raiseChangedEvent() {
+        if (this._changed) {
+            this._changed.invoke(this, EventArgs.Empty);
+        }
+    };
+
+    get selectedItems() {
+        return this._selectedItems;
+    };
+
+    get changed() { return this._changed; }
+};
+
+//#endregion
+
+//#region DateCriteria
+
+class DateCriteria extends BaseCriteria {
+    constructor(parent) {
+        super(parent);
+
+        this._changed = new EventHandler();
+    };
+
+    raiseChangedEvent() {
+        if (this._changed) {
+            this._changed.invoke(this, EventArgs.Empty);
+        }
+    };
+
+    get changed() { return this._changed; }
+};
+
+//#endregion
+
+//#region BranchCriteria
+
+class BranchCriteria extends BaseCriteria {
+    constructor(parent) {
+        super(parent);
+
+        // variables for source and map from master model.
+        this._items = null;
+        this._maps = null;
+
+        this._selectedItems = []; // variable selected items.
+
+        let self = this;
+
+        let modelchanged = (sender, evt) => {
+            //console.log('org model changed.');
+            self.__loadbranchs();
+            self.raiseChangedEvent();
+        };
+        this.report.org.ModelChanged.add(modelchanged);
+
+        this._changed = new EventHandler();
+    };
+
+    __loadbranchs() {
+        //console.log('build branch list and maps.');
+        this._items = null;
+        this._maps = null;
+
+        if (!this.report.org.model || !this.report.org.model.branchs) {
+            //console.log('The Org Model not loaded.');
+            return;
+        };
+        // set reference for slide and map.
+        let branchs = this.report.org.model.branchs;
+        if (branchs) {
+            this._items = branchs;
+            this._maps = this._items.map((item) => { return String(item.BranchId) });
+        }
+        else {
+            console.log('branch list not found.');
+        }
+        // update changed to selected items.
+        if (this._selectedItems && this._selectedItems.length > 0) {
+            let self = this;
+            let selmaps = this._selectedItems.map((item) => { return String(item.BranchId); });
+            this._selectedItems.splice(0); // remove all.
+            selmaps.forEach((branchid) => {
+                let sindex = self._maps.indexOf(branchid);
+                if (sindex !== -1) {
+                    self._selectedItems.push(self._items[sindex]);
+                }
+            });
+        }
+    };
+
+    raiseChangedEvent() {
+        if (this._changed) {
+            this._changed.invoke(this, EventArgs.Empty);
+        }
+    };
+
+    clear() {
+        if (!this._selectedItems || this._selectedItems.length <= 0) {
+            return;
+        }
+        this._selectedItems.splice(0);
+    };
+
+    add(branchid) {
+        if (!this._selectedItems) {
+            this._selectedItems = [];
+        }
+        //console.log(this._maps);
+        if (this.indexOf(branchid) !== -1) {
+            //console.log('already exist.');
+            return;
+        }
+
+        let index = this._maps.indexOf(String(branchid));
+        if (index === -1) {
+            //console.log('Not found BranchId: ', branchid);
+            return;
+        }
+        let item = this._items[index];
+        //console.log('add item: ', item);
+        this._selectedItems.push(item);
+        this.raiseChangedEvent();
+    };
+
+    remove(index) {
+        if (!this._selectedItems || index < 0 || index >= this._selectedItems.length) {
+            return;
+        }
+        this._selectedItems.splice(index, 1);
+        this.raiseChangedEvent();
+    };
+
+    indexOf(branchid) {
+        if (!this._selectedItems) return -1;
+        let selmaps = this._selectedItems.map((item) => { return String(item.BranchId); });
+        let index = selmaps.indexOf(String(branchid));
+        return index;
+    };
+
+    get selectedItems() {
+        return this._selectedItems;
+    };
+
+    get changed() { return this._changed; }
+};
+
+//#endregion
+
+//#region OrgCriteria
+
+class OrgCriteria extends BaseCriteria {
+    constructor(parent) {
+        super(parent);
+
+        // variables for source and map from master model.
+        this._items = null;
+        this._maps = null;
+
+        this._selectedItems = []; // variable selected items.
+
+        let self = this;
+
+        let modelchanged = (sender, evt) => {
+            //console.log('Org Model changed.');
+            self.__loadorgs();
+            self.raiseChangedEvent();
+        };
+        this.report.org.ModelChanged.add(modelchanged);
+
+        let branchchanged = (sender, evt) => { 
+            self.__loadorgs();
+            self.raiseChangedEvent();
+        };
+        this.parent.branch.changed.add(branchchanged);
+
+        this._changed = new EventHandler();
+    };
+
+    __loadorgs() {
+        //console.log('build org list and maps.');
+        this._items = null;
+        this._maps = null;
+
+        if (!this.report.org.model || !this.report.org.model.branchs) {
+            //console.log('The Org Model not loaded.');
+            return;
+        };
+
+        // set reference for slide and map.
+        let branchs = this.report.org.model.branchs;
+        let bc = this.parent.branch;
+        let bFilter = (bc.selectedItems && bc.selectedItems.length > 0) ? true : false;
+
+        if (branchs) {
+            let self = this;
+
+            this._items = [];            
+            branchs.forEach((eachBranch) => {
+                // check has filter option for branch.
+                let invalidClass = '';
+                if (bFilter) {
+                    if (bc.indexOf(eachBranch.BranchId) === -1) {
+                        // the current branch is not in filter so need to gray it.
+                        invalidClass = 'invalid'
+                        //console.log('branch is in filter:', eachBranch.BranchId);
+                    }
+                    else {
+                        //console.log('no branch in filter:', eachBranch.BranchId);
+                    }
+                }
+                eachBranch.orgs.forEach((eachOrg) => {
+                    // append branch name to org name.
+                    let bNane = ' (' + eachBranch.BranchName + ')';
+                    if (!eachOrg.OrgName.endsWith(bNane)) {
+                        eachOrg.OrgName = eachOrg.OrgName + bNane;
+                    }
+                    eachOrg.Invalid = invalidClass;
+                });
+                // merge into single array.
+                self._items.push(...eachBranch.orgs);
+            });
+            this._maps = this._items.map((item) => { return String(item.OrgId) });
+        }
+        else {
+            console.log('org list not found.');
+        }
+        // update changed to selected items.
+        if (this._selectedItems && this._selectedItems.length > 0) {
+            let self = this;        
+            let selmaps = this._selectedItems.map((item) => { return String(item.OrgId); });
+            this._selectedItems.splice(0); // remove all.
+            selmaps.forEach((orgid) => {
+                let sindex = self._maps.indexOf(orgid);
+                if (sindex !== -1) {
+                    let item = self._items[sindex];
+                    self._selectedItems.push(item);
+                }
+            });
+        }
+    };
+
+    clear() {
+        if (!this._selectedItems || this._selectedItems.length <= 0) {
+            return;
+        }
+        this._selectedItems.splice(0);
+    };
+
+    add(orgid) {
+        if (!this._selectedItems) {
+            this._selectedItems = [];
+        }
+        //console.log(this._maps);
+        if (this.indexOf(orgid) !== -1) {
+            //console.log('already exist.');
+            return;
+        }
+
+        let index = this._maps.indexOf(String(orgid));
+        if (index === -1) {
+            //console.log('Not found OrgId: ', orgid);
+            return;
+        }
+        let item = this._items[index];
+        //console.log('add item: ', item);
+        this._selectedItems.push(item);
+        this.raiseChangedEvent();
+    };
+
+    remove(index) {
+        if (!this._selectedItems || index < 0 || index >= this._selectedItems.length) {
+            return;
+        }
+        this._selectedItems.splice(index, 1);
+        this.raiseChangedEvent();
+    };
+
+    indexOf(orgid) {
+        if (!this._selectedItems) return -1;
+        let selmaps = this._selectedItems.map((item) => { return String(item.OrgId); });
+        let index = selmaps.indexOf(String(orgid));
+        return index;
+    };
+
+    raiseChangedEvent() {
+        if (this._changed) {
+            this._changed.invoke(this, EventArgs.Empty);
+        }
+    };
+
+    get selectedItems() {
+        return this._selectedItems;
+    };
+
+    get changed() { return this._changed; }
+};
+
+//#endregion
+
+//#region MemberCriteria
+
+class MemberCriteria extends BaseCriteria {
+    constructor(parent) {
+        super(parent);
+
+        // variables for source and map from master model.
+        this._items = null;
+        this._maps = null;
+
+        this._selectedItems = []; // variable selected items.
+
+        let self = this;
+
+        let modelchanged = (sender, evt) => {
+            //console.log('org model changed.');
+            self.__loadmembers();
+            self.raiseChangedEvent();
+        };
+        this.report.member.ModelChanged.add(modelchanged);
+
+        this._changed = new EventHandler();
+    };
+
+    __loadmembers() {
+        //console.log('build branch list and maps.');
+        this._items = null;
+        this._maps = null;
+
+        if (!this.report.member.model || !this.report.member.model.members) {
+            //console.log('The Org Model not loaded.');
+            return;
+        };
+        // set reference for slide and map.
+        let members = this.report.member.model.members;
+        if (members) {
+            this._items = members;
+            this._maps = this._items.map((item) => { return String(item.MemberId) });
+        }
+        else {
+            console.log('member list not found.');
+        }
+        // update changed to selected items.
+        if (this._selectedItems && this._selectedItems.length > 0) {
+            let self = this;
+            let selmaps = this._selectedItems.map((item) => { return String(item.MemberId); });
+            this._selectedItems.splice(0); // remove all.
+            selmaps.forEach((memberid) => {
+                let sindex = self._maps.indexOf(memberid);
+                if (sindex !== -1) {
+                    self._selectedItems.push(self._items[sindex]);
+                }
+            });
+        }
+    };
+
+    raiseChangedEvent() {
+        if (this._changed) {
+            this._changed.invoke(this, EventArgs.Empty);
+        }
+    };
+
+    clear() {
+        if (!this._selectedItems || this._selectedItems.length <= 0) {
+            return;
+        }
+        this._selectedItems.splice(0);
+    };
+
+    add(memberid) {
+        if (!this._selectedItems) {
+            this._selectedItems = [];
+        }
+        //console.log(this._maps);
+        if (this.indexOf(memberid) !== -1) {
+            //console.log('already exist.');
+            return;
+        }
+
+        let index = this._maps.indexOf(String(memberid));
+        if (index === -1) {
+            //console.log('Not found MemberId: ', memberid);
+            return;
+        }
+        let item = this._items[index];
+        //console.log('add item: ', item);
+        this._selectedItems.push(item);
+        this.raiseChangedEvent();
+    };
+
+    remove(index) {
+        if (!this._selectedItems || index < 0 || index >= this._selectedItems.length) {
+            return;
+        }
+        this._selectedItems.splice(index, 1);
+        this.raiseChangedEvent();
+    };
+
+    indexOf(memberid) {
+        if (!this._selectedItems) return -1;
+        let selmaps = this._selectedItems.map((item) => { return String(item.MemberId); });
+        let index = selmaps.indexOf(String(memberid));
+        return index;
+    };
+
+    get selectedItems() {
+        return this._selectedItems;
+    };
+
+    get changed() { return this._changed; }
 };
 
 //#endregion

@@ -41,32 +41,35 @@ riot.tag2('page-nav-bar', '<div class="navbar navbar-expand-sm fixed-top navbar-
             e.preventUpdate = true;
         };
 });
-riot.tag2('report-branch-criteria-view', '<virtual if="{(items !==null && items.length> 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{tag in items}"> <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-branch-criteria-view,[data-is="report-branch-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+riot.tag2('report-branch-criteria-view', '<virtual if="{(criteria !== null && criteria.branch !== null && criteria.branch.selectedItems != null && criteria.branch.selectedItems.length > 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{item in criteria.branch.selectedItems}"> <span class="tag-item">{item.BranchName}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-branch-criteria-view,[data-is="report-branch-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
         let self = this;
         this.caption = this.opts.caption;
-        this.items = [
-            { id: '1', text: 'Bangkok' },
-            { id: '2', text: 'Nontaburi' },
-            { id: '3', text: 'Samutprakarn' }
-        ];
+        this.criteria = report.search.current;
+
+        let branchchanged = (sender, evt) => {
+
+            self.update();
+        };
+
+        this.on('mount', () => {
+
+            self.criteria.branch.changed.add(branchchanged);
+        });
+
+        this.on('unmount', () => {
+
+            self.criteria.branch.changed.remove(branchchanged);
+        });
 
         this.clearTagItems = (e) => {
-            if (self.items && self.items.length > 0) {
-                self.items.splice(0);
-
-                self.update();
-            }
+            self.criteria.branch.clear();
         };
 
         this.removeTagItem = (e) => {
             let target = e.item;
-            if (self.items && self.items.length > 0) {
-                let maps = self.items.map(item => { return item.id; });
-                let index = maps.indexOf(target.tag.id);
-                self.items.splice(index, 1);
-
-                self.update();
-            }
+            let branchid = target.item.BranchId;
+            let removeIndex = self.criteria.branch.indexOf(branchid);
+            self.criteria.branch.remove(removeIndex);
         };
 });
 riot.tag2('report-date-criteria-view', '<virtual if="{(items !==null && items.length> 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{tag in items}"> <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-date-criteria-view,[data-is="report-date-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
@@ -96,68 +99,56 @@ riot.tag2('report-date-criteria-view', '<virtual if="{(items !==null && items.le
             }
         };
 });
-riot.tag2('report-org-criteria-view', '<virtual if="{(items !==null && items.length> 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{tag in items}"> <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-org-criteria-view,[data-is="report-org-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+riot.tag2('report-org-criteria-view', '<virtual if="{(criteria !== null && criteria.org !== null && criteria.org.selectedItems != null && criteria.org.selectedItems.length > 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{item in criteria.org.selectedItems}"> <span class="tag-item {item.Invalid}">{item.OrgName}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-org-criteria-view,[data-is="report-org-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
         let self = this;
         this.caption = this.opts.caption;
-        this.items = [
-            { id: '1', text: 'Softbase' },
-            { id: '2', text: 'Marketing' },
-            { id: '3', text: 'Account' },
-            { id: '4', text: 'Manufacture' },
-            { id: '5', text: 'Support' },
-            { id: '6', text: 'Finance' },
-            { id: '7', text: 'Perchasing' },
-            { id: '8', text: 'Audit' },
-            { id: '9', text: 'PR' },
-            { id: '10', text: 'Housekeeping' },
-            { id: '11', text: 'Counter 1F' },
-            { id: '11', text: 'Counter 2F' },
-            { id: '11', text: 'Counter 3F' },
-            { id: '11', text: 'Counter 4F' }
-        ];
+        this.criteria = report.search.current;
+
+        let orgchanged = (sender, evt) => {
+
+            self.update();
+        };
+
+        this.on('mount', () => {
+
+            self.criteria.org.changed.add(orgchanged);
+        });
+
+        this.on('unmount', () => {
+
+            self.criteria.org.changed.remove(orgchanged);
+        });
 
         this.clearTagItems = (e) => {
-            if (self.items && self.items.length > 0) {
-                self.items.splice(0);
-
-                self.update();
-            }
+            self.criteria.org.clear();
         };
 
         this.removeTagItem = (e) => {
             let target = e.item;
-            if (self.items && self.items.length > 0) {
-                let maps = self.items.map(item => { return item.id; });
-                let index = maps.indexOf(target.tag.id);
-                self.items.splice(index, 1);
-
-                self.update();
-            }
+            let orgid = target.item.OrgId;
+            let removeIndex = self.criteria.org.indexOf(orgid);
+            self.criteria.org.remove(removeIndex);
         };
 });
-riot.tag2('report-qset-criteria-view', '<virtual if="{(criteria !== null && criteria.QSet !== null)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <span class="tag-item">{criteria.QSet.QSetDescription}<span class="tag-close" onclick="{removeTagItem}"></span></span> </div> </div> </div> </virtual>', 'report-qset-criteria-view,[data-is="report-qset-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+riot.tag2('report-qset-criteria-view', '<virtual if="{(criteria !== null && criteria.qset !== null && criteria.qset.QSet !== null)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <span class="tag-item">{criteria.qset.QSet.QSetDescription}<span class="tag-close" onclick="{removeTagItem}"></span></span> </div> </div> </div> </virtual>', 'report-qset-criteria-view,[data-is="report-qset-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
         let self = this;
 
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
 
-        let modelchanged = (sender, evt) => {
-            self.update();
-        };
         let qsetchanged = (sender, evt) => {
+
             self.update();
         };
 
         this.on('mount', () => {
-            console.log('mount: add handers.');
 
-            self.criteria.QSetChanged.add(qsetchanged);
+            self.criteria.qset.changed.add(qsetchanged);
         });
 
         this.on('unmount', () => {
-            console.log('unmount: remove handers.');
-            self.criteria.QSetChanged.remove(qsetchanged);
 
+            self.criteria.qset.changed.remove(qsetchanged);
         });
 
         this.clearTagItems = (e) => {
@@ -168,32 +159,35 @@ riot.tag2('report-qset-criteria-view', '<virtual if="{(criteria !== null && crit
             self.criteria.QSetId = null;
         };
 });
-riot.tag2('report-question-criteria-view', '<virtual if="{(items !==null && items.length> 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{tag in items}"> <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-question-criteria-view,[data-is="report-question-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+riot.tag2('report-question-criteria-view', '<virtual if="{(criteria !== null && criteria.question !== null && criteria.question.selectedItems != null && criteria.question.selectedItems.length > 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{item in criteria.question.selectedItems}"> <span class="tag-item">{item.QSlideText}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-question-criteria-view,[data-is="report-question-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
         let self = this;
         this.caption = this.opts.caption;
-        this.items = [
-            { id: '1', text: '1. What do you think about our service?' },
-            { id: '2', text: '2. What do you think about our food taste?' },
-            { id: '3', text: '3. What do you think about our food quality?' }
-        ];
+        this.criteria = report.search.current;
+
+        let quesionchanged = (sender, evt) => {
+
+            self.update();
+        };
+
+        this.on('mount', () => {
+
+            self.criteria.question.changed.add(quesionchanged);
+        });
+
+        this.on('unmount', () => {
+
+            self.criteria.question.changed.remove(quesionchanged);
+        });
 
         this.clearTagItems = (e) => {
-            if (self.items && self.items.length > 0) {
-                self.items.splice(0);
-
-                self.update();
-            }
+            self.criteria.question.clear();
         };
 
         this.removeTagItem = (e) => {
             let target = e.item;
-            if (self.items && self.items.length > 0) {
-                let maps = self.items.map(item => { return item.id; });
-                let index = maps.indexOf(target.tag.id);
-                self.items.splice(index, 1);
-
-                self.update();
-            }
+            let qseq = target.item.QSeq;
+            let removeIndex = self.criteria.question.indexOf(qseq);
+            self.criteria.question.remove(removeIndex);
         };
 });
 riot.tag2('report-search-box', '<div> <div> <input ref="tag-input" type="text" onfocus="{onFocus}" oninput="{onInput}" onblur="{onBlur}"> <div ref="tag-dropdown" class="autocomplete-items"> <span class="autocomplete-item">Softbase</span> <span class="autocomplete-item">Marketing</span> <span class="autocomplete-item">Account</span> <span class="autocomplete-item">Manufacture</span> <span class="autocomplete-item">Supports</span> </div> </div> <div data-is="report-qset-criteria-view" caption="QSets"></div> <div data-is="report-date-criteria-view" caption="Date"></div> <div data-is="report-question-criteria-view" caption="Questions"></div> <div data-is="report-branch-criteria-view" caption="Branchs"></div> <div data-is="report-org-criteria-view" caption="Orgs"></div> <div data-is="report-staff-criteria-view" caption="Staffs"></div> </div>', 'report-search-box,[data-is="report-search-box"]{ margin: 0 auto; padding: 15px; font-size: 14px; } report-search-box input[type=\'text\'],[data-is="report-search-box"] input[type=\'text\']{ display: inline-block; margin: 0 auto; width: 100%; } report-search-box .autocomplete-items,[data-is="report-search-box"] .autocomplete-items{ display: none; position: absolute; margin: 1px auto; padding: 5px; color: silver; background-color: white; border: 1px solid dimgray; border-radius: 5px; top: 43px; left: 15px; right: 15px; z-index: 100; } report-search-box .autocomplete-items.show,[data-is="report-search-box"] .autocomplete-items.show{ display: inline-block; } report-search-box .autocomplete-items .autocomplete-item,[data-is="report-search-box"] .autocomplete-items .autocomplete-item{ position:relative; padding: 2px; display: block; cursor: pointer; } report-search-box .autocomplete-items .autocomplete-item:hover,[data-is="report-search-box"] .autocomplete-items .autocomplete-item:hover{ color: white; background-color: cornflowerblue; }', '', function(opts) {
@@ -234,32 +228,35 @@ riot.tag2('report-search-box', '<div> <div> <input ref="tag-input" type="text" o
 
         };
 });
-riot.tag2('report-staff-criteria-view', '<virtual if="{(items !==null && items.length> 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{tag in items}"> <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-staff-criteria-view,[data-is="report-staff-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+riot.tag2('report-staff-criteria-view', '<virtual if="{(criteria !== null && criteria.member !== null && criteria.member.selectedItems != null && criteria.member.selectedItems.length > 0)}"> <div class="tag-box"> <div class="row"> <div class="col-2 mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="col-10 ml-0 pl-0"> <virtual each="{item in criteria.member.selectedItems}"> <span class="tag-item">{item.FullName}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-staff-criteria-view,[data-is="report-staff-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
         let self = this;
         this.caption = this.opts.caption;
-        this.items = [
-            { id: '1', text: 'Mr. Administrator' },
-            { id: '2', text: 'Mr. Chumpon Asaneerat' },
-            { id: '3', text: 'Mr. Thana Phorchan' }
-        ];
+        this.criteria = report.search.current;
+
+        let memberchanged = (sender, evt) => {
+
+            self.update();
+        };
+
+        this.on('mount', () => {
+
+            self.criteria.member.changed.add(memberchanged);
+        });
+
+        this.on('unmount', () => {
+
+            self.criteria.member.changed.remove(memberchanged);
+        });
 
         this.clearTagItems = (e) => {
-            if (self.items && self.items.length > 0) {
-                self.items.splice(0);
-
-                self.update();
-            }
+            self.criteria.member.clear();
         };
 
         this.removeTagItem = (e) => {
             let target = e.item;
-            if (self.items && self.items.length > 0) {
-                let maps = self.items.map(item => { return item.id; });
-                let index = maps.indexOf(target.tag.id);
-                self.items.splice(index, 1);
-
-                self.update();
-            }
+            let memberid = target.item.MemberId;
+            let removeIndex = self.criteria.member.indexOf(memberid);
+            self.criteria.member.remove(removeIndex);
         };
 });
 riot.tag2('search-content', '<yield></yield>', '', 'class="search-content"', function(opts) {

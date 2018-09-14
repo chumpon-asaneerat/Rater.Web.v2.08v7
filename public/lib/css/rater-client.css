@@ -172,6 +172,10 @@ body {
     border-radius: 5px;
 }
 
+.tag-box .tag-item.invalid {
+    background-color: dimgray;
+}
+
 .tag-box .tag-item .tag-close {
     display: inline-block;
     margin-top: 0px;

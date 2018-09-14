@@ -1,5 +1,5 @@
 <report-qset-criteria-view>
-    <virtual if={(criteria !== null && criteria.QSet !== null)}>
+    <virtual if={(criteria !== null && criteria.qset !== null && criteria.qset.QSet !== null)}>
         <div class="tag-box">
             <div class="row">
                 <div class="col-2 mr-0 pr-0">
@@ -7,7 +7,7 @@
                     <span class="tag-caption">{caption}</span>
                 </div>
                 <div class="col-10 ml-0 pl-0">
-                    <span class="tag-item">{criteria.QSet.QSetDescription}<span class="tag-close" onclick="{removeTagItem}"></span></span>
+                    <span class="tag-item">{criteria.qset.QSet.QSetDescription}<span class="tag-close" onclick="{removeTagItem}"></span></span>
                 </div>
             </div>
         </div>
@@ -24,23 +24,19 @@
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
 
-        let modelchanged = (sender, evt) => {
-            self.update();
-        };
         let qsetchanged = (sender, evt) => {
+            //console.log('qset changed.');
             self.update();
         };
 
         this.on('mount', () => {
-            console.log('mount: add handers.');
-            //report.qset.ModelChanged.add(modelchanged);
-            self.criteria.QSetChanged.add(qsetchanged);
+            //console.log('mount: add handers.');
+            self.criteria.qset.changed.add(qsetchanged);
         });
 
         this.on('unmount', () => {
-            console.log('unmount: remove handers.');
-            self.criteria.QSetChanged.remove(qsetchanged);
-            //report.qset.ModelChanged.remove(modelchanged);
+            //console.log('unmount: remove handers.');
+            self.criteria.qset.changed.remove(qsetchanged);
         });
 
         this.clearTagItems = (e) => {

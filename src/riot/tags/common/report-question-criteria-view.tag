@@ -1,5 +1,5 @@
 <report-question-criteria-view>
-    <virtual if={(items !==null && items.length> 0)}>
+    <virtual if={(criteria !== null && criteria.question !== null && criteria.question.selectedItems != null && criteria.question.selectedItems.length > 0)}>
         <div class="tag-box">
             <div class="row">
                 <div class="col-2 mr-0 pr-0">
@@ -7,8 +7,8 @@
                     <span class="tag-caption">{caption}</span>
                 </div>
                 <div class="col-10 ml-0 pl-0">
-                    <virtual each={tag in items}>
-                        <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span>
+                    <virtual each={item in criteria.question.selectedItems}>
+                        <span class="tag-item">{item.QSlideText}<span class="tag-close" onclick="{removeTagItem}"></span></span>
                     </virtual>
                 </div>
             </div>
@@ -23,29 +23,32 @@
     <script>
         let self = this;
         this.caption = this.opts.caption;
-        this.items = [
-            { id: '1', text: '1. What do you think about our service?' },
-            { id: '2', text: '2. What do you think about our food taste?' },
-            { id: '3', text: '3. What do you think about our food quality?' }
-        ];
+        this.criteria = report.search.current;
+
+        let quesionchanged = (sender, evt) => {
+            //console.log('question changed.');
+            self.update();
+        };
+
+        this.on('mount', () => {
+            //console.log('mount: add handers.');
+            self.criteria.question.changed.add(quesionchanged);
+        });
+
+        this.on('unmount', () => {
+            //console.log('unmount: remove handers.');
+            self.criteria.question.changed.remove(quesionchanged);
+        });
 
         this.clearTagItems = (e) => {
-            if (self.items && self.items.length > 0) {
-                self.items.splice(0);
-                // refresh
-                self.update();
-            }
+            self.criteria.question.clear();
         };
 
         this.removeTagItem = (e) => {
             let target = e.item;
-            if (self.items && self.items.length > 0) {
-                let maps = self.items.map(item => { return item.id; });
-                let index = maps.indexOf(target.tag.id);
-                self.items.splice(index, 1);
-                // refresh
-                self.update();
-            }
+            let qseq = target.item.QSeq;
+            let removeIndex = self.criteria.question.indexOf(qseq);
+            self.criteria.question.remove(removeIndex);
         };
     </script>
 </report-question-criteria-view>

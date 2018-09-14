@@ -1,5 +1,5 @@
 <report-org-criteria-view>
-    <virtual if={(items !==null && items.length> 0)}>
+    <virtual if={(criteria !== null && criteria.org !== null && criteria.org.selectedItems != null && criteria.org.selectedItems.length > 0)}>
         <div class="tag-box">
             <div class="row">
                 <div class="col-2 mr-0 pr-0">
@@ -7,8 +7,8 @@
                     <span class="tag-caption">{caption}</span>
                 </div>
                 <div class="col-10 ml-0 pl-0">
-                    <virtual each={tag in items}>
-                        <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span>
+                    <virtual each={item in criteria.org.selectedItems}>
+                        <span class="tag-item {item.Invalid}">{item.OrgName}<span class="tag-close" onclick="{removeTagItem}"></span></span>
                     </virtual>
                 </div>
             </div>
@@ -23,40 +23,32 @@
     <script>
         let self = this;
         this.caption = this.opts.caption;
-        this.items = [
-            { id: '1', text: 'Softbase' },
-            { id: '2', text: 'Marketing' },
-            { id: '3', text: 'Account' },
-            { id: '4', text: 'Manufacture' },
-            { id: '5', text: 'Support' },
-            { id: '6', text: 'Finance' },
-            { id: '7', text: 'Perchasing' },
-            { id: '8', text: 'Audit' },
-            { id: '9', text: 'PR' },
-            { id: '10', text: 'Housekeeping' },
-            { id: '11', text: 'Counter 1F' },
-            { id: '11', text: 'Counter 2F' },
-            { id: '11', text: 'Counter 3F' },
-            { id: '11', text: 'Counter 4F' }
-        ];
+        this.criteria = report.search.current;
+
+        let orgchanged = (sender, evt) => {
+            //console.log('org changed.');
+            self.update();
+        };
+
+        this.on('mount', () => {
+            //console.log('mount: add handers.');
+            self.criteria.org.changed.add(orgchanged);
+        });
+
+        this.on('unmount', () => {
+            //console.log('unmount: remove handers.');
+            self.criteria.org.changed.remove(orgchanged);
+        });
         
         this.clearTagItems = (e) => {
-            if (self.items && self.items.length > 0) {
-                self.items.splice(0);
-                // refresh
-                self.update();
-            }
+            self.criteria.org.clear();
         };
 
         this.removeTagItem = (e) => {
             let target = e.item;
-            if (self.items && self.items.length > 0) {
-                let maps = self.items.map(item => { return item.id; });            
-                let index = maps.indexOf(target.tag.id);
-                self.items.splice(index, 1);
-                // refresh
-                self.update();
-            }
+            let orgid = target.item.OrgId;
+            let removeIndex = self.criteria.org.indexOf(orgid);
+            self.criteria.org.remove(removeIndex);
         };
     </script>
 </report-org-criteria-view>

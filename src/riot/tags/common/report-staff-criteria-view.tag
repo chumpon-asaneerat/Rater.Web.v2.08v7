@@ -1,5 +1,5 @@
 <report-staff-criteria-view>
-    <virtual if={(items !==null && items.length> 0)}>
+    <virtual if={(criteria !== null && criteria.member !== null && criteria.member.selectedItems != null && criteria.member.selectedItems.length > 0)}>
         <div class="tag-box">
             <div class="row">
                 <div class="col-2 mr-0 pr-0">
@@ -7,8 +7,8 @@
                     <span class="tag-caption">{caption}</span>
                 </div>
                 <div class="col-10 ml-0 pl-0">
-                    <virtual each={tag in items}>
-                        <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span>
+                    <virtual each={item in criteria.member.selectedItems}>
+                        <span class="tag-item">{item.FullName}<span class="tag-close" onclick="{removeTagItem}"></span></span>
                     </virtual>
                 </div>
             </div>
@@ -23,29 +23,32 @@
     <script>
         let self = this;
         this.caption = this.opts.caption;
-        this.items = [
-            { id: '1', text: 'Mr. Administrator' },
-            { id: '2', text: 'Mr. Chumpon Asaneerat' },
-            { id: '3', text: 'Mr. Thana Phorchan' }
-        ];
+        this.criteria = report.search.current;
+
+        let memberchanged = (sender, evt) => {
+            //console.log('member changed.');
+            self.update();
+        };
+
+        this.on('mount', () => {
+            //console.log('mount: add handers.');
+            self.criteria.member.changed.add(memberchanged);
+        });
+
+        this.on('unmount', () => {
+            //console.log('unmount: remove handers.');
+            self.criteria.member.changed.remove(memberchanged);
+        });
         
         this.clearTagItems = (e) => {
-            if (self.items && self.items.length > 0) {
-                self.items.splice(0);
-                // refresh
-                self.update();
-            }
+            self.criteria.member.clear();
         };
 
         this.removeTagItem = (e) => {
             let target = e.item;
-            if (self.items && self.items.length > 0) {
-                let maps = self.items.map(item => { return item.id; });            
-                let index = maps.indexOf(target.tag.id);
-                self.items.splice(index, 1);
-                // refresh
-                self.update();
-            }
+            let memberid = target.item.MemberId;
+            let removeIndex = self.criteria.member.indexOf(memberid);
+            self.criteria.member.remove(removeIndex);
         };
     </script>
 </report-staff-criteria-view>

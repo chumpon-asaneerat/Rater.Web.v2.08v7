@@ -1,5 +1,5 @@
 <report-branch-criteria-view>
-    <virtual if={(items !==null && items.length> 0)}>
+    <virtual if={(criteria !== null && criteria.branch !== null && criteria.branch.selectedItems != null && criteria.branch.selectedItems.length > 0)}>
         <div class="tag-box">
             <div class="row">
                 <div class="col-2 mr-0 pr-0">
@@ -7,8 +7,8 @@
                     <span class="tag-caption">{caption}</span>
                 </div>
                 <div class="col-10 ml-0 pl-0">
-                    <virtual each={tag in items}>
-                        <span class="tag-item">{tag.text}<span class="tag-close" onclick="{removeTagItem}"></span></span>
+                    <virtual each={item in criteria.branch.selectedItems}>
+                        <span class="tag-item">{item.BranchName}<span class="tag-close" onclick="{removeTagItem}"></span></span>
                     </virtual>
                 </div>
             </div>
@@ -23,29 +23,32 @@
     <script>
         let self = this;
         this.caption = this.opts.caption;
-        this.items = [
-            { id: '1', text: 'Bangkok' },
-            { id: '2', text: 'Nontaburi' },
-            { id: '3', text: 'Samutprakarn' }
-        ];
+        this.criteria = report.search.current;
+
+        let branchchanged = (sender, evt) => {
+            //console.log('branch changed.');
+            self.update();
+        };
+
+        this.on('mount', () => {
+            //console.log('mount: add handers.');
+            self.criteria.branch.changed.add(branchchanged);
+        });
+
+        this.on('unmount', () => {
+            //console.log('unmount: remove handers.');
+            self.criteria.branch.changed.remove(branchchanged);
+        });
         
         this.clearTagItems = (e) => {
-            if (self.items && self.items.length > 0) {
-                self.items.splice(0);
-                // refresh
-                self.update();
-            }
+            self.criteria.branch.clear();
         };
 
         this.removeTagItem = (e) => {
             let target = e.item;
-            if (self.items && self.items.length > 0) {
-                let maps = self.items.map(item => { return item.id; });            
-                let index = maps.indexOf(target.tag.id);
-                self.items.splice(index, 1);
-                // refresh
-                self.update();
-            }
+            let branchid = target.item.BranchId;
+            let removeIndex = self.criteria.branch.indexOf(branchid);
+            self.criteria.branch.remove(removeIndex);
         };
     </script>
 </report-branch-criteria-view>
