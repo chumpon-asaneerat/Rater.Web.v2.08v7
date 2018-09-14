@@ -758,11 +758,23 @@ class ReportCriteria {
 
         this._service = svr; // report service.
         this._qset = new QSetCriteria(this);
+        let qsetchanged = (sender, evt) => {
+            self.clear();
+        };
+        this._qset.changed.add(qsetchanged);
         this._question = new QuestionCriteria(this);
         this._date = new DateCriteria(this);
         this._branch = new BranchCriteria(this);
         this._org = new OrgCriteria(this);
         this._member = new MemberCriteria(this);
+    };
+
+    clear() {
+        this._member.clear();
+        this._org.clear();
+        this._branch.clear();
+        this._date.clear();
+        this._question.clear();
     };
 
     // get report service.
@@ -825,7 +837,7 @@ class QSetCriteria extends BaseCriteria {
     get QSetId() { return this._qsetId; };
     set QSetId(value) {
         if (this._qsetId !== value) {
-            this._qsetId = value;
+            this._qsetId = value;            
             // raise event when qsetid changed.
             this.raiseChangedEvent();
         }
@@ -913,6 +925,7 @@ class QuestionCriteria extends BaseCriteria {
             return;
         }        
         this._selectedItems.splice(0);
+        this.raiseChangedEvent();
     };
     
     add(qseq) {
@@ -979,6 +992,9 @@ class DateCriteria extends BaseCriteria {
         if (this._changed) {
             this._changed.invoke(this, EventArgs.Empty);
         }
+    };
+
+    clear() {        
     };
 
     get changed() { return this._changed; }
@@ -1053,6 +1069,7 @@ class BranchCriteria extends BaseCriteria {
             return;
         }
         this._selectedItems.splice(0);
+        this.raiseChangedEvent();
     };
 
     add(branchid) {
@@ -1198,6 +1215,7 @@ class OrgCriteria extends BaseCriteria {
             return;
         }
         this._selectedItems.splice(0);
+        this.raiseChangedEvent();
     };
 
     add(orgid) {
@@ -1318,6 +1336,7 @@ class MemberCriteria extends BaseCriteria {
             return;
         }
         this._selectedItems.splice(0);
+        this.raiseChangedEvent();
     };
 
     add(memberid) {

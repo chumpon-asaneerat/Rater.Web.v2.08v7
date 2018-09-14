@@ -40,11 +40,11 @@
         });
 
         this.clearTagItems = (e) => {
-            self.criteria.QSetId = null;            
+            self.criteria.qset.QSetId = null;            
         };
 
         this.removeTagItem = (e) => {
-            self.criteria.QSetId = null;
+            self.criteria.qset.QSetId = null;
         };
     </script>
 </report-qset-criteria-view>
