@@ -1356,3 +1356,139 @@ class NJson {
         })
     };
 };
+
+/**
+ * NList class. The array helper class.
+ */
+class NList {
+    constructor() {
+        this._datasource = null;
+        this._displayMember = '';
+        this._map = null;
+        this._items = null;
+        this._input = '';
+        this._caseSensitive = false;
+    };
+
+    __filter(elem) {
+        if (!this._input || this._input.length < 0) {
+            //console.log('input is null or empty.');
+            return elem;
+        }
+        else {
+            let sIdx = elem.indexOf(this._input);
+            if (sIdx !== -1) {
+                return elem;
+            }
+        }
+    };
+
+    __builditems() {
+        this._map = null;
+        this._items = null;
+        if (!this._datasource) {
+            //console.log('datasource not assigned.');
+            return;
+        }
+        if (!(this._datasource instanceof Array)) {
+            //console.log('datasource is not array.');
+            return;
+        }
+        if (!this._displayMember) {
+            //console.log('display member not assigned.');
+            return;
+        }
+        let ds = this._datasource;
+        let member = String(this._displayMember);
+
+        this._map = ds.map(elem =>
+            (this._caseSensitive) ? elem[member] : elem[member].toLowerCase()
+        );
+        this.__applyFilter();
+    };
+
+    __applyFilter() {
+        this._items = null;
+        if (!this._map) return;
+        let self = this;
+        let map = this._map;
+        this._items = map.filter(elem => self.__filter(elem));
+    };
+
+    // find index in source array.
+    indexOf(value) {
+        if (!this._map) return null;
+        let val = (this._caseSensitive) ? value : val.toLowerCase();
+        return this._map.indexOf(val);
+    };
+
+    // find item in source array.
+    findItem(value) {
+        if (!this._datasource) return null;
+        if (!this._map) return null;
+        let val = (this._caseSensitive) ? value : val.toLowerCase();
+        let idx = this._map.indexOf(val);
+        if (idx === -1) return null;
+        return this.datasource[idx];
+    };
+
+    get datasource() { return this._datasource; }
+    set datasource(value) {
+        if (!this._datasource && value) {
+            // assigned value to null datasource.
+            this._datasource = value;
+            this.__builditems();
+        }
+        else if (this._datasource && !value) {
+            // assigned null to exist datasource.
+            this._datasource = value;
+            this.__builditems();
+        }
+        else if (this._datasource && value) {
+            // both has value.
+            this._datasource = value;
+            if (this._displayMember && this._displayMember !== '') {
+                this.__builditems();
+            }
+        }
+        else {
+            // both is null.
+            this._datasource = value;
+            // clear related arrays.
+            this._map = null;
+            this._items = null;
+        }
+    };
+
+    get displayMember() { return this._displayMember; };
+    set displayMember(value) {
+        if (this._displayMember !== value) {
+            this._displayMember = value;
+            this.__builditems();
+        }
+    };
+
+    get caseSensitive() { return this._caseSensitive; };
+    set caseSensitive(value) {
+        if (this._caseSensitive != value) {
+            this._caseSensitive = value;
+            this.__builditems();
+        }
+    };
+
+    get input() { return this._input; };
+    set input(value) {
+        if (this._input !== value) {
+            this._input = value;
+            this.__applyFilter();
+        }
+    };
+
+    get items() { return this._items; };
+
+    get selectedText() {
+        if (!this._items || this._items.length <= 0) return null;
+        //if (!this._input || this._input.length <= 0) return null;
+        return this._items[0];
+    };
+};
