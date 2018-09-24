@@ -196,43 +196,24 @@ riot.tag2('report-question-criteria-view', '<virtual if="{(criteria !== null && 
             self.criteria.question.remove(removeIndex);
         };
 });
-riot.tag2('report-search-box', '<div> <div> <input ref="tag-input" type="text" onfocus="{onFocus}" oninput="{onInput}" onblur="{onBlur}"> <div ref="tag-dropdown" class="autocomplete-items"> <span class="autocomplete-item">Softbase</span> <span class="autocomplete-item">Marketing</span> <span class="autocomplete-item">Account</span> <span class="autocomplete-item">Manufacture</span> <span class="autocomplete-item">Supports</span> </div> </div> <div data-is="report-qset-criteria-view" caption="QSets"></div> <div data-is="report-date-criteria-view" caption="Date"></div> <div data-is="report-question-criteria-view" caption="Questions"></div> <div data-is="report-branch-criteria-view" caption="Branchs"></div> <div data-is="report-org-criteria-view" caption="Orgs"></div> <div data-is="report-staff-criteria-view" caption="Staffs"></div> </div>', 'report-search-box,[data-is="report-search-box"]{ margin: 0 auto; padding: 15px; font-size: 14px; } report-search-box input[type=\'text\'],[data-is="report-search-box"] input[type=\'text\']{ display: inline-block; margin: 0 auto; width: 100%; } report-search-box .autocomplete-items,[data-is="report-search-box"] .autocomplete-items{ display: none; position: absolute; margin: 1px auto; padding: 5px; color: silver; background-color: white; border: 1px solid dimgray; border-radius: 5px; top: 43px; left: 15px; right: 15px; z-index: 100; } report-search-box .autocomplete-items.show,[data-is="report-search-box"] .autocomplete-items.show{ display: inline-block; } report-search-box .autocomplete-items .autocomplete-item,[data-is="report-search-box"] .autocomplete-items .autocomplete-item{ position:relative; padding: 2px; display: block; cursor: pointer; } report-search-box .autocomplete-items .autocomplete-item:hover,[data-is="report-search-box"] .autocomplete-items .autocomplete-item:hover{ color: white; background-color: cornflowerblue; }', '', function(opts) {
+riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" caption="QSets"></div> <div data-is="report-date-criteria-view" caption="Date"></div> <div data-is="report-question-criteria-view" caption="Questions"></div> <div data-is="report-branch-criteria-view" caption="Branchs"></div> <div data-is="report-org-criteria-view" caption="Orgs"></div> <div data-is="report-staff-criteria-view" caption="Staffs"></div> <div ref="tag-input"></div> </div>', 'report-search-box,[data-is="report-search-box"]{ margin: 0 auto; padding: 15px; font-size: 14px; }', '', function(opts) {
         let self = this;
 
-        let tagdropdown = null;
+        let taginput = null;
+        let autofill = null;
 
         this.on('mount', () => {
-            tagdropdown = this.refs["tag-dropdown"];
-
+            taginput = this.refs["tag-input"];
+            autofill = new AutoFill(taginput);
         });
 
         this.on('unmount', () => {
-            tagdropdown = null;
+            if (autofill) {
+
+            }
+            autofill = null;
+            taginput = null;
         });
-
-        this.onFocus = (e) => {
-
-            if (!tagdropdown) {
-                console.log('dropdown element not found.');
-                return;
-            }
-            let $tagdd = $(tagdropdown);
-            $tagdd.addClass('show');
-
-        };
-        this.onInput = (e) => {
-
-        };
-        this.onBlur = (e) => {
-
-            if (!tagdropdown) {
-                console.log('dropdown element not found.');
-                return;
-            }
-            let $tagdd = $(tagdropdown);
-            $tagdd.removeClass('show');
-
-        };
 });
 riot.tag2('report-staff-criteria-view', '<virtual if="{(criteria !== null && criteria.member !== null && criteria.member.selectedItems != null && criteria.member.selectedItems.length > 0)}"> <div class="tag-box"> <div class="row"> <div class="tag-r-col mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="tag-c-col ml-0 pl-0"> <virtual each="{item in criteria.member.selectedItems}"> <span class="tag-item">{item.FullName}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-staff-criteria-view,[data-is="report-staff-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
         let self = this;

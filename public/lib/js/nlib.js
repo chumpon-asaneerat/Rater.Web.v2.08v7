@@ -1364,19 +1364,23 @@ class NList {
     constructor() {
         this._datasource = null;
         this._displayMember = '';
-        this._map = null;
+        this._mapCS = null;
+        this._mapCI = null;
         this._items = null;
         this._input = '';
         this._caseSensitive = false;
     };
 
     __filter(elem) {
-        if (!this._input || this._input.length < 0) {
+        if (!this._input || this._input.length <= 0) {
             //console.log('input is null or empty.');
             return elem;
         }
         else {
-            let sIdx = elem.indexOf(this._input);
+
+            let sIdx = (this._caseSensitive) ? 
+                elem.indexOf(this._input) : 
+                elem.toLowerCase().indexOf(this._input.toLowerCase());
             if (sIdx !== -1) {
                 return elem;
             }
@@ -1384,7 +1388,8 @@ class NList {
     };
 
     __builditems() {
-        this._map = null;
+        this._mapCS = null;
+        this._mapCI = null;
         this._items = null;
         if (!this._datasource) {
             //console.log('datasource not assigned.');
@@ -1401,33 +1406,57 @@ class NList {
         let ds = this._datasource;
         let member = String(this._displayMember);
 
-        this._map = ds.map(elem =>
-            (this._caseSensitive) ? elem[member] : elem[member].toLowerCase()
-        );
+        this._mapCS = ds.map(elem => {
+            let obj = elem[member];
+            return obj;
+        });
+        this._mapCI = ds.map(elem => {
+            let obj = elem[member];
+            return obj.toLowerCase();
+        });
+
         this.__applyFilter();
     };
 
     __applyFilter() {
+        //console.log('apply filter.');
         this._items = null;
-        if (!this._map) return;
+        if (!this._mapCS) {
+            //console.log('map is null.');
+            return;
+        }
         let self = this;
-        let map = this._map;
+        let map = this._mapCS;
         this._items = map.filter(elem => self.__filter(elem));
     };
 
     // find index in source array.
     indexOf(value) {
-        if (!this._map) return null;
-        let val = (this._caseSensitive) ? value : val.toLowerCase();
-        return this._map.indexOf(val);
+        if (this._caseSensitive) {
+            if (!this._mapCS) return -1;
+            return this._mapCS.indexOf(value);
+        }
+        else {
+            if (!this._mapCI) return -1;
+            return this._mapCI.indexOf(value.toLowerCase());
+        }
+        
     };
 
     // find item in source array.
     findItem(value) {
         if (!this._datasource) return null;
-        if (!this._map) return null;
-        let val = (this._caseSensitive) ? value : val.toLowerCase();
-        let idx = this._map.indexOf(val);
+        let val, idx;
+        if (this._caseSensitive) {
+            if (!this._mapCS) return null;
+            val = value;
+            idx = this._mapCS.indexOf(val);
+        }
+        else {
+            if (!this._mapCI) return null;
+            val = value.toLowerCase();
+            idx = this._mapCI.indexOf(val);
+        }
         if (idx === -1) return null;
         return this.datasource[idx];
     };
@@ -1455,7 +1484,8 @@ class NList {
             // both is null.
             this._datasource = value;
             // clear related arrays.
-            this._map = null;
+            this._mapCI = null;
+            this._mapCS = null;            
             this._items = null;
         }
     };
@@ -1491,4 +1521,565 @@ class NList {
         //if (!this._input || this._input.length <= 0) return null;
         return this._items[0];
     };
+};
+
+/**
+ * NDOM class. The html dom helper class.
+ */
+ class NDOM {
+    //#region constructor
+
+    constructor(elem) {
+        this._elem = elem;
+    };
+
+    //#endregion 
+
+    //#region fluent method
+
+    fluent() {
+        /*
+        console.clear();
+        let props = Object.getPrototypeOf(this);
+        //console.log(props);
+        let propNames = Object.getOwnPropertyNames(props);
+        //console.log(propNames);
+        propNames.forEach((pName) => {
+            let desc = Object.getOwnPropertyDescriptor(NDOM.prototype, pName);
+            
+            if (pName !== 'constructor' && desc && desc.set) {
+                // this should show all set property of NDOM
+                //console.log(pName + ' -> ' + desc);
+            }
+            else if (pName !== 'constructor' && desc && !desc.get && !desc.set) {
+                // this should show all another method.
+                //console.log(pName + ' -> ' + desc);
+            }
+        });
+        */
+
+        return new FluentDOM(this);
+    };
+
+    //#endregion 
+
+    //#region Class manipulation functions.
+
+    addClass(...classNames) {
+        if (!this._elem) return;
+        this._elem.classList.add(...classNames);
+    };
+
+    removeClass(...classNames) {
+        if (!this._elem) return;
+        this._elem.classList.remove(...classNames);
+    };
+
+    hasClass(className) {
+        if (!this._elem) return;
+        return this._elem.classList.contains(className);
+    };
+
+    toggleClass(className, force) {
+        if (!this._elem) return;
+        return this._elem.classList.toggle(className, force);
+    };
+
+    replaceClass(oldClassName, newClassName) {
+        if (!this._elem) return;
+        this._elem.classList.replace(oldClassName, newClassName);
+    };
+
+    //#endregion
+
+    //#region Attribute (general) function.
+
+    attr(name, value) {
+        //console.log(arguments);
+        if (!this._elem) return;
+        if (arguments.length === 0) {
+            // no argument.
+            return;
+        }
+        if (arguments.length === 1) {
+            // only set name
+            return this._elem.getAttribute(name);
+        }
+        else if (arguments.length === 2) {
+            this._elem.setAttribute(name, value);
+        }
+    };
+
+    //#endregion
+
+    //#region Style (general) function.
+
+    style(name, value) {
+        if (!this._elem) return;
+        this._elem.style[name] = value;
+    };
+
+    //#endregion
+
+    //#region margin (with margin-left, margin-top, , margin-right, , margin-bottom)
+
+    get margin() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.margin;
+    };
+    set margin(value) {
+        if (!this._elem) return;
+        this._elem.style.margin = value;
+    };
+
+    get marginLeft() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.marginLeft;
+    };
+    set marginLeft(value) {
+        if (!this._elem) return;
+        this._elem.style.marginLeft = value;
+    };
+
+    get marginTop() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.marginTop;
+    };
+    set marginTop(value) {
+        if (!this._elem) return;
+        this._elem.style.marginTop = value;
+    };
+
+    get marginRight() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.marginRight;
+    };
+    set marginRight(value) {
+        if (!this._elem) return;
+        this._elem.style.marginRight = value;
+    };
+
+    get marginBottom() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.marginBottom;
+    };
+    set marginBottom(value) {
+        if (!this._elem) return;
+        this._elem.style.marginBottom = value;
+    };
+
+    //#endregion
+
+    //#region padding (with padding-left, padding-top, , padding-right, , padding-bottom)
+
+    get padding() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.padding;
+    };
+    set padding(value) {
+        if (!this._elem) return;
+        this._elem.style.padding = value;
+    };
+
+    get paddingLeft() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.paddingLeft;
+    };
+    set paddingLeft(value) {
+        if (!this._elem) return;
+        this._elem.style.paddingLeft = value;
+    };
+
+    get paddingTop() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.paddingTop;
+    };
+    set paddingTop(value) {
+        if (!this._elem) return;
+        this._elem.style.paddingTop = value;
+    };
+
+    get paddingRight() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.paddingRight;
+    };
+    set paddingRight(value) {
+        if (!this._elem) return;
+        this._elem.style.paddingRight = value;
+    };
+
+    get paddingBottom() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.paddingBottom;
+    };
+    set paddingBottom(value) {
+        if (!this._elem) return;
+        this._elem.style.paddingBottom = value;
+    };
+
+    //#endregion
+
+    //#region border (with border-left, border-top, , border-right, , border-bottom)
+
+    get border() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.border;
+    };
+    set border(value) {
+        if (!this._elem) return;
+        this._elem.style.border = value;
+    };
+
+    get borderLeft() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.borderLeft;
+    };
+    set borderLeft(value) {
+        if (!this._elem) return;
+        this._elem.style.borderLeft = value;
+    };
+
+    get borderTop() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.borderTop;
+    };
+    set borderTop(value) {
+        if (!this._elem) return;
+        this._elem.style.borderTop = value;
+    };
+
+    get borderRight() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.borderRight;
+    };
+    set borderRight(value) {
+        if (!this._elem) return;
+        this._elem.style.borderRight = value;
+    };
+
+    get borderBottom() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.borderBottom;
+    };
+    set borderBottom(value) {
+        if (!this._elem) return;
+        this._elem.style.borderBottom = value;
+    };
+
+    //#endregion
+
+    //#region color
+
+    get color() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.color;
+    };
+    set color(value) {
+        if (!this._elem) return;
+        this._elem.style.color = value;
+    };
+
+    //#endregion
+
+    //#region background (background, backgroundColor, backgroundImage, positionX, positionY)
+
+    get background() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.background;
+    };
+    set background(value) {
+        if (!this._elem) return;
+        this._elem.style.background = value;
+    };
+
+    get backgroundColor() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.backgroundColor;
+    };
+    set backgroundColor(value) {
+        if (!this._elem) return;
+        this._elem.style.backgroundColor = value;
+    };
+
+    get backgroundImage() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.backgroundImage;
+    };
+    set backgroundImage(value) {
+        if (!this._elem) return;
+        this._elem.style.backgroundImage = value;
+    };
+
+    get backgroundPositionX() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.backgroundPositionX;
+    };
+    set backgroundPositionX(value) {
+        if (!this._elem) return;
+        this._elem.style.backgroundPositionX = value;
+    };
+
+    get backgroundPositionY() {
+        if (!this._elem) return null;
+        var style = window.getComputedStyle(this._elem, null);
+        return style.backgroundPositionY;
+    };
+    set backgroundPositionY(value) {
+        if (!this._elem) return;
+        this._elem.style.backgroundPositionY = value;
+    };
+
+    //#endregion
+
+    //#region events
+
+     addEvent(evtName, callback, options) {
+         if (!this._elem) return;
+         this._elem.addEventListener(evtName, callback, options);
+     };
+     removeEvent(evtName, callback, options) {
+         if (!this._elem) return;
+         this._elem.removeEventListener(evtName, callback, options);
+     };
+
+    //#endregion
+
+    //#region Element
+
+    addChild(dom) {
+        if (!this._elem || !dom || !dom.element) return;
+        this._elem.appendChild(dom.element);
+    };    
+    removeChild(dom) {
+        if (!this._elem || !dom || !dom.element) return;
+        this._elem.removeChild(dom.element);
+    };
+    clearChildren() {
+        if (!this._elem) return;
+
+        while (this._elem.firstChild) {
+            this._elem.removeChild(this._elem.firstChild);
+        }
+    };
+
+    //#endregion
+
+    //#region public properties
+
+    get element() { return this._elem; }
+
+    //#endregion
+
+    // static method
+    static createElement(tagName) { 
+        return document.createElement(tagName);
+    };
+};
+
+class FluentDOM {
+    //#region constructor
+
+    constructor(dom) {
+        this._dom = dom;
+    };
+
+    //#endregion
+
+    //#region Class manupulation functions
+
+    addClass(...classNames) {
+        if (this._dom && this._dom.element) {
+            this._dom.element.classList.add(...classNames);
+        }
+        return this;
+    };
+
+    removeClass(...classNames) {
+        if (this._dom && this._dom.element) {
+            this._dom.element.classList.remove(...classNames);
+        }
+        return this;
+    };
+
+    toggleClass(className, force) {
+        if (this._dom) {
+            this._dom.toggleClass(className, force);
+        }
+        return this;
+    };
+
+    replaceClass(oldClassName, newClassName) {
+        if (this._dom) {
+            this._dom.replaceClass(oldClassName, newClassName);
+        }
+        return this;
+    };
+
+    //#endregion
+
+    //#region Style (general) function.
+
+    style(name, value) {
+        if (this._dom && this._dom.element) {
+            this._dom.element.style[name] = value;
+        }
+        return this;
+    };
+
+    //#endregion
+
+    //#region margin related functions.
+
+    margin(value) {
+        if (this._dom) {
+            this._dom.margin = value;
+        }
+        return this;
+    };
+
+    marginLeft(value) {
+        if (this._dom) {
+            this._dom.marginLeft = value;
+        }
+        return this;
+    };
+
+    marginTop(value) {
+        if (this._dom) {
+            this._dom.marginTop = value;
+        }
+        return this;
+    };
+
+    marginRight(value) {
+        if (this._dom) {
+            this._dom.marginRight = value;
+        }
+        return this;
+    };
+
+    marginBottom(value) {
+        if (this._dom) {
+            this._dom.marginBottom = value;
+        }
+        return this;
+    };
+
+    //#endregion
+
+    //#region padding related functions.
+
+    padding(value) {
+        if (this._dom) {
+            this._dom.padding = value;
+        }
+        return this;
+    };
+
+    paddingLeft(value) {
+        if (this._dom) {
+            this._dom.paddingLeft = value;
+        }
+        return this;
+    };
+
+    paddingTop(value) {
+        if (this._dom) {
+            this._dom.paddingTop = value;
+        }
+        return this;
+    };
+
+    paddingRight(value) {
+        if (this._dom) {
+            this._dom.paddingRight = value;
+        }
+        return this;
+    };
+
+    paddingBottom(value) {
+        if (this._dom) {
+            this._dom.paddingBottom = value;
+        }
+        return this;
+    };
+
+    //#endregion
+
+    //#region color related functions.
+
+    color(value) {
+        if (this._dom) {
+            this._dom.color = value;
+        }
+        return this;
+    };
+
+    //#endregion
+
+    //#region background related functions.
+
+    background(value) {
+        if (this._dom) {
+            this._dom.background = value;
+        }
+        return this;
+    };
+
+    backgroundColor(value) {
+        if (this._dom) {
+            this._dom.backgroundColor = value;
+        }
+        return this;
+    };
+
+    backgroundImage(value) {
+        if (this._dom) {
+            this._dom.backgroundImage = value;
+        }
+        return this;
+    };
+
+    backgroundPositionX(value) {
+        if (this._dom) {
+            this._dom.backgroundPositionX = value;
+        }
+        return this;
+    };
+
+    backgroundPositionY(value) {
+        if (this._dom) {
+            this._dom.backgroundPositionY = value;
+        }
+        return this;
+    };
+
+    //#endregion
+
+    //#region public properties
+
+    get element() { return (this._dom) ? this._dom.element : null; };
+    get dom() { return this._dom; };
+
+    //#endregion
 };

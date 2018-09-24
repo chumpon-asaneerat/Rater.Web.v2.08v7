@@ -1,21 +1,13 @@
 <report-search-box>
     <div>
-        <div>
-            <input ref="tag-input" type="text" onfocus="{onFocus}" oninput="{onInput}" onblur="{onBlur}">
-            <div ref="tag-dropdown" class="autocomplete-items">
-                <span class="autocomplete-item">Softbase</span>
-                <span class="autocomplete-item">Marketing</span>
-                <span class="autocomplete-item">Account</span>
-                <span class="autocomplete-item">Manufacture</span>
-                <span class="autocomplete-item">Supports</span>
-            </div>
-        </div>
         <div data-is="report-qset-criteria-view" caption="QSets"></div>
         <div data-is="report-date-criteria-view" caption="Date"></div>
         <div data-is="report-question-criteria-view" caption="Questions"></div>
         <div data-is="report-branch-criteria-view" caption="Branchs"></div>
         <div data-is="report-org-criteria-view" caption="Orgs"></div>
         <div data-is="report-staff-criteria-view" caption="Staffs"></div>
+        <div ref="tag-input"></div>
+        
         <!--
         <div class="tag-box">
             <a href="#"><span class="tag-clear"></span></a>
@@ -30,7 +22,7 @@
             padding: 15px;
             font-size: 14px;
         }
-
+        /*
         input[type='text'] {
             display: inline-block;
             margin: 0 auto;
@@ -46,7 +38,7 @@
             background-color: white;
             border: 1px solid dimgray;
             border-radius: 5px;
-            top: 43px; /* parent-height */
+            top: 43px;
             left: 15px;
             right: 15px;
             z-index: 100;
@@ -67,43 +59,26 @@
             color: white;
             background-color: cornflowerblue;
         }
+        */
     </style>
     <script>
         let self = this;
 
-        let tagdropdown = null;
+        let taginput = null;
+        let autofill = null;
         
+        // riot handlers.
         this.on('mount', () => {
-            tagdropdown = this.refs["tag-dropdown"];
-            //console.log(tagdropdown);
+            taginput = this.refs["tag-input"];
+            autofill = new AutoFill(taginput);
         });
 
         this.on('unmount', () => {
-            tagdropdown = null;
+            if (autofill) {
+                // cleanup.
+            }
+            autofill = null;
+            taginput = null;
         });
-
-        this.onFocus = (e) => {
-            //console.log('focus', e);
-            if (!tagdropdown) {
-                console.log('dropdown element not found.');
-                return;
-            }
-            let $tagdd = $(tagdropdown);
-            $tagdd.addClass('show');
-            //console.log($tagdd);
-        };
-        this.onInput = (e) => {
-            //console.log('input', e);
-        };
-        this.onBlur = (e) => {
-            //console.log('blur', e);
-            if (!tagdropdown) {
-                console.log('dropdown element not found.');
-                return;
-            }
-            let $tagdd = $(tagdropdown);
-            $tagdd.removeClass('show');
-            //console.log($tagdd);
-        };
     </script>
 </report-search-box>
