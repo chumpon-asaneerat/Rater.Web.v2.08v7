@@ -1,3 +1,5 @@
+//#region NLib Core
+
 /**
  * module: NLib Core.
  * version: 1.0.8
@@ -96,6 +98,10 @@ nlib = function () {
     };
 }().getInstance();
 
+//#endregion
+
+//#region NLib Utils
+
 /**
  * module: NLib Utils.
  * version  1.0.8
@@ -174,6 +180,10 @@ nlib = function () {
     }
     else nlib.utils = nlib.utils;
 })();
+
+//#endregion
+
+//#region NLib Cookies
 
 /**
  * module: NLib Cookies.
@@ -351,6 +361,10 @@ nlib = function () {
     }
     else nlib.cookies = nlib.cookies;
 })();
+
+//#endregion
+
+//#region NLib (local)Storage
 
 /**
  * module: NLib (local)Storage.
@@ -885,6 +899,10 @@ nlib = function () {
     else nlib.storage = nlib.storage; // re-assigned.
 })();
 
+//#endregion
+
+//#region NLib Navigator
+
 /**
  * module: NLib Navigator.
  * version  1.0.8
@@ -952,6 +970,10 @@ nlib = function () {
     }
     else nlib.nav = nlib.nav;
 })();
+
+//#endregion
+
+//#region NLib data type extenstion methods
 
 /**
  * module: NLib various data type extenstion methods.
@@ -1060,6 +1082,11 @@ nlib = function () {
         return format;
     };
 })();
+
+//#endregion
+
+//#region NLib JQuery $.when extenstion methods
+
 /**
  * module: NLib JQuery $.when extenstion methods.
  * version  1.0.8
@@ -1083,6 +1110,9 @@ nlib = function () {
     }
 })();
 
+//#endregion
+
+//#region NLib Event Classes
 
 /**
  * NDelegate class. The .NET like delegate.
@@ -1092,29 +1122,20 @@ class NDelegate {
         this._locked = false;
         this._events = [];
     };
-
     //-- public methods.
     indexOf(value) {
-        if (value && value instanceof Function) {
+        if (value && value instanceof Function)
             return this._events.indexOf(value);
-        }
         else return -1;
     };
-
     add(value) {
         if (value && value instanceof Function) {
             let index = this.indexOf(value);
-            if (index === -1) {
+            if (index === -1)
                 this._events.push(value); // append.
-            }
             else this._events[index] = value; // replace.
-            //console.log(this._events);
-        }
-        else {
-            console.log('The value is null or is not instance of Function.');
         }
     };
-
     remove(value) {
         if (value && value instanceof Function) {
             let index = this.indexOf(value);
@@ -1122,41 +1143,17 @@ class NDelegate {
                 this._events.splice(index, 1); // delete.
             }
         }
-        else {
-            console.log('The value is null or is not instance of Function.');
-        }
     };
-
-    locked() {
-        this._locked = true;
-    };
-
-    unlocked() {
-        this._locked = false;
-    };
-
-    get isLocked() {
-        return this._locked;
-    };
-
+    locked() { this._locked = true; };
+    unlocked() { this._locked = false; };
+    get isLocked() { return this._locked; };
     invoke(...args) {
-        if (this._locked) {
-            return;
-        }
+        if (this._locked) return;
         let evtDataObj = this.createEventData(args);
-        //console.log(this._events.length);
-        this._events.forEach((evt) => {
-            this.raiseEvent(evt, evtDataObj);
-        });
+        this._events.forEach((evt) => { this.raiseEvent(evt, evtDataObj); });
     };
-
-    createEventData(...args) {
-        return args;
-    };
-
-    raiseEvent(evt, evtDataObj) {
-        evt(evtDataObj)
-    };
+    createEventData(...args) { return args; };
+    raiseEvent(evt, evtDataObj) { evt(evtDataObj) };
 };
 /**
  * EventHandler class. The .NET like EventHandler.
@@ -1172,36 +1169,26 @@ class EventHandler extends NDelegate {
             if (a0.length >= 1) sender = a0[0];
             if (a0.length >= 2) evtData = a0[1];
 
-            if (!evtData) {
-                evtData = { sender: null, handled: false };
-            }
+            if (!evtData) { evtData = { sender: null, handled: false }; }
         }
-
         return { "sender": sender, "evtData": evtData }
     };
 
     raiseEvent(evt, evtDataObj) {
         let evtData = (!evtDataObj) ? { sender: null, handled: false } : evtDataObj.evtData;
 
-        if (!evtData) {
-            evtData = { handled: false };
-        }
+        if (!evtData) { evtData = { handled: false }; }
 
-        if (typeof evtData.handled === 'undefined' || evtData.handled === null) {
+        if (typeof evtData.handled === 'undefined' || evtData.handled === null)
             evtData.handled = false;
-        }
 
-        if (!evtData.handled) {
-            evt(evtDataObj.sender, evtData);
-        }
+        if (!evtData.handled) { evt(evtDataObj.sender, evtData); }
     };
 };
 /**
  * The Event Args class. The .NET like EventArgs.
  */
-class EventArgs {
-    static get Empty() { return null; }
-};
+class EventArgs { static get Empty() { return null; } };
 /**
  * The DataSource class.
  */
@@ -1213,56 +1200,30 @@ class DataSource {
         this._datasourceChanged = new EventHandler();
         this._selectedIndexChanged = new EventHandler();
     };
-
     //-- protected methods.
-    onDatasourceChange() {
-
-    };
-
-    onSelectedIndexChange() {
-
-    };
-
+    onDatasourceChange() { };
+    onSelectedIndexChange() { };
     //-- public properties.
-    get datasource() {
-        return this._datasource;
-    };
+    get datasource() { return this._datasource; };
     set datasource(value) {
         let oVal = this._datasource;
         let nVal = value;
 
         if (value && (value instanceof Array)) {
-            //console.log('new data source assigned.');
             this._datasource = value;
-            //console.log(self._datasource);
-            this._datasourceChanged.invoke(this, { "oldValue": oVal, "newValue": nVal })
-            if (this._datasource && this._datasource.length > 0) {
-                //console.log('datasource is not null so set to first item');
+
+            this._datasourceChanged.invoke(this, { "oldValue": oVal, "newValue": nVal });
+
+            if (this._datasource && this._datasource.length > 0)
                 this.selectedIndex = 0;
-            }
-            else {
-                //console.log('datasource is null');
-                this.selectedIndex = -1;
-            }
+            else this.selectedIndex = -1;
             // call protected method.
             this.onDatasourceChange();
         }
-        else {
-            console.log('datasource is null and is not instance of array.');
-        }
     };
 
-    get selectedIndex() {
-        return this._selectedIndex;
-    };
-    set selectedIndex(value) {
-        /*
-        if (this._selectedIndex === value) {
-            //console.log('same index.');
-            return;
-        }
-        */
-        
+    get selectedIndex() { return this._selectedIndex; };
+    set selectedIndex(value) {        
         let oVal = this._selectedIndex;
         let nVal = -1;
 
@@ -1283,23 +1244,18 @@ class DataSource {
 
     get selectedObject() {
         if (!this.datasource ||
-            this.selectedIndex < 0 || this.selectedIndex >= this.datasource.length) {
+            this.selectedIndex < 0 || this.selectedIndex >= this.datasource.length)
             return null;
-        }
-        else {
-            //console.log(this.datasource[this.selectedIndex]);
-            return this.datasource[this.selectedIndex];
-        }
+        else return this.datasource[this.selectedIndex];
     };
-
     //-- event handlers.
-    get datasourceChanged() {
-        return this._datasourceChanged;
-    };
-    get selectedIndexChanged() {
-        return this._selectedIndexChanged;
-    };
+    get datasourceChanged() { return this._datasourceChanged; };
+    get selectedIndexChanged() { return this._selectedIndexChanged; };
 };
+
+//#endregion
+
+//#region MockPromise
 
 /**
  * The Mock Promise class. Use setTimeout to make function look like call from server.
@@ -1311,7 +1267,7 @@ class MockPromise {
         let ret = new Promise((resolve, reject) => {
             let result = null;
             if (!fn || !(fn instanceof Function)) {
-                console.log('The assigned value should be function.');
+                console.error('The assigned value should be function.');
             }
             setTimeout(() => {
                 result = fn();
@@ -1322,6 +1278,10 @@ class MockPromise {
         return ret;
     };
 };
+
+//#endregion
+
+//#region NJson
 
 /**
  * NJson class. Provide helper functions to work with JSON object.
@@ -1357,729 +1317,711 @@ class NJson {
     };
 };
 
-/**
- * NList class. The array helper class.
- */
-class NList {
-    constructor() {
-        this._datasource = null;
-        this._displayMember = '';
-        this._mapCS = null;
-        this._mapCI = null;
-        this._items = null;
-        this._input = '';
-        this._caseSensitive = false;
-    };
+//#endregion
 
-    __filter(elem) {
-        if (!this._input || this._input.length <= 0) {
-            //console.log('input is null or empty.');
-            return elem;
-        }
-        else {
+//#region NDOM and related classes
 
-            let sIdx = (this._caseSensitive) ? 
-                elem.indexOf(this._input) : 
-                elem.toLowerCase().indexOf(this._input.toLowerCase());
-            if (sIdx !== -1) {
-                return elem;
-            }
-        }
-    };
+//#region NDOM
 
-    __builditems() {
-        this._mapCS = null;
-        this._mapCI = null;
-        this._items = null;
-        if (!this._datasource) {
-            //console.log('datasource not assigned.');
-            return;
-        }
-        if (!(this._datasource instanceof Array)) {
-            //console.log('datasource is not array.');
-            return;
-        }
-        if (!this._displayMember) {
-            //console.log('display member not assigned.');
-            return;
-        }
-        let ds = this._datasource;
-        let member = String(this._displayMember);
-
-        this._mapCS = ds.map(elem => {
-            let obj = elem[member];
-            return obj;
-        });
-        this._mapCI = ds.map(elem => {
-            let obj = elem[member];
-            return obj.toLowerCase();
-        });
-
-        this.__applyFilter();
-    };
-
-    __applyFilter() {
-        //console.log('apply filter.');
-        this._items = null;
-        if (!this._mapCS) {
-            //console.log('map is null.');
-            return;
-        }
-        let self = this;
-        let map = this._mapCS;
-        this._items = map.filter(elem => self.__filter(elem));
-    };
-
-    // find index in source array.
-    indexOf(value) {
-        if (this._caseSensitive) {
-            if (!this._mapCS) return -1;
-            return this._mapCS.indexOf(value);
-        }
-        else {
-            if (!this._mapCI) return -1;
-            return this._mapCI.indexOf(value.toLowerCase());
-        }
-        
-    };
-
-    // find item in source array.
-    findItem(value) {
-        if (!this._datasource) return null;
-        let val, idx;
-        if (this._caseSensitive) {
-            if (!this._mapCS) return null;
-            val = value;
-            idx = this._mapCS.indexOf(val);
-        }
-        else {
-            if (!this._mapCI) return null;
-            val = value.toLowerCase();
-            idx = this._mapCI.indexOf(val);
-        }
-        if (idx === -1) return null;
-        return this.datasource[idx];
-    };
-
-    get datasource() { return this._datasource; }
-    set datasource(value) {
-        if (!this._datasource && value) {
-            // assigned value to null datasource.
-            this._datasource = value;
-            this.__builditems();
-        }
-        else if (this._datasource && !value) {
-            // assigned null to exist datasource.
-            this._datasource = value;
-            this.__builditems();
-        }
-        else if (this._datasource && value) {
-            // both has value.
-            this._datasource = value;
-            if (this._displayMember && this._displayMember !== '') {
-                this.__builditems();
-            }
-        }
-        else {
-            // both is null.
-            this._datasource = value;
-            // clear related arrays.
-            this._mapCI = null;
-            this._mapCS = null;            
-            this._items = null;
-        }
-    };
-
-    get displayMember() { return this._displayMember; };
-    set displayMember(value) {
-        if (this._displayMember !== value) {
-            this._displayMember = value;
-            this.__builditems();
-        }
-    };
-
-    get caseSensitive() { return this._caseSensitive; };
-    set caseSensitive(value) {
-        if (this._caseSensitive != value) {
-            this._caseSensitive = value;
-            this.__builditems();
-        }
-    };
-
-    get input() { return this._input; };
-    set input(value) {
-        if (this._input !== value) {
-            this._input = value;
-            this.__applyFilter();
-        }
-    };
-
-    get items() { return this._items; };
-
-    get selectedText() {
-        if (!this._items || this._items.length <= 0) return null;
-        //if (!this._input || this._input.length <= 0) return null;
-        return this._items[0];
-    };
-};
-
-/**
- * NDOM class. The html dom helper class.
- */
- class NDOM {
-    //#region constructor
-
+NDOM = class {
     constructor(elem) {
         this._elem = elem;
+        this._class = new NDOM.Class(this);
+        this._event = new NDOM.Event(this);
+        this._style = new NDOM.Style(this);
+        this._attr = new NDOM.Attribute(this);
+        this._selector = new NDOM.Selector(this);
+        this._fluent = new NDOM.Fluent(this);
     };
-
-    //#endregion 
-
-    //#region fluent method
-
-    fluent() {
-        /*
-        console.clear();
-        let props = Object.getPrototypeOf(this);
-        //console.log(props);
-        let propNames = Object.getOwnPropertyNames(props);
-        //console.log(propNames);
-        propNames.forEach((pName) => {
-            let desc = Object.getOwnPropertyDescriptor(NDOM.prototype, pName);
-            
-            if (pName !== 'constructor' && desc && desc.set) {
-                // this should show all set property of NDOM
-                //console.log(pName + ' -> ' + desc);
-            }
-            else if (pName !== 'constructor' && desc && !desc.get && !desc.set) {
-                // this should show all another method.
-                //console.log(pName + ' -> ' + desc);
-            }
-        });
-        */
-
-        return new FluentDOM(this);
-    };
-
-    //#endregion 
-
-    //#region Class manipulation functions.
-
-    addClass(...classNames) {
-        if (!this._elem) return;
-        this._elem.classList.add(...classNames);
-    };
-
-    removeClass(...classNames) {
-        if (!this._elem) return;
-        this._elem.classList.remove(...classNames);
-    };
-
-    hasClass(className) {
-        if (!this._elem) return;
-        return this._elem.classList.contains(className);
-    };
-
-    toggleClass(className, force) {
-        if (!this._elem) return;
-        return this._elem.classList.toggle(className, force);
-    };
-
-    replaceClass(oldClassName, newClassName) {
-        if (!this._elem) return;
-        this._elem.classList.replace(oldClassName, newClassName);
-    };
-
-    //#endregion
-
-    //#region Attribute (general) function.
-
+    // class
+    get class() { return this._class; }
+    // event
+    get event() { return this._event; }
+    // attributes
+    get attrs() { return this._attr; }
+    // attribute
     attr(name, value) {
-        //console.log(arguments);
-        if (!this._elem) return;
+        if (!this._elem || !arguments) return undefined;
         if (arguments.length === 0) {
-            // no argument.
-            return;
+            return this._attr;
         }
-        if (arguments.length === 1) {
-            // only set name
-            return this._elem.getAttribute(name);
+        else if (arguments.length === 1) {
+            return this._attr.get(name);
         }
         else if (arguments.length === 2) {
-            this._elem.setAttribute(name, value);
+            this._attr.set(name, value);
         }
     };
-
-    //#endregion
-
-    //#region Style (general) function.
-
+    // styles
+    get styles() { return this._style; }
+    // style
     style(name, value) {
-        if (!this._elem) return;
-        this._elem.style[name] = value;
+        if (!this._elem || !arguments) return undefined;
+        if (arguments.length === 0) {
+            return this._style;
+        }
+        else if (arguments.length === 1) {
+            return this._style.get(name);
+        }
+        else if (arguments.length === 2) {
+            this._style.set(name, value);
+        }
     };
-
-    //#endregion
-
-    //#region margin (with margin-left, margin-top, , margin-right, , margin-bottom)
-
-    get margin() {
+    // query selector
+    query(selector) { 
+        if (!this._elem || !arguments) return null;
+        if (arguments.length === 0) {
+            return this._selector;
+        }
+        else {
+            return this._selector.gets(selector);
+        }        
+    };
+    // element information.
+    get tagName() {
+        if (!this._elem) return '';
+        return this._elem.tagName;
+    }
+    get text() {
+        if (!this._elem) return '';
+        return this._elem.textContent;
+    }
+    set text(value) {
+        if (!this._elem) return;
+        if (this._elem.textContent != value) {
+            this._elem.textContent = value;
+        }
+    }
+    get html() {
+        if (!this._elem) return '';
+        return this._elem.innerHTML;
+    }
+    set html(value) {
+        if (!this._elem) return;
+        if (this._elem.innerHTML != value) {
+            this._elem.innerHTML = value;
+        }
+    }
+    // parent/child access.
+    get parent() {
         if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.margin;
-    };
-    set margin(value) {
-        if (!this._elem) return;
-        this._elem.style.margin = value;
-    };
-
-    get marginLeft() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.marginLeft;
-    };
-    set marginLeft(value) {
-        if (!this._elem) return;
-        this._elem.style.marginLeft = value;
-    };
-
-    get marginTop() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.marginTop;
-    };
-    set marginTop(value) {
-        if (!this._elem) return;
-        this._elem.style.marginTop = value;
-    };
-
-    get marginRight() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.marginRight;
-    };
-    set marginRight(value) {
-        if (!this._elem) return;
-        this._elem.style.marginRight = value;
-    };
-
-    get marginBottom() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.marginBottom;
-    };
-    set marginBottom(value) {
-        if (!this._elem) return;
-        this._elem.style.marginBottom = value;
-    };
-
-    //#endregion
-
-    //#region padding (with padding-left, padding-top, , padding-right, , padding-bottom)
-
-    get padding() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.padding;
-    };
-    set padding(value) {
-        if (!this._elem) return;
-        this._elem.style.padding = value;
-    };
-
-    get paddingLeft() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.paddingLeft;
-    };
-    set paddingLeft(value) {
-        if (!this._elem) return;
-        this._elem.style.paddingLeft = value;
-    };
-
-    get paddingTop() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.paddingTop;
-    };
-    set paddingTop(value) {
-        if (!this._elem) return;
-        this._elem.style.paddingTop = value;
-    };
-
-    get paddingRight() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.paddingRight;
-    };
-    set paddingRight(value) {
-        if (!this._elem) return;
-        this._elem.style.paddingRight = value;
-    };
-
-    get paddingBottom() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.paddingBottom;
-    };
-    set paddingBottom(value) {
-        if (!this._elem) return;
-        this._elem.style.paddingBottom = value;
-    };
-
-    //#endregion
-
-    //#region border (with border-left, border-top, , border-right, , border-bottom)
-
-    get border() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.border;
-    };
-    set border(value) {
-        if (!this._elem) return;
-        this._elem.style.border = value;
-    };
-
-    get borderLeft() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.borderLeft;
-    };
-    set borderLeft(value) {
-        if (!this._elem) return;
-        this._elem.style.borderLeft = value;
-    };
-
-    get borderTop() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.borderTop;
-    };
-    set borderTop(value) {
-        if (!this._elem) return;
-        this._elem.style.borderTop = value;
-    };
-
-    get borderRight() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.borderRight;
-    };
-    set borderRight(value) {
-        if (!this._elem) return;
-        this._elem.style.borderRight = value;
-    };
-
-    get borderBottom() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.borderBottom;
-    };
-    set borderBottom(value) {
-        if (!this._elem) return;
-        this._elem.style.borderBottom = value;
-    };
-
-    //#endregion
-
-    //#region color
-
-    get color() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.color;
-    };
-    set color(value) {
-        if (!this._elem) return;
-        this._elem.style.color = value;
-    };
-
-    //#endregion
-
-    //#region background (background, backgroundColor, backgroundImage, positionX, positionY)
-
-    get background() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.background;
-    };
-    set background(value) {
-        if (!this._elem) return;
-        this._elem.style.background = value;
-    };
-
-    get backgroundColor() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.backgroundColor;
-    };
-    set backgroundColor(value) {
-        if (!this._elem) return;
-        this._elem.style.backgroundColor = value;
-    };
-
-    get backgroundImage() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.backgroundImage;
-    };
-    set backgroundImage(value) {
-        if (!this._elem) return;
-        this._elem.style.backgroundImage = value;
-    };
-
-    get backgroundPositionX() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.backgroundPositionX;
-    };
-    set backgroundPositionX(value) {
-        if (!this._elem) return;
-        this._elem.style.backgroundPositionX = value;
-    };
-
-    get backgroundPositionY() {
-        if (!this._elem) return null;
-        var style = window.getComputedStyle(this._elem, null);
-        return style.backgroundPositionY;
-    };
-    set backgroundPositionY(value) {
-        if (!this._elem) return;
-        this._elem.style.backgroundPositionY = value;
-    };
-
-    //#endregion
-
-    //#region events
-
-     addEvent(evtName, callback, options) {
-         if (!this._elem) return;
-         this._elem.addEventListener(evtName, callback, options);
-     };
-     removeEvent(evtName, callback, options) {
-         if (!this._elem) return;
-         this._elem.removeEventListener(evtName, callback, options);
-     };
-
-    //#endregion
-
-    //#region Element
-
+        if (!this._elem.parentElement) return null;
+        return new NDOM(this._elem.parentElement);
+    }
+    get children() {
+        let results = [];
+        if (!this._elem) return results;
+        let el = this._elem;
+        let celems = el.children;
+        if (celems && celems.length > 0) {
+            let iMax = celems.length;
+            for (let i = 0; i < iMax; i++) {
+                let celem = celems[i];
+                results.push(new NDOM(celem));
+            }
+        }
+        return results;
+    }
+    // child node management.
     addChild(dom) {
-        if (!this._elem || !dom || !dom.element) return;
-        this._elem.appendChild(dom.element);
-    };    
-    removeChild(dom) {
-        if (!this._elem || !dom || !dom.element) return;
-        this._elem.removeChild(dom.element);
+        if (!this._elem || !dom || !dom.elem) return;
+        this._elem.appendChild(dom.elem);
+    };
+    removeChild(value) {
+        if (!this._elem || !dom || !dom.elem) return;
+        this._elem.removeChild(dom.elem);
     };
     clearChildren() {
         if (!this._elem) return;
-
         while (this._elem.firstChild) {
             this._elem.removeChild(this._elem.firstChild);
         }
     };
-
-    //#endregion
-
-    //#region public properties
-
-    get element() { return this._elem; }
-
-    //#endregion
-
-    // static method
-    static createElement(tagName) { 
-        return document.createElement(tagName);
+    // offset
+    get offsetLeft() {
+        if (!this._elem) return undefined
+        return this._elem.offsetLeft;
+    }
+    get offsetTop() { 
+        if (!this._elem) return undefined
+        return this._elem.offsetTop;
+    }
+    get offsetWidth() {
+        if (!this._elem) return undefined
+        return this._elem.offsetWidth;
+    }
+    get offsetHeight() {
+        if (!this._elem) return undefined
+        return this._elem.offsetHeight;
+    }
+    // behavior
+    focus() { 
+        if (!this._elem) return;
+        this._elem.focus();
+    };
+    // fluent
+    fluent() { return this._fluent; };
+    get elem() { return this._elem; }
+    // static
+    static create(tagName, options) {
+        return new NDOM(document.createElement(tagName, options));
     };
 };
 
-class FluentDOM {
-    //#region constructor
+//#endregion
 
+//#region NDOM.Class
+
+NDOM.Class = class {
+    constructor(dom) { this._dom = dom; };
+
+    add(...classNames) {
+        if (!this._dom || !this._dom.elem) return;
+        let el = this._dom.elem;
+        el.classList.add(...classNames);
+    };
+    remove(...classNames) {
+        if (!this._dom || !this._dom.elem) return;
+        let el = this._dom.elem;
+        el.classList.remove(...classNames);
+    };
+    toggle(className, force) {
+        if (!this._dom || !this._dom.elem) return;
+        if (!className || className.trim() === '') return;
+        let el = this._dom.elem;
+        return el.classList.toggle(className, force);
+    };
+    has(className) {
+        if (!this._dom || !this._dom.elem) return;
+        if (!className || className.trim() === '') return;
+        let el = this._dom.elem;
+        return el.classList.contains(className);
+    };
+    replace(oldClassName, newClassName) {
+        if (!this._dom || !this._dom.elem) return;
+        if (!oldClassName || oldClassName.trim() === '') return;
+        let el = this._dom.elem;
+        el.classList.replace(oldClassName, newClassName);
+    };
+
+    get dom() { return this._dom; }
+    get elem() {
+        if (!this._dom || !this._dom.elem) return null;
+        return this._dom.elem;
+    }
+};
+
+//#endregion
+
+//#region NDOM.Event
+
+NDOM.Event = class {
+    constructor(dom) { this._dom = dom; };
+
+    // event
+    add(eventName, handler, options) {
+        if (!this._dom || !this._dom.elem) return;
+        if (!eventName || eventName.trim() === '') return;
+        if (!handler) return;
+        let el = this._dom.elem;
+        el.addEventListener(eventName, handler, options);
+    };
+    remove(eventName, handler, options) {
+        if (!this._dom || !this._dom.elem) return;
+        if (!eventName || eventName.trim() === '') return;
+        let el = this._dom.elem;
+        el.removeEventListener(eventName, handler, options);
+    };
+
+    get dom() { return this._dom; }
+    get elem() {
+        if (!this._dom || !this._dom.elem) return null;
+        return this._dom.elem;
+    }
+};
+
+//#endregion
+
+//#region NDOM.Attribute
+
+NDOM.Attribute = class {
+    constructor(dom) { this._dom = dom; };
+
+    get(name) {
+        if (!this._dom || !this._dom.elem) return undefined;
+        if (!name || name.trim() === '') return undefined;
+        let el = this._dom.elem;
+        return el.getAttribute(name);
+    };
+    set(name, value) {
+        if (!this._dom || !this._dom.elem) return;
+        if (!name || name.trim() === '') return;
+        let el = this._dom.elem;
+        el.setAttribute(name, value);
+    };
+    remove(name) {
+        if (!this._dom || !this._dom.elem) return undefined;
+        if (!name || name.trim() === '') return undefined;
+        let el = this._dom.elem;
+        el.removeAttribute(name);
+    };
+    has(name) {
+        if (!this._dom || !this._dom.elem) return false;
+        if (!name || name.trim() === '') return false;
+        let el = this._dom.elem;
+        return el.hasAttribute(name);
+    };
+    toggle(name, value) {
+        if (!this._dom || !this._dom.elem) return;
+        if (!name || name.trim() === '') return;
+        if (this.has(name)) this.remove(name);
+        else {
+            let val = (value) ? value : '';
+            this.set(name, val);
+        }
+    };
+    get dom() { return this._dom; }
+    get elem() {
+        if (!this._dom || !this._dom.elem) return null;
+        return this._dom.elem;
+    }
+};
+
+//#endregion
+
+//#region NDOM.Style
+
+NDOM.Style = class {
     constructor(dom) {
         this._dom = dom;
+        this._margin = new NDOM.Margin(dom);
+        this._padding = new NDOM.Padding(dom);
     };
 
-    //#endregion
+    get(name) {
+        if (!this._dom || !this._dom.elem) return undefined;
+        if (!name || name.trim() === '') return undefined;
+        let el = this._dom.elem;
+        return el.style[name];
+    };
+    set(name, value) {
+        if (!this._dom || !this._dom.elem) return;
+        if (!name || name.trim() === '') return;
+        let el = this._dom.elem;
+        el.style[name] = value;
+    };
+    remove(name) {
+        if (!this._dom || !this._dom.elem) return undefined;
+        if (!name || name.trim() === '') return undefined;
+        let el = this._dom.elem;
+        el.style[name] = undefined;
+    };
+    has(name) {
+        if (!this._dom || !this._dom.elem) return false;
+        if (!name || name.trim() === '') return false;
+        let el = this._dom.elem;
+        return (el.style[name] !== undefined && el.style[name] !== '');
+    };
 
-    //#region Class manupulation functions
-
-    addClass(...classNames) {
-        if (this._dom && this._dom.element) {
-            this._dom.element.classList.add(...classNames);
+    // margin
+    get margins() { return this._margin; }
+    margin() {
+        if (!this._margin) return undefined;
+        if (!arguments || arguments.length === 0) {
+            return this._margin.val();
         }
-        return this;
+        else this._margin.val(...arguments);
+    };
+    // padding
+    get paddings() { return this._padding; }
+    padding() {
+        if (!this._padding) return undefined;
+        if (!arguments || arguments.length === 0)
+            return this._padding.val();
+        else this._padding.val(...arguments);
     };
 
-    removeClass(...classNames) {
-        if (this._dom && this._dom.element) {
-            this._dom.element.classList.remove(...classNames);
-        }
-        return this;
-    };
-
-    toggleClass(className, force) {
-        if (this._dom) {
-            this._dom.toggleClass(className, force);
-        }
-        return this;
-    };
-
-    replaceClass(oldClassName, newClassName) {
-        if (this._dom) {
-            this._dom.replaceClass(oldClassName, newClassName);
-        }
-        return this;
-    };
-
-    //#endregion
-
-    //#region Style (general) function.
-
-    style(name, value) {
-        if (this._dom && this._dom.element) {
-            this._dom.element.style[name] = value;
-        }
-        return this;
-    };
-
-    //#endregion
-
-    //#region margin related functions.
-
-    margin(value) {
-        if (this._dom) {
-            this._dom.margin = value;
-        }
-        return this;
-    };
-
-    marginLeft(value) {
-        if (this._dom) {
-            this._dom.marginLeft = value;
-        }
-        return this;
-    };
-
-    marginTop(value) {
-        if (this._dom) {
-            this._dom.marginTop = value;
-        }
-        return this;
-    };
-
-    marginRight(value) {
-        if (this._dom) {
-            this._dom.marginRight = value;
-        }
-        return this;
-    };
-
-    marginBottom(value) {
-        if (this._dom) {
-            this._dom.marginBottom = value;
-        }
-        return this;
-    };
-
-    //#endregion
-
-    //#region padding related functions.
-
-    padding(value) {
-        if (this._dom) {
-            this._dom.padding = value;
-        }
-        return this;
-    };
-
-    paddingLeft(value) {
-        if (this._dom) {
-            this._dom.paddingLeft = value;
-        }
-        return this;
-    };
-
-    paddingTop(value) {
-        if (this._dom) {
-            this._dom.paddingTop = value;
-        }
-        return this;
-    };
-
-    paddingRight(value) {
-        if (this._dom) {
-            this._dom.paddingRight = value;
-        }
-        return this;
-    };
-
-    paddingBottom(value) {
-        if (this._dom) {
-            this._dom.paddingBottom = value;
-        }
-        return this;
-    };
-
-    //#endregion
-
-    //#region color related functions.
-
-    color(value) {
-        if (this._dom) {
-            this._dom.color = value;
-        }
-        return this;
-    };
-
-    //#endregion
-
-    //#region background related functions.
-
-    background(value) {
-        if (this._dom) {
-            this._dom.background = value;
-        }
-        return this;
-    };
-
-    backgroundColor(value) {
-        if (this._dom) {
-            this._dom.backgroundColor = value;
-        }
-        return this;
-    };
-
-    backgroundImage(value) {
-        if (this._dom) {
-            this._dom.backgroundImage = value;
-        }
-        return this;
-    };
-
-    backgroundPositionX(value) {
-        if (this._dom) {
-            this._dom.backgroundPositionX = value;
-        }
-        return this;
-    };
-
-    backgroundPositionY(value) {
-        if (this._dom) {
-            this._dom.backgroundPositionY = value;
-        }
-        return this;
-    };
-
-    //#endregion
-
-    //#region public properties
-
-    get element() { return (this._dom) ? this._dom.element : null; };
-    get dom() { return this._dom; };
-
-    //#endregion
+    get dom() { return this._dom; }
+    get elem() {
+        if (!this._dom || !this._dom.elem) return null;
+        return this._dom.elem;
+    }
 };
+
+//#endregion
+
+//#region NDOM.Style (wrapper)
+
+//#region BlockStyle (common style)
+
+NDOM.BlockStyle = class {
+    constructor(dom) {
+        this._dom = dom;
+        this._prefix = '';
+    };
+
+    get prefix() { return this._prefix; }
+    set prefix(value) { this._prefix = value; }
+
+    get hasStyle() { return (this._dom && this._dom.elem); }
+
+    val() {        
+        if (!this.hasStyle) return undefined; 
+        if (!arguments) return this.style(this._prefix);
+        if (arguments.length === 1) {
+            let value = arguments[0];
+            this._dom.style(this._prefix, value);
+        }
+        else if (arguments.length === 2) {
+            let value = 
+                arguments[0] + // top-bottom
+                ' ' +
+                arguments[1];  // right-left
+            this._dom.style(this._prefix, value);
+        }
+        else if (arguments.length === 3) {
+            let value = 
+                arguments[0] + // top
+                ' ' + 
+                arguments[1] + // right-left
+                ' ' +
+                arguments[2];  // bottom
+            this._dom.style(this._prefix, value);
+        }
+        else if (arguments.length === 4) {
+            let value = 
+                arguments[0] + // top
+                ' ' + 
+                arguments[1] + // right-left
+                ' ' +
+                arguments[2] + // bottom
+                ' ' + 
+                arguments[3];  // left
+            this._dom.style(this._prefix, value);
+        }
+        else {
+            return this._dom.style(this._prefix);
+        }
+    }
+    get left() {
+        if (!this.hasStyle) return undefined;
+        return this._dom.style(this._prefix + '-left');
+    }
+    set left(value) {
+        if (!this.hasStyle) return;
+        this._dom.style(this._prefix + '-left', value);
+    }
+    get right() {
+        if (!this.hasStyle) return undefined;
+        return this._dom.style(this._prefix + '-right');
+    }
+    set right(value) {
+        if (!this.hasStyle) return;
+        this._dom.style(this._prefix + '-right', value);
+    }
+    get top() {
+        if (!this.hasStyle) return undefined;
+        return this._dom.style(this._prefix + '-top');
+    }
+    set top(value) {
+        if (!this.hasStyle) return;
+        this._dom.style(this._prefix + '-top', value);
+    }
+    get bottom() {
+        if (!this.hasStyle) return undefined;
+        return this._dom.style(this._prefix + '-bottom');
+    }
+    set bottom(value) {
+        if (!this.hasStyle) return;
+        this._dom.style(this._prefix + '-bottom', value);
+    }
+
+    get dom() { return this._dom; }
+    get elem() {
+        if (!this._dom || !this._dom.elem) return null;
+        return this._dom.elem;
+    }    
+};
+
+//#endregion
+
+//#region Margin
+
+NDOM.Margin = class extends NDOM.BlockStyle {
+    constructor(dom) {
+        super(dom);
+        this.prefix = 'margin';
+    };
+};
+
+//#endregion
+
+//#region Padding
+
+NDOM.Padding = class extends NDOM.BlockStyle {
+    constructor(dom) {
+        super(dom);
+        this.prefix = 'padding';
+    };
+};
+
+//#endregion
+
+//#endregion
+
+//#region NDOM.Selector
+
+NDOM.Selector = class {
+    constructor(dom) { this._dom = dom; };
+    // returns the first child element that matches a specified CSS selector(s).
+    // of an element. If not found null returns.
+    get(selector) {
+        if (!this._dom || !this._dom.elem) return null;
+        if (!selector || selector.trim() === '') return null;
+        let el = this._dom.elem;
+        let element = el.querySelector(selector);
+        return (element) ? element : null;
+    };
+    // returns a collection of an element's child elements that match a specified 
+    // CSS selector(s), as a static NodeList object. If not found empty array returns.
+    gets(selector) {
+        let results = [];
+        if (!this._dom || !this._dom.elem) return results;
+        if (!selector || selector.trim() === '') return results;
+        let el = this._dom.elem;
+        let elements = el.querySelectorAll(selector);
+        if (elements && elements.length > 0) {
+            elements.forEach(element => {
+                let edom = new NDOM(element);
+                results.push(edom);
+            })
+        }
+        return results;
+    };
+
+    get dom() { return this._dom; }
+    get elem() {
+        if (!this._dom || !this._dom.elem) return null;
+        return this._dom.elem;
+    }
+};
+
+//#endregion
+
+//#region NDOM.Fluent - not implements.
+
+NDOM.Fluent = class {
+    constructor(dom) { this._dom = dom; };
+
+    get dom() { return this._dom; }
+    get elem() {
+        if (!this._dom || !this._dom.elem) return null;
+        return this._dom.elem;
+    }
+};
+
+//#endregion
+
+//#endregion
+
+//#region NArrray
+
+class NArrray { };
+
+//#endregion
+
+//#region NArrray.CaseSensitiveDataSource
+
+NArrray.CaseSensitiveDataSource = class {
+    constructor() {
+        this._ds = null; 
+        this._valueMember = '';
+        this._caseSensitive = false;
+        this._values = null;
+    };
+    // reset values array.
+    refresh() {
+        this._values = null;
+    };
+    // Gets array of all item's property value that match value member.
+    // Note: all value in array will convert to string.
+    get values() {
+        if (!this._ds) {
+            this.refresh(); // make sure value is null if source is null.
+            return null; // datasource is null.
+        }
+        if (this._values && this._values.length !== this._items.length) {
+            // already create values map but seem size is difference
+            // so reset the values map.
+            this.refresh();
+        }
+        // values map is not created so created only if required.
+        if (!this._values) {
+            let self = this;
+            let pName = (this._valueMember) ? String(this._valueMember).trim() : '';
+            this._values = this._ds.map(elem => {
+                let sVal = (pName !== '') ? String(elem[pName]) : String(elem);
+                let result = sVal.trim();
+                return (self._caseSensitive) ? result : result.toLowerCase();
+            });
+        }
+        return this._values;
+    };
+
+    indexOf(search) {
+        let map = this.values;
+        if (!map || !search) return -1;
+        let sSch = String(search).trim();
+        let cSch = (self._caseSensitive) ? sSch : sSch.toLowerCase();
+        return map.indexOf(cSch);
+    };
+
+    getitem(index) { 
+        let ds = this._ds;
+        return (ds && index >= 0 && index < ds.length) ? ds[index] : null;
+    };
+
+    get datasource() { return this._ds; }
+    set datasource(value) {
+        if (value && !(value instanceof Array)) {
+            console.error('Assigned value must be array.');
+            return;
+        }
+        this._ds = value;
+        this.refresh(); // resets values map.
+    }
+
+    get valueMember() { return this._valueMember; }
+    set valueMember(value) {
+        if (this._valueMember != value) {
+            this._valueMember = value;
+            this.refresh(); // resets values map.
+        }
+    }
+
+    get caseSensitive() { return this._caseSensitive; }
+    set caseSensitive(value) {
+        if (this._caseSensitive != value) {
+            this._caseSensitive = value;
+            this.refresh(); // resets values map.
+        }
+    }
+};
+
+//#endregion
+
+//#region NArrray.AutoFilterDataSource
+
+NArrray.AutoFilterDataSource = class {
+    constructor() {
+        this._ds = new NArrray.CaseSensitiveDataSource();
+        this._input = '';
+        this._items = null;
+        this._parts = null;
+    };
+    // reset filters array.
+    refresh() { 
+        this._items = null;
+        this._parts = null;
+    };
+
+    get items() {
+        if (!this._ds || !this._ds.datasource) {            
+            this.refresh(); // make sure value is null if source is null.         
+            return this._items; // no data source assigned.
+        }
+        if (!this._items) {
+            let vals = this._ds.values;
+            if (!vals) {
+                // if some case cannot generate values array
+                // so reset items to null;
+                this.refresh();
+            }
+            else {
+                let filter = this._input;
+                let matchs = vals.filter((elem) => {
+                    // The elem is string and in case-sensitive or 
+                    // case-insensitive that match user setting.
+                    let idx = elem.indexOf(filter);
+                    let result = (idx !== -1);
+                    return result;
+                });
+                let results = [];
+                let parts = [];
+                let ds = this._ds;
+                let pName = this._ds.valueMember;
+                matchs.forEach(elem => {
+                    // find index that match elem (string).
+                    let idx = vals.indexOf(elem);
+                    if (idx !== -1) {
+                        // push active item to result.
+                        let aItem = ds.getitem(idx);
+                        results.push(aItem);
+                        // get active value string.
+                        let sVal = (pName) ? aItem[pName] : aItem;
+                        // calculate each parts position.
+                        let ipos = elem.indexOf(filter);
+                        let pos = {
+                            pos1: 0,
+                            len1: ipos,
+                            pos2: ipos,
+                            len2: filter.length,
+                            pos3: ipos + filter.length,
+                            len3: elem.length - (ipos + filter.length)
+                        };
+                        // extract parts
+                        let part = {
+                            pre: sVal.substr(pos.pos1, pos.len1),
+                            match: sVal.substr(pos.pos2, pos.len2),
+                            post: sVal.substr(pos.pos3, pos.len3)
+                        }
+                        // append to output array.
+                        parts.push(part);
+                    }
+                });
+                // setup results to related variables.
+                this._items = results;
+                this._parts = parts;
+            }
+        }
+        return this._items;
+    }
+    get parts() { return this._parts; }
+
+    get datasource() { return this._ds.datasource; }
+    set datasource(value) {
+        if (value && !(value instanceof Array)) {
+            console.error('Assigned value must be array.');
+            return;
+        }
+        this._ds.datasource = value;
+        this.refresh(); // resets filter items.
+    }
+
+    get valueMember() { return this._ds.valueMember; }
+    set valueMember(value) {
+        if (this._ds.valueMember != value) {
+            this._ds.valueMember = value;
+            this.refresh(); // resets filter items.
+        }
+    }
+
+    get caseSensitive() { return this._ds.caseSensitive; }
+    set caseSensitive(value) {
+        if (this._ds.caseSensitive != value) {
+            this._ds.caseSensitive = value;
+            this.refresh(); // resets filter items.
+        }
+    }
+
+    get filter() { return this._input; }
+    set filter(value) {
+        if (this._input != value) {
+            this._input = (value) ? String(value) : ''; // null not allow.
+            this.refresh(); // resets filter items.
+        }
+    };
+};
+
+//#endregion
+
