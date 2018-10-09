@@ -1,14 +1,15 @@
 // common requires.
 const path = require('path');
-
 //const rootPath = path.dirname(require.main.filename);
 process.env['ROOT_PATHS'] = path.join(path.dirname(require.main.filename), '../');
 
 const rootPath = process.env['ROOT_PATHS'];
-
 const libPath = path.join(rootPath, 'lib');
-
 const sql = require('mssql');
+
+describe('Dummies', () => { 
+    test('Dummy Test', () => { expect(true).toBe(true); })
+})
 
 /*
 const nlib = require(path.join(libPath, 'nlib-core'));
