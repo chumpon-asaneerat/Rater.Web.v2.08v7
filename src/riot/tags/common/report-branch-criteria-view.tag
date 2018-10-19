@@ -1,54 +1,76 @@
 <report-branch-criteria-view>
-    <virtual if={(criteria !== null && criteria.branch !== null && criteria.branch.selectedItems != null && criteria.branch.selectedItems.length > 0)}>
-        <div class="tag-box">
-            <div class="row">
-                <div class="tag-r-col mr-0 pr-0">
-                    <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a>
-                    <span class="tag-caption">{caption}</span>
-                </div>
-                <div class="tag-c-col ml-0 pl-0">
-                    <virtual each={item in criteria.branch.selectedItems}>
-                        <span class="tag-item">{item.BranchName}<span class="tag-close" onclick="{removeTagItem}"></span></span>
-                    </virtual>
-                </div>
-            </div>
-        </div>
-    </virtual>
+    <div ref="tag-branch"></div>
     <style>
         :scope {
             margin: 0 auto;
-            padding: 0;
         }
     </style>
     <script>
         let self = this;
+
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
+        let elem, tagbox;
 
-        let branchchanged = (sender, evt) => {
-            //console.log('branch changed.');
-            self.update();
+        let changed = (sender, evt) => {
+            //console.log('qset changed.');
+            tagbox.items = getItems();
         };
 
+        let getItems = () => {
+            if (!self.criteria) return [];
+            if (!self.criteria.branch) return [];
+            return self.criteria.branch.selectedItems;
+        };
+
+        let clearItems = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.branch) return;
+            self.criteria.branch.clear();
+            // remove related orgs.
+            //self.criteria.org.clear();
+        };
+        let removeItem = (sender, evtData) => {
+            let target = sender;
+            let id = target.BranchId;
+            let removeIndex = self.criteria.branch.indexOf(id);
+            self.criteria.branch.remove(removeIndex);
+            // remove related orgs.
+            /*
+            let orgs = self.criteria.org.getItems();
+            orgs.forEach(org => {                
+                if (org.BranchId === id) {
+                    let oidx = self.criteria.org.indexOf(org.OrgId);
+                    self.criteria.org.remove(oidx);
+                }
+            });
+            */
+        };
+
+        // riot handlers.
         this.on('mount', () => {
-            //console.log('mount: add handers.');
-            self.criteria.branch.changed.add(branchchanged);
+            self.criteria.branch.changed.add(changed);
+
+            elem = this.refs["tag-branch"];
+            tagbox = new NGui.TagBox(elem);
+            // binding
+            tagbox.caption = 'Branchs';
+            tagbox.valueMember = 'BranchName';
+            // setup handlers
+            tagbox.clearItems.add(clearItems);
+            tagbox.removeItem.add(removeItem);
         });
 
         this.on('unmount', () => {
-            //console.log('unmount: remove handers.');
-            self.criteria.branch.changed.remove(branchchanged);
-        });
-        
-        this.clearTagItems = (e) => {
-            self.criteria.branch.clear();
-        };
+            self.criteria.branch.changed.remove(changed);
 
-        this.removeTagItem = (e) => {
-            let target = e.item;
-            let branchid = target.item.BranchId;
-            let removeIndex = self.criteria.branch.indexOf(branchid);
-            self.criteria.branch.remove(removeIndex);
-        };
+            if (tagbox) {
+                // cleanup.
+                tagbox.clearItems.remove(clearItems);
+                tagbox.removeItem.remove(removeItem);
+            }
+            tagbox = null;
+            elem = null;
+        });
     </script>
 </report-branch-criteria-view>

@@ -1824,15 +1824,311 @@ NDOM.Fluent = class {
 
 //#endregion
 
-//#region NArrray
+//#region NArray and related classes
 
-class NArrray { };
+//#region NArray
+
+class NArray {
+    /**
+     * Create value map for spefificed array.
+     * 
+     * @param {Array} items The source array to create map.
+     * @param {String} member The element property's name to get value.
+     * @param {Boolean} lowerCase true for convert value to lowercase.
+     */
+    static map(items, member, lowerCase = true) {
+        let results = null;
+        if (!items) return results;
+        // inline helper function.
+        let isString = value => (typeof value === 'string');
+        let hasMember = (item, name) => (Object.keys(item).indexOf(name) !== -1);
+        // local variables
+        results = items.map(item => {
+            let val = (member && hasMember(item, member)) ? item[member] : item;
+            return (isString(val) && lowerCase) ? String(val).toLowerCase() : val;
+        });
+        return results;
+    };
+    /**
+     * Create multiple value maps for spefificed array.
+     * 
+     * @param {Array} items The source items.
+     * @param {Array} members The member name array to gernate map array.
+     * @param {Boolean} lowerCase True for convert value to string lowercase.
+     */
+    static maps(items, members, lowerCase = true) {
+        let result = null;
+        let isArray = value => (value instanceof Array);
+        let isString = value => (typeof value === 'string');
+        if (!items || items.length <= 0) return result;
+        let omembers;
+        let bValue = isString(members);
+        if (bValue) omembers = [ members ];
+        let bArray = isArray(members);
+        if (bArray) omembers = members;
+        if (!omembers) return result; // cannot create member array.
+        // create lookup object
+        result = {};
+        items.forEach(item => {
+            omembers.forEach(omember => {
+                let smem = String(omember);
+                if (!result[smem]) result[smem] = [];
+                let oVal = String(item[smem]);
+                let sVal = (lowerCase) ? oVal.toLowerCase() : oVal;
+                result[smem].push(sVal);
+            })
+        });
+        return result;
+    };
+    /**
+     * Create new array from source array with exclude items or values in exclude array.
+     * 
+     * @param {Array} items The source array.
+     * @param {Array} excludes The Array that contains items or values to exclude.
+     * The exclude array must be same structure as source array or can be simple array
+     * that contains only values (must be same data type as item's member) to exclude.
+     * @param {String} member The element property's name to get value.
+     * @param {Boolean} ignoreCase true for ignore case with compare.
+     * @param {Boolean} compareAsString true for convert value to string for compare.
+     */
+    static exclude(items, excludes, member, ignoreCase, compareAsString = true) {
+        let results = null;
+        if (!items) return results;
+        if (!excludes) return items;
+        // inline helper function.
+        let isString = value => (typeof value === 'string');
+        // local vars.
+        let idx, val, oVal, exmaps;
+        // init exclude maps.
+        exmaps = NArray.map(excludes, member, ignoreCase);
+        exmaps = (compareAsString) ? exmaps.map(elem => String(elem)) : exmaps;
+
+        results = items.filter(item => {
+            val = (member) ? item[member] : item;
+            oVal = (isString(val) && ignoreCase) ? val.toLowerCase() : val;
+            idx = (compareAsString) ? exmaps.indexOf(String(oVal)) : exmaps.indexOf(oVal);
+            return (idx === -1); // returns results if not found in exclude map.
+        });
+        return results;
+    };
+    /**
+     * Gets filter items from specificed source array and filter string.
+     * Returns object that contains 
+     * items array (the filter items),
+     * values array (the value of item's member that match filter),
+     * indexes array (the index of item in source array) and
+     * parts array that contains match information on each item.
+     * 
+     * @param {Array} items The source array.
+     * @param {String} filter The filter string.
+     * @param {String} member The element property's name to filter value.
+     * @param {Boolean} ignoreCase true for ignore case with compare.
+     */
+    static filter(items, filter, member, ignoreCase = true) {
+        // prepare results.
+        let result = { items: null, values: null, indexes: null, parts: null };
+        if (!items) return result;
+
+        let sFilter = (ignoreCase) ? filter.toLowerCase() : filter;
+        // get maps of all items
+        let srcs = NArray.map(items, member, false); // with case sensitive.        
+        let maps = NArray.map(items, member, ignoreCase); // with ignoreCase option.
+        // filter
+        let values = [], indexes = [];
+        let matchs = maps.filter((elem, index) => {
+            let val = (ignoreCase) ? String(elem).toLowerCase() : String(elem);
+            let found = val.indexOf(sFilter) !== -1;
+            if (found) {
+                values.push(srcs[index]); // keep value of source item (case sensitive).
+                indexes.push(index); // keep index of source item.
+            }
+            return found;
+        });
+        // build results.
+        let outs = [], vals = [], idxs = [], parts = [];
+        matchs.forEach((elem, index) => {
+            let sVal = (ignoreCase) ? String(elem).toLowerCase() : String(elem);
+            let ipos = sVal.indexOf(sFilter);
+            if (ipos === -1) return; // item not match filter.
+
+            let aVal = String(values[index]); // get source value from values array.
+            // extract parts.
+            let part = {
+                pre: aVal.substr(0, ipos),
+                match: aVal.substr(ipos, sFilter.length),
+                post: aVal.substr(ipos + sFilter.length, elem.length - (ipos + sFilter.length))
+            }
+            outs.push(items[indexes[index]]); // append to items array.
+            vals.push(values[index]) // append to values array.
+            idxs.push(indexes[index]) // append to indexes array.
+            parts.push(part); // append to parts array.
+        });
+        // set result arrays and returns.
+        result.items = outs;
+        result.values = vals;
+        result.indexes = idxs;
+        result.parts = parts;
+        return result;
+    };
+    /**
+     * Gets array which all items in source array that has all members's value match in lookup array.
+     * The source array is acts like child table in database.
+     * The lookup array is acts like master table in database.
+     * 
+     * @param {Array} items The source (or child) array.
+     * @param {Array} members The source Mambers
+     * @param {Array} lookupItems The lookup (or master) array.
+     * @param {Array} lookupMembers The lookup Members
+     * @param {Boolean} ignoreCase true for ignore case with compare.
+     */
+    static inArray(items, members, lookupItems, lookupMembers, ignoreCase = true) {
+        let results = null;
+        let isArray = value => (value instanceof Array);
+        let isString = value => (typeof value === 'string');
+
+        if (!isArray(items)) return results;
+        if (!isArray(lookupItems)) return results;
+
+        if (!items || items.length <= 0) return results;
+        if (!lookupItems || lookupItems.length <= 0) return results;
+
+        let smembers, lmembers;
+
+        let bothIsValue = (isString(members) && isString(lookupMembers));
+        if (bothIsValue) {
+            // make an local array.
+            smembers = [ members ];
+            lmembers = [ lookupMembers ];
+        }
+
+        let bothIsArray = (isArray(members) && isArray(lookupMembers));
+        if (bothIsArray) {
+            if (members && lookupMembers && members.length !== lookupMembers.length) {
+                console.error('Number of members not match');
+                return results;
+            }
+            // set to local array.
+            smembers = members;
+            lmembers = lookupMembers;
+        }
+
+        if (!smembers || !lmembers) return results; // cannot create both member array.
+        // create lookup object
+        let lookup = NArray.maps(lookupItems, lookupMembers, ignoreCase);
+
+        results = items.filter(item => {
+            let matchCnt = 0;
+            for (let i = 0; i < smembers.length; ++i) {
+                let smember = String(smembers[i]);
+                let dmember = String(lmembers[i]);
+                let oVal = String(item[smember]);
+                let sVal = (ignoreCase) ? oVal.toLowerCase() : oVal;
+                // find is current src item's value is in desc value lookup array.
+                let idx = lookup[dmember].indexOf(sVal)
+                if (idx !== -1) matchCnt++; // found so increase match count.
+            }
+            return (matchCnt === smembers.length);
+        });
+
+        return results;
+    };
+    /**
+     * Find index of item in source array.
+     * 
+     * @param {Array} items The source array to find index.
+     * @param {String} member The element property's name to get value.
+     * @param {Object} item The item to find index.
+     * @param {Boolean} lowerCase true for convert value to lowercase.
+     */
+    static indexOf(items, member, item, lowerCase = true) {
+        let idx = -1;
+        if (!items) return idx;
+        if (!item) return idx;
+        let map = NArray.map(items, member, lowerCase);
+        if (!map) return idx;
+        // inline helper function.
+        let isString = value => (typeof value === 'string');
+        let hasMember = (item, name) => (Object.keys(item).indexOf(name) !== -1);
+        let val = (member && hasMember(item, member)) ? item[member] : item;
+        let sVal = (isString(val) && lowerCase) ? String(val).toLowerCase() : val;
+        idx = map.indexOf(sVal);
+        return idx;
+    };
+};
 
 //#endregion
 
-//#region NArrray.CaseSensitiveDataSource
+//#region NArray.Date (helper for generate date related array)
 
-NArrray.CaseSensitiveDataSource = class {
+NArray.Date = class {
+    /**
+     * Gets Current Year.
+     */
+    static get currentYear() { return Number(new Date().getFullYear()); };
+    /**
+     * Create array of past years from current year with specificed parameter.
+     * i.e. if delta is 2 and current year is 2012 the result is 2010, 2011, 2012.
+     * 
+     * @param {Number} delta The number of past years to generate.
+     * @param {Boolean} asObj True to returns object instead of single value. Default is true.
+     */
+    static getYears(delta, asObj = true) {
+        let currYr = Number(new Date().getFullYear());
+        let idalta = (delta) ? delta : 5;
+        let stYr = currYr - idalta;
+        let edYr = currYr;
+        let years = [];
+        for (let i = stYr; i <= edYr; i++) {
+            if (asObj)
+                years.push({ id:i, text: String(i) });
+            else years.push(i);
+        }
+        return years;
+    };
+    /**
+     * Gets Month array.
+     * 
+     * @param {Number} year The target year.
+     * @param {Boolean} asObj True to returns object instead of single value. Default is true.
+     */
+    static getMonths(year, asObj = true) {
+        let results = [];
+        let sYear = (year) ? year.toString() + '-' : '';
+        for(var i = 1; i <= 12; i++) {
+            if (asObj)
+                results.push({ id: i, text: sYear + String(i) });
+            else results.push(i);
+        }
+        return results;
+    };
+    /**
+     * Gets days array by specificed year and month.
+     * 
+     * @param {Number} year The target year.
+     * @param {Number} month The target month.
+     * @param {Boolean} asObj True to returns object instead of single value. Default is true.
+     */
+    static getDays(year, month, asObj = true) {
+        let results = [];
+        if (!year) return results;
+        if (!month) return results;
+        let sYear = year.toString() + '-';
+        let sMonth = month.toString() + '-';
+        let maxDays = new Date(year, month, 0).getDate();
+        for(var i = 1; i <= maxDays; i++) {
+            if (asObj)
+                results.push({ id: i, text: sYear + sMonth + String(i) });
+            else results.push(i);
+        }
+        return results;
+    };
+};
+
+//#endregion
+
+//#region NArray.CaseSensitiveDataSource
+
+NArray.CaseSensitiveDataSource = class {
     constructor() {
         this._ds = null; 
         this._valueMember = '';
@@ -1850,10 +2146,12 @@ NArrray.CaseSensitiveDataSource = class {
             this.refresh(); // make sure value is null if source is null.
             return null; // datasource is null.
         }
-        if (this._values && this._values.length !== this._items.length) {
+        if (this._values && this._items) {
             // already create values map but seem size is difference
             // so reset the values map.
-            this.refresh();
+            if (this._values.length !== this._items.length) {
+                this.refresh();
+            }
         }
         // values map is not created so created only if required.
         if (!this._values) {
@@ -1867,7 +2165,6 @@ NArrray.CaseSensitiveDataSource = class {
         }
         return this._values;
     };
-
     indexOf(search) {
         let map = this.values;
         if (!map || !search) return -1;
@@ -1875,12 +2172,10 @@ NArrray.CaseSensitiveDataSource = class {
         let cSch = (self._caseSensitive) ? sSch : sSch.toLowerCase();
         return map.indexOf(cSch);
     };
-
     getitem(index) { 
         let ds = this._ds;
         return (ds && index >= 0 && index < ds.length) ? ds[index] : null;
     };
-
     get datasource() { return this._ds; }
     set datasource(value) {
         if (value && !(value instanceof Array)) {
@@ -1890,7 +2185,6 @@ NArrray.CaseSensitiveDataSource = class {
         this._ds = value;
         this.refresh(); // resets values map.
     }
-
     get valueMember() { return this._valueMember; }
     set valueMember(value) {
         if (this._valueMember != value) {
@@ -1898,7 +2192,6 @@ NArrray.CaseSensitiveDataSource = class {
             this.refresh(); // resets values map.
         }
     }
-
     get caseSensitive() { return this._caseSensitive; }
     set caseSensitive(value) {
         if (this._caseSensitive != value) {
@@ -1910,11 +2203,11 @@ NArrray.CaseSensitiveDataSource = class {
 
 //#endregion
 
-//#region NArrray.AutoFilterDataSource
+//#region NArray.AutoFilterDataSource
 
-NArrray.AutoFilterDataSource = class {
+NArray.AutoFilterDataSource = class {
     constructor() {
-        this._ds = new NArrray.CaseSensitiveDataSource();
+        this._ds = new NArray.CaseSensitiveDataSource();
         this._input = '';
         this._items = null;
         this._parts = null;
@@ -1924,7 +2217,6 @@ NArrray.AutoFilterDataSource = class {
         this._items = null;
         this._parts = null;
     };
-
     get items() {
         if (!this._ds || !this._ds.datasource) {            
             this.refresh(); // make sure value is null if source is null.         
@@ -1938,7 +2230,7 @@ NArrray.AutoFilterDataSource = class {
                 this.refresh();
             }
             else {
-                let filter = this._input;
+                let filter = (this.caseSensitive) ? this._input : this._input.toLowerCase();
                 let matchs = vals.filter((elem) => {
                     // The elem is string and in case-sensitive or 
                     // case-insensitive that match user setting.
@@ -1987,7 +2279,15 @@ NArrray.AutoFilterDataSource = class {
         return this._items;
     }
     get parts() { return this._parts; }
-
+    indexOf(search) {
+        if (!this._ds) return null -1;
+        return this._ds.indexOf(search);
+    };
+    getitem(index) {
+        if (!this._ds) return null;
+        let item = this._ds.getitem(index);
+        return item;
+    };
     get datasource() { return this._ds.datasource; }
     set datasource(value) {
         if (value && !(value instanceof Array)) {
@@ -1997,7 +2297,6 @@ NArrray.AutoFilterDataSource = class {
         this._ds.datasource = value;
         this.refresh(); // resets filter items.
     }
-
     get valueMember() { return this._ds.valueMember; }
     set valueMember(value) {
         if (this._ds.valueMember != value) {
@@ -2005,7 +2304,6 @@ NArrray.AutoFilterDataSource = class {
             this.refresh(); // resets filter items.
         }
     }
-
     get caseSensitive() { return this._ds.caseSensitive; }
     set caseSensitive(value) {
         if (this._ds.caseSensitive != value) {
@@ -2013,7 +2311,6 @@ NArrray.AutoFilterDataSource = class {
             this.refresh(); // resets filter items.
         }
     }
-
     get filter() { return this._input; }
     set filter(value) {
         if (this._input != value) {
@@ -2025,3 +2322,1192 @@ NArrray.AutoFilterDataSource = class {
 
 //#endregion
 
+//#region NArray.MultiSelectDataSource
+
+NArray.MultiSelectDataSource = class {
+    constructor() {
+        this._ds = null;
+        this._idMember = '';
+        this._valueMember = '';
+        this._caseSensitive = false;
+        this._selectedIds = [];
+        this._selectedItems = null;
+        this._currentItems = null;
+    };
+    // public methods.
+    clearSelection() {
+        if (!this._selectedIds) this._selectedIds = [];
+        else this._selectedIds.splice(0);
+        this._selectedItems = null;
+        this._currentItems = null;
+    };
+    refresh() {
+        // reset array for recalculate.
+        this._selectedItems = null;
+        this._currentItems = null;
+        if (!this._ds) return;
+    };
+    indexOf(value) {
+        let self = this;
+        let ignoreCase = (this._caseSensitive) ? false : true;
+        let sMember = (this._valueMember) ? this._valueMember.trim() : null;
+        let isMember = (sMember && sMember.length > 0) ? true : false;
+        let oValue = (value) ? String(value).trim() : null;
+        let sValue = (oValue) ? oValue.toLowerCase() : null;
+        if (!sValue) return -1;
+        if (!this._ds) return -1;
+        let getitem = (item) => {
+            let oItem = (isMember) ? item[sMember] : item;
+            return (ignoreCase) ? String(oItem).toLowerCase() : String(oItem);
+        };
+        let map = this._ds.map(item => {
+            let sItem = getitem(item);
+            return sItem;
+        });
+        return map.indexOf(sValue);
+    };
+    selectValue(value) {
+        let idx = this.indexOf(value);
+        if (idx === -1) return;
+        let isIndex = (!this._idMember || this._idMember === '');
+        if (isIndex)
+            this.selectId(idx);
+        else {
+            let item = this._ds[idx];
+            if (!item) return -1;
+            let sId = String(item[this._idMember]);
+            this.selectId(sId);
+        }
+    }
+    unselectValue(value) {
+        let idx = this.indexOf(value);
+        if (idx === -1) return;
+        let isIndex = (!this._idMember || this._idMember === '');
+        if (isIndex)
+            this.unselectId(idx);
+        else {
+            let item = this._ds[idx];
+            if (!item) return -1;
+            let sId = String(item[this._idMember]);
+            this.unselectId(sId);
+        }
+    }
+    selectId(id) {
+        if (!this._selectedIds) this._selectedIds = [];
+        let isIndex = (!this._idMember || this._idMember === '');
+        let sId;        
+        if (isIndex) sId = String(id); // force to string.
+        else sId = (id) ? String(id).trim().toLowerCase() : null;
+        if (!sId) return;
+        //console.log(sId);
+        let idx = this._selectedIds.indexOf(sId);
+        //console.log(idx);
+        if (idx === -1) {
+            this._selectedIds.push(sId);
+            // reset array for recalculate.
+            this._selectedItems = null;
+            this._currentItems = null;
+        }
+    };
+    unselectId(id) {
+        if (!this._selectedIds) this._selectedIds = [];
+        let isIndex = (!this._idMember || this._idMember === '');
+        let sId;        
+        if (isIndex) sId = String(id); // force to string.
+        else sId = (id) ? String(id).trim().toLowerCase() : null;
+        if (!sId) return;
+        //console.log(sId);
+        let idx = this._selectedIds.indexOf(sId);
+        //console.log(idx);
+        if (idx !== -1) {
+            this._selectedIds.splice(idx, 1);
+            // reset array for recalculate.
+            this._selectedItems = null;
+            this._currentItems = null;
+        }
+    };
+    selectAll() {
+        if (!this._selectedIds) this._selectedIds = [];
+        let isIndex = (!this._idMember || this._idMember === '');
+        let items = this.currentItems;
+        if (!items || items.length <= 0) return;
+        let pName = this._idMember;
+        let sId;
+        let self = this;
+        items.forEach(item => {
+            if (isIndex) sId = String(item)
+            else sId = String(item[pName]);
+            this.selectId(sId);
+        });
+    };
+    // public properties.
+    get datasource() {
+        return this._ds;
+    }
+    set datasource(value) {
+        this._ds = value;
+        // Implement required: make sure the id member is same i.e. change language
+        // the datasource should be changed but the id property of each item
+        // should be same if not all exists selection must be clear.
+        this.refresh(); // resets related items.
+    }
+    get idMember() { return this._idMember; }
+    set idMember(value) {
+        if (this._idMember != value) {
+            this._idMember = value;
+            this.clearSelection();
+        }
+    }
+    get valueMember() { return this._valueMember; }
+    set valueMember(value) {
+        if (this._valueMember != value) {
+            this._valueMember = value;
+            this.refresh(); // resets related items.
+        }
+    }
+    get caseSensitive() { return this._caseSensitive; }
+    set caseSensitive(value) {
+        if (this._caseSensitive != value) {
+            this._caseSensitive = value;
+            this.refresh(); // resets related items.
+        }
+    }
+    get selectedIds() { return this._selectedIds; }
+    get selectedItems() {
+        if (!this._selectedItems) {
+            let idMember = (this._idMember) ? this._idMember.trim().toLowerCase() : null;
+            let hasIdMember = (idMember && idMember.length > 0);
+            let ids = this._selectedIds;
+            if (this._ds) {
+                let getitem = (item) => {
+                    let oItem = (hasIdMember) ? item[idMember] : item;
+                    return String(oItem).toLowerCase();
+                };
+                this._selectedItems = [];
+                let oItems;
+                ids.forEach(sId => {
+                    if (hasIdMember) {
+                        oItems = this._ds.filter((item) => {
+                            let sItem = getitem(item);
+                            return (sId === sItem);
+                        });
+                        if (oItems && oItems.length > 0) this._selectedItems.push(oItems[0]);
+                    }
+                    else {
+                        let oItem = this._ds[sId];
+                        this._selectedItems.push(oItem);
+                    }
+                });
+            }
+        }
+        return this._selectedItems;
+    }
+    get currentItems() {
+        if (!this._currentItems) {
+            let idMember = (this._idMember) ? this._idMember.trim().toLowerCase() : null;
+            let hasIdMember = (idMember && idMember.length > 0);            
+            let ids = this._selectedIds;
+            if (this._ds) {
+                let items = this._ds;
+                let map = this._ds.map((item) => {
+                    let sVal = (hasIdMember) ? item[idMember] : item;
+                    return String(sVal);
+                });
+                let results = [];
+                if (hasIdMember) {
+                    let index = 0;
+                    map.forEach(id => {
+                        let idx = ids.indexOf(id.toLowerCase());
+                        if (idx === -1) {
+                            // not in selection.
+                            let item = items[index];
+                            results.push(item);
+                        }
+                        index++;
+                    });
+                }
+                else {
+                    let index = 0;
+                    map.forEach(item => {
+                        let idx = ids.indexOf(String(index));
+                        if (idx === -1) {
+                            results.push(item);
+                        }
+                        index++;
+                    });
+                }
+                this._currentItems = results;
+            }
+        }
+        return this._currentItems;
+    }
+};
+
+//#endregion
+
+//#endregion
+
+//#region NGui and related classes
+
+//#region NGui
+
+class NGui {};
+
+//#endregion
+
+//#region NGui.AutoFill and related classes
+
+//#region NGui.AutoFill
+
+NGui.AutoFill = class {
+    constructor(elem, options) {
+        this._dom = new NDOM(elem);
+        this._gui = null;
+
+        this._filterDS = new NArray.AutoFilterDataSource();
+        this._filterDS.caseSensitive = false;        
+        let opts = (options) ? options : {};
+
+        this._onSelectItem = new EventHandler();
+
+        this.init(opts);
+    };
+    // private methods.
+    init(options) {
+        let dom = this._dom;
+        dom.class.add('auto-fill'); // add auto-fill css class.
+        // setup listeners.
+        dom.event.add('click', this.click.bind(this));
+        // create related gui elements.
+        if (!this._gui) {
+            let opt = options;
+            // Create gui elements.
+            let gui = {};
+            gui.buttons = {};
+            gui.buttons.left = new NGui.AutoFill.Buttons(this, this);
+            gui.container = new NGui.AutoFill.Container(this, this);
+            gui.buttons.right = new NGui.AutoFill.Buttons(this, this, { align: 'right' });
+
+            if (opt.buttons) {
+                opt.buttons.forEach(btn => {
+                    if (btn.align && btn.align === 'left') {
+                        gui.buttons.left.add(btn);
+                    }
+                    else {
+                        gui.buttons.right.add(btn);
+                    }
+                });
+            }
+
+            gui.input = {};
+            gui.input.filter = new NGui.AutoFill.Input(this, gui.container);
+            gui.input.suggest = new NGui.AutoFill.Suggest(this, gui.container);
+
+            gui.drop = {};
+            gui.drop.panel = new NGui.AutoFill.DropPanel(this, gui.container);
+
+            this._gui = gui;
+        }
+    };
+    raiseOnSelectItem(item) {
+        if (this._onSelectItem) this._onSelectItem.invoke(this,  { 'item': item });
+    };
+    // HTML Element Events
+    click(evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        this.focus();
+        return false;
+    };
+    // public methods.
+    focus() {
+        if (!this._gui) return;
+        if (!this._gui.input) return;
+        if (!this._gui.input.filter) return;
+        this._gui.input.filter.focus();
+    };
+    get isdroped() {
+        if (!this._gui) return;
+        if (!this._gui.drop) return;
+        if (!this._gui.drop.panel) return;
+        return this._gui.drop.panel.isdroped;
+    }
+    dropdown() {
+        if (!this._gui) return;
+        if (!this._gui.drop) return;
+        if (!this._gui.drop.panel) return;
+        //self.__checkRedirect();
+        this._gui.drop.panel.dropdown();
+    };
+    close() {
+        if (!this._gui) return;
+        if (!this._gui.drop) return;
+        if (!this._gui.drop.panel) return;
+        this._gui.drop.panel.close();
+    };
+    refresh() { 
+        // refresh drop panel.
+        if (!this._gui) return;
+        if (!this._gui.drop) return;
+        if (!this._gui.drop.panel) return;
+        this._gui.drop.panel.refresh();
+    };
+    selectItem(item) {
+        if (!item) return;
+        this.raiseOnSelectItem(item);
+    };
+    // public properties.
+    // dom and HTMLElement access.
+    get dom() { return this._dom; }
+    get elem() { return (this._dom) ? this._dom.elem : null; }
+    // get gui.
+    get gui() { return this._gui; }
+    get filter() {
+        if (!this._gui) return undefined;
+        if (!this._gui.input) return undefined;
+        if (!this._gui.input.filter) return undefined;
+        if (!this._gui.input.filter.dom) return undefined;
+        return this._gui.input.filter.dom.text;
+    }
+    set filter(value) {
+        if (!this._gui) return;
+        if (!this._gui.input) return;
+        if (!this._gui.input.filter) return;
+        if (!this._gui.input.filter.dom) return;
+        if (this._gui.input.filter.text != value) {
+            this._gui.input.filter.text = value;
+            if (this._gui.drop && this._gui.drop.panel)
+                this._gui.drop.panel.refresh();
+        }
+    }
+    // datasource related properties.
+    get datasource() {
+        if (!this._filterDS) return null;
+        return this._filterDS.datasource; 
+    }
+    set datasource(value) {
+        if (!this._filterDS) return;
+        this._filterDS.datasource = value;        
+    }
+    get valueMember() {
+        if (!this._filterDS) return '';
+        return this._filterDS.valueMember;
+    }
+    set valueMember(value) {
+        if (!this._filterDS) return;
+        if (this._filterDS.valueMember != value) {
+            this._filterDS.valueMember = value;
+        }
+    }
+    get caseSensitive() { 
+        if (!this._filterDS) return false;        
+        return this._filterDS.caseSensitive; 
+    }
+    set caseSensitive(value) {
+        if (!this._filterDS) return;
+        if (this._filterDS.caseSensitive != value) {
+            this._filterDS.caseSensitive = value;
+        }
+    }
+    get currentItems() {
+        if (!this._filterDS) return null;
+        if (this._filterDS.filter != this.filter) {
+            this._filterDS.filter = this.filter;
+        }
+        return this._filterDS.items;
+    }
+    get currentParts() {
+        return this._filterDS.parts;
+    }
+    // public event
+    get onSelectItem() { return this._onSelectItem; }
+};
+
+//#endregion
+
+//#region NGui.AutoFill.Element (base class)
+
+NGui.AutoFill.Element = class {
+    constructor(autofill, parent, options) {
+        this._autofill = autofill;
+        this._parent = parent;
+        this._options = options;
+        this._dom = this.create(options);
+    };
+    // virtual methods.
+    create() { return null; };
+    // get the autofill instance.
+    get autofill() { return this._autofill; }
+    // get root/parent dom.
+    get root() { return this._autofill; }
+    get parent() { return this._parent; }
+    // get options
+    get options() { return this._options; }
+    // get gui.
+    get gui() { return (this._autofill) ? this._autofill.gui : null; }
+    get dom() { return this._dom; }
+};
+
+//#endregion
+
+//#region NGui.AutoFill.Buttons
+
+NGui.AutoFill.Buttons = class extends NGui.AutoFill.Element {
+    // override methods.
+    create() {        
+        this._buttons = [];
+        if (!this.parent || !this.parent.dom) return null;
+        let opts = this.options;
+        let parent = this.parent.dom;
+        // create new element.
+        let dom = NDOM.create('div');
+        // set css class.
+        dom.class.add('auto-fill-buttons');
+        // set align class.
+        let sAlign = (!opts || !opts.align) ? 'left' : opts.align.trim().toLowerCase();
+        if (sAlign !== 'left') dom.class.add('right'); // right align.
+        // add to parent element.
+        parent.addChild(dom);
+
+        return dom;
+    };
+    // public methods.
+    add(opt) {
+        if (!opt) return;
+        // create child element.
+        let btn = new NGui.AutoFill.Button(this.autofill, this, opt);
+        this._buttons.push(btn);
+    };
+    // public properties
+    get buttons() { return this._buttons; }
+};
+
+//#endregion
+
+//#region NGui.AutoFill.Button
+
+NGui.AutoFill.Button = class extends NGui.AutoFill.Element {
+    // override methods.
+    create(options) {
+        if (!this.parent || !this.parent.dom) return null;
+        let opt = options;
+        let parent = this.parent.dom;
+        this._name = (opt) ? opt.name : null;
+        // create new element.
+        let dom = NDOM.create('span');
+        // set css class.
+        dom.class.add('auto-fill-button');
+        // set css optional class.
+        let classList = (opt && opt.css && opt.css.class) ? opt.css.class.split(' ') : [];
+        classList.forEach(css => dom.class.add(css));
+        // setup listeners.
+        dom.event.add('click', this.click.bind(this));
+        // set tooltip child element.
+        let sTooltip = (opt) ? opt.tooltip : null;        
+        if (sTooltip && sTooltip.trim().length > 0) {
+            // has tooltip so add tooltip class
+            dom.class.add('ntooltip');
+            // create popup tooltip element.
+            let tooltip = NDOM.create('span');
+            tooltip.class.add('ntooltiptext');
+            // set text.
+            tooltip.text = sTooltip;
+            // add to button (span) element.
+            dom.addChild(tooltip);
+        }
+        // add to parent element.
+        parent.addChild(dom);
+
+        return dom;
+    };
+    // HTML Element Events
+    click(evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        if (this.options && this.options.click) {
+            this.options.click(evt, this.autofill, this);
+        }
+        return false;
+    };
+    // public properties
+    get name() { return this._name; }
+};
+//#endregion
+
+//#region NGui.AutoFill.Container
+
+NGui.AutoFill.Container = class extends NGui.AutoFill.Element {
+    // override methods.
+    create(options) {
+        if (!this.parent || !this.parent.dom) return null;
+        let parent = this.parent.dom;
+        let dom = NDOM.create('div');
+        // set css class.
+        dom.class.add('auto-fill-container');
+        // setup listeners.
+        dom.event.add('click', this.click.bind(this));
+        // add to parent element.
+        parent.addChild(dom);
+
+        return dom;
+    };
+    // HTML Element Events
+    click(evt) {
+        if (!this.autofill) return;
+        evt.preventDefault();
+        evt.stopPropagation();
+        this.autofill.focus();
+        return false;
+    };
+};
+
+//#endregion
+
+//#region NGui.AutoFill.Input
+
+NGui.AutoFill.Input = class extends NGui.AutoFill.Element {
+    // override methods.
+    create(options) {
+        if (!this.parent || !this.parent.dom) return null;
+        let parent = this.parent.dom;
+        let dom = NDOM.create('span');
+        // set attribute.
+        dom.attr('contenteditable', 'true');
+        // set css class.
+        dom.class.add('input-text');
+        // setup listeners.
+        dom.event.add('focus', this.gotfocus.bind(this));
+        dom.event.add('blur', this.lostfocus.bind(this));
+        dom.event.add('input', this.input.bind(this));
+        dom.event.add('keydown', this.keydown.bind(this));
+        // add to parent element.
+        parent.addChild(dom);
+
+        return dom;
+    };
+    // private methods.
+    setEndOfContenteditable(contentEditableElem) {
+        if (!contentEditableElem) return;
+        var range, sel;
+        if (document.createRange) {
+            range = document.createRange();
+            range.selectNodeContents(contentEditableElem);
+            range.collapse(false);
+            sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        } else if (document.selection) {
+            range = document.body.createTextRange();
+            range.moveToElementText(contentEditableElem);
+            range.collapse(false);
+            range.select();
+        }
+    };
+    updateSuggestion() {
+        if (!this.autofill) return;
+        if (!this.autofill.gui) return;
+        if (!this.autofill.gui.input) return;
+        if (!this.autofill.gui.input.filter) return;
+        if (!this.autofill.gui.input.filter.dom) return;
+        if (!this.autofill.gui.input.suggest) return;
+        if (!this.autofill.gui.input.suggest.dom) return;
+
+        let input = this.autofill.gui.input.filter.dom;
+        let suggest = this.autofill.gui.input.suggest.dom;
+
+        let curritems = this.autofill.currentItems;
+        if (!curritems) {
+            suggest.text = '';
+            return;
+        }
+        if (!curritems.length < 0) {
+            suggest.text = '';
+            return;
+        }
+        if (!curritems[0]) {
+            suggest.text = '';
+            return;
+        }
+        let fItem = curritems[0];
+        let valMember = this.autofill.valueMember;
+        let caseSensitive = this.autofill.caseSensitive;
+
+        if (input.text === '') {
+            suggest.text = '';
+            return;
+        }
+
+        let ipt = input.text;
+        let text = (valMember) ? String(fItem[valMember]) : String(fItem);
+        let bFound = false;
+
+        //freakin NO-BREAK SPACE needs extra care
+        if (caseSensitive) {
+            bFound = (text && text.indexOf(ipt) === 0);
+        }
+        else {
+            bFound = (text && text.toLowerCase().indexOf(ipt.toLowerCase()) === 0);
+        }
+        if (bFound) {
+            let suggestText = text.substr(ipt.length, text.length);
+            suggest.text = suggestText;
+        }
+        else {
+            suggest.text = '';
+        }
+    };
+    // HTML Element Events
+    gotfocus(evt) {
+        if (!this.autofill) return;
+        evt.preventDefault();
+        evt.stopPropagation();
+        this.autofill.dropdown();
+        return false;
+    };
+    lostfocus(evt) {
+        if (!this.autofill) return;
+        evt.preventDefault();
+        evt.stopPropagation();
+        this.autofill.close();
+        let self = this;        
+        if (self.autofill && self.autofill.dom) {
+            let root = self.autofill.dom;
+            root.class.remove('focused');
+        }
+        
+        return false;
+    };
+    input(evt) {
+        if (!this.autofill) return;
+        let autofill = this.autofill;
+        if (!autofill.isdroped) autofill.dropdown();
+        this.updateSuggestion();
+        autofill.filter = this.dom.text;
+    };
+    keydown(evt) {
+        let afill = this.autofill;        
+        switch (evt.key) {
+            case 'Enter':
+                evt.preventDefault();
+                evt.stopPropagation();
+                let items = afill.currentItems;
+                if (items && items.length > 0) {
+                    let item = items[0];
+                    if (item) {
+                        afill.selectItem(item);
+                        if (!afill.gui.input) return;
+                        if (!afill.gui.input.filter) return;
+                        if (!afill.gui.input.filter.dom) return;
+                        let input = afill.gui.input.filter.dom;
+                        let suggest = this.autofill.gui.input.suggest.dom;
+                        input.text = '';
+                        suggest.text = '';
+                    }
+                }
+                break;
+            case 'Escape':
+            case '?':
+            case '@':
+                evt.preventDefault();
+                evt.stopPropagation();
+                break;
+            case 'ArrowUp':
+                evt.preventDefault();
+                evt.stopPropagation();
+                break;
+            case 'ArrowDown':
+                evt.preventDefault();
+                evt.stopPropagation();
+                break;
+            default:
+                //console.log(evt);
+                break;
+        };
+    };
+    // public methods
+    focus() {
+        if (!this.dom || !this.dom.elem) return;
+        this.setEndOfContenteditable(this.dom.elem);
+        let self = this;        
+        setTimeout(function () {
+            if (self.autofill && self.autofill.dom) {
+                let root = self.autofill.dom;
+                root.class.add('focused');
+            }
+            self.dom.focus();
+        }, 0);
+    };
+
+    get text() {
+        if (!this.dom || !this.dom.elem) return null;
+        return this.dom.text;
+    }
+    set text(value) {
+        if (!this.dom || !this.dom.elem) return;
+        if (this.dom.text != value) {
+            this.dom.text = value;
+        }        
+    }
+};
+
+//#endregion
+
+//#region NGui.AutoFill.Suggest
+
+NGui.AutoFill.Suggest = class extends NGui.AutoFill.Element {
+    // override methods.
+    create(options) {
+        if (!this.parent || !this.parent.dom) return null;
+        let parent = this.parent.dom;
+        let dom = NDOM.create('span');
+        // set css class.
+        dom.class.add('suggest-text');
+        // add to parent element.
+        parent.addChild(dom);
+
+        return dom;
+    };
+
+    get text() {
+        if (!this.dom || !this.dom.elem) return null;
+        return this.dom.text;
+    }
+    set text(value) {
+        if (!this.dom || !this.dom.elem) return;
+        if (this.dom.text != value) {
+            this.dom.text = value;
+        }        
+    }
+};
+
+//#endregion
+
+//#region NGui.AutoFill.DropPanel
+
+NGui.AutoFill.DropPanel = class extends NGui.AutoFill.Element {
+    // override methods.
+    create(options) {
+        this._items = [];
+        if (!this.parent || !this.parent.dom) return null;
+        let parent = this.parent.dom;
+        let dom = NDOM.create('div');
+        // set css class.
+        dom.class.add('drop-panel');
+        dom.class.add('hide');
+        // add to parent element.
+        parent.addChild(dom);
+
+        return dom;
+    };
+    // public methods.
+    get isdroped() {
+        if (!this.dom) return false;
+        let isHide = this.dom.class.has('hide');
+        return !isHide;
+    };
+    dropdown() {
+        if (!this.dom) return;
+        let dom = this.dom;
+        dom.class.remove('hide');
+
+        if (!this.autofill || !this.autofill.gui) return null;
+        if (!this.autofill.gui.buttons) return;
+        if (!this.autofill.gui.buttons.left) return;
+        if (!this.autofill.gui.buttons.left.dom) return;
+        if (!this.autofill.gui.buttons.right) return;
+        if (!this.autofill.gui.buttons.right.dom) return;
+        let lfdom = this.autofill.gui.buttons.left.dom;
+        let rtdom = this.autofill.gui.buttons.right.dom;
+        // recalc position.
+        let left = -lfdom.offsetWidth - 9;
+        let right = rtdom.offsetWidth - 4;
+        // update position.
+        dom.style('left', left + 'px');
+        dom.style('right', right + 'px');
+        //dom.style('top', top + 'px');
+        this.refresh();
+    };
+    clear() {
+        this.dom.clearChildren();
+        this._items.splice(0);
+    };
+    refresh() {
+        this.clear();
+        if (!this.autofill || !this.autofill.datasource) return;
+        let items = this.autofill.currentItems;
+        let parts = this.autofill.currentParts;
+        if (items && items.length > 0) {
+            let self = this;
+            let idx = 0;
+            items.forEach(item => {
+                let afItem = new NGui.AutoFill.AutoFillItem(self.autofill, self, {
+                    index: idx,
+                    item: item,
+                    part: parts[idx]
+                })
+                if (idx === 0) afItem.selected();
+                this._items.push(afItem);
+                idx++;
+            });
+        };
+    };
+    close() {
+        if (!this.dom) return;
+        this.dom.class.add('hide');
+    };
+    // public properties
+    get items() { return this._items; }
+}
+
+//#endregion
+
+//#region NGui.AutoFill.AutoFillItem
+
+NGui.AutoFill.AutoFillItem = class extends NGui.AutoFill.Element {
+    // override methods.
+    create(options) {
+        this._item = null;
+        this._selected = false;
+        if (!this.autofill || !this.autofill.datasource) return;
+        if (!this.parent || !this.parent.dom) return null;
+        if (!options || !options.item || !options.part) return;
+        if (!this.gui || !this.gui.input) return;
+        if (!this.gui.input.filter || !this.gui.input.filter.dom) return;
+        let parent = this.parent.dom;
+
+        let item = options.item;
+        let part = options.part;
+
+        this._item = item; // assigned item.
+
+        let dom = NDOM.create('div');
+        // set css class.
+        dom.class.add('auto-fill-item');
+        dom.attr('href', 'javascript:;');
+        
+        let preSpan = NDOM.create('span');
+        preSpan.text = part.pre;
+        dom.addChild(preSpan);
+
+        let inputBold = NDOM.create('b');
+        inputBold.text = part.match;
+        dom.addChild(inputBold);
+
+        let postSpan = NDOM.create('span');
+        postSpan.text = part.post;
+        dom.addChild(postSpan);
+        
+        // setup listeners.
+        let self = this;
+        dom.event.add('mousedown', self.mousedown.bind({
+            self: self,
+            target: dom.elem,
+            item: item
+        }));
+        dom.event.add('mouseup', self.mouseup.bind({
+            self: self,
+            target: dom.elem,
+            item: item
+        }));
+
+        // add to parent element.
+        parent.addChild(dom);
+
+        return dom;
+    };
+    // HTML Element Events
+    mousedown(evt) {
+        //let pObj = this;
+        //console.log('mouse down:', pObj);
+        evt.preventDefault();
+    };
+    mouseup(evt) {
+        //let pObj = this;
+        //console.log('mouse up:', pObj);
+        evt.preventDefault();
+        evt.stopPropagation();
+        let item = this.item;
+        let self = this.self;        
+        self.autofill.selectItem(item);
+    };
+    // public methods.
+    selected() {
+        if (!this.dom) return;
+        this.dom.class.add('selected');
+        this._selected = true;
+    }
+    // public properties.
+    get item() { return this._item; }
+}
+
+//#endregion
+
+//#endregion
+
+//#region NGui.TagBox and related classes
+
+//#region NGui.TagBox
+
+NGui.TagBox = class {
+    constructor(elem) {
+        this._dom = new NDOM(elem);
+
+        this._caption = 'Category';
+        this._itemSeparator = '';
+        this._valueMember = '';
+        this._items = null;
+
+        this._clearItems = new EventHandler();
+        this._removeItem = new EventHandler();
+
+        this.init();
+    };
+    // private methods.
+    init() {
+        let dom = this._dom;
+        dom.class.add('tag-box'); // add tag-box css class.
+        // set left column
+        this._captionDOM = new NGui.TagBox.Caption(this);
+        let capdom = this._captionDOM;
+        capdom.text = this._caption;
+        // append to parent.
+        dom.addChild(capdom);
+        this._itemsDOM = new NGui.TagBox.Items(this);
+        let itemsdom = this._itemsDOM;
+        // append to parent.
+        dom.addChild(itemsdom);
+        this.refresh();
+    };
+    raiseClearItems() {
+        if (this._clearItems) this._clearItems.invoke(this, EventArgs.Empty);
+    }
+    raiseRemoveItem(item) {
+        if (this._removeItem) this._removeItem.invoke(item, EventArgs.Empty);
+    }
+    // public methods.
+    refresh() {
+        let dom = this._dom;
+        if (!dom) return;
+        let hasItems = (this._items && this._items.length > 0) ? true : false;
+        
+        if (hasItems === false) {
+            dom.class.add('hide');
+        }
+        else dom.class.remove('hide');
+
+        if (this._captionDOM) this._captionDOM.text = this._caption;
+
+        if (!this._itemsDOM) return;
+        this._itemsDOM.refresh();
+    };
+    // public properties.
+    // dom and HTMLElement access.
+    get dom() { return this._dom; }
+    get elem() { return (this._dom) ? this._dom.elem : null; }
+    // gets or sets caption.
+    get caption() { return this._caption; }
+    set caption(value) {
+        if (this._caption != value) {
+            this._caption = value;
+            this.refresh(); // resets related items.
+        }
+    }
+    // gets or sets item separator.
+    get itemSeparator() { return this._itemSeparator; }
+    set itemSeparator(value) {
+        if (this._itemSeparator != value) {
+            this._itemSeparator = value;
+            this.refresh(); // resets related items.
+        }
+    }
+    // gets or sets value member.
+    // gets or sets value member.
+    get valueMember() { return this._valueMember; }
+    set valueMember(value) {
+        if (this._valueMember != value) {
+            this._valueMember = value;
+            this.refresh(); // resets related items.
+        }
+    }
+    // gets or sets items.
+    get items() { return this._items; }
+    set items(value) {
+        this._items = value;
+        this.refresh();
+    }
+    // public events
+    get clearItems() { return this._clearItems; }
+    get removeItem() { return this._removeItem; }
+};
+
+//#endregion
+
+//#region NGui.TagBox.Caption
+
+NGui.TagBox.Caption = class {
+    constructor(tagbox) {
+        this._tagbox = tagbox;
+        this._dom = null;
+        this._textdom = null;
+        this.init();
+    };
+    // private methods.
+    init() {
+        this._dom = NDOM.create('div');
+        let dom = this._dom;
+        dom.class.add('tag-left-col'); // add tag-caption css class.
+        // add span for close and span for text.
+        let cleardom = NDOM.create('span');
+        cleardom.class.add('tag-clear');
+        cleardom.event.add('click', this.clearClick.bind(this));
+        // append to dom.
+        dom.addChild(cleardom);
+
+        let textdom = NDOM.create('span');
+        textdom.class.add('tag-caption');
+        this._textdom = textdom;
+        textdom.text = this._text;
+        // append to dom.
+        dom.addChild(textdom);
+    };
+    // DOM Event Handler.
+    clearClick(evt) {
+        let self = this;
+        evt.preventDefault();
+        evt.stopPropagation();
+        let tagbox = self.tagbox;
+        if (!tagbox) return;
+        tagbox.raiseClearItems(self._item);
+    };
+    // public properties.
+    // dom and HTMLElement access.
+    get dom() { return this._dom; }
+    get elem() { return (this._dom) ? this._dom.elem : null; }
+    // TagBox element access.
+    get tagbox() { return this._tagbox; }
+    get text() { return (this._textdom) ? this._textdom.text : null; }
+    set text(value) {
+        if (!this._textdom) return;
+        if (this._textdom.text !== value) {
+            this._textdom.text = value;
+        }
+    }
+};
+
+//#endregion
+
+//#region NGui.TagBox.Items
+
+NGui.TagBox.Items = class {
+    constructor(tagbox) {
+        this._tagbox = tagbox;
+        this._dom = null;
+        this.init();
+    };
+    // private methods.
+    init() {
+        this._dom = NDOM.create('div');
+        let dom = this._dom;
+        dom.class.add('tag-right-col');
+    };
+    // public methods.
+    refresh() {
+        if (!this.tagbox) return;
+        let dom = this._dom;
+        if (!dom) return;
+        dom.clearChildren();
+
+        let items = this.tagbox.items;
+        let pName = this.tagbox.valueMember;
+        let hasMember = (pName && pName.length > 0) ? true : false;
+        if (!items) return;
+        let self = this;
+        let itemdom = null;
+        let hasSeperator = (this.tagbox.itemSeparator) ? true : false;
+        let iCnt = 0, iMax = (items) ? items.length : 0;
+        items.forEach(item => {            
+            itemdom = new NGui.TagBox.Item(self, item);
+            itemdom.text = (hasMember) ? String(item[pName]) : String(item);
+            if (hasSeperator && (iCnt + 1 !== iMax)) {
+                let sepdom = NDOM.create('span');
+                sepdom.class.add('tag-seperator');
+                sepdom.text = this.tagbox.itemSeparator;
+                dom.addChild(sepdom);
+            }
+            ++iCnt;
+        });
+    };
+    // public properties.
+    // dom and HTMLElement access.
+    get dom() { return this._dom; }
+    get elem() { return (this._dom) ? this._dom.elem : null; }
+    // TagBox element access.
+    get tagbox() { return this._tagbox; }
+};
+
+//#endregion
+
+//#region NGui.TagBox.Item
+
+NGui.TagBox.Item = class {
+    constructor(itemsDom, item) {
+        this._itemsDom = itemsDom;
+        this._item = item;
+        this._dom = null;
+        this._textdom = null;
+        this._closedom = null;
+        this.init();
+    };
+    // private methods.
+    init() {
+        if (!this._itemsDom || !this._itemsDom.dom) return;
+        let itemsDom = this._itemsDom.dom;
+
+        this._dom = NDOM.create('span');
+        let dom = this._dom;
+        dom.class.add('tag-item'); // tag-item css class.
+
+        let textdom = NDOM.create('span');
+        textdom.class.add('tag-text');
+        this._textdom = textdom;
+        dom.addChild(textdom);
+
+        let closedom = NDOM.create('span');
+        closedom.class.add('tag-close');
+        closedom.event.add('click', this.closeClick.bind(this));
+        this._closedom = closedom;
+        dom.addChild(closedom);
+        // add to parent container.
+        itemsDom.addChild(dom);
+    };
+    // DOM Event Handler
+    closeClick(evt) {
+        let self = this;
+        evt.preventDefault();
+        evt.stopPropagation();
+        let tagbox = self.tagbox;
+        if (!tagbox) return;
+        if (!self._item) return;
+        tagbox.raiseRemoveItem(self._item);
+    };
+    // public properties.
+    // dom and HTMLElement access.
+    get dom() { return this._dom; }
+    get elem() { return (this._dom) ? this._dom.elem : null; }
+    // TagBox element access.
+    get tagbox() { return (this._itemsDom) ? this._itemsDom.tagbox : null; }
+    get text() { return (this._textdom) ? this._textdom.text : null }
+    set text(value) {
+        if (!this._textdom) return;
+        if (this._textdom.text !== value) {
+            this._textdom.text = value;
+        }
+    }
+    get item() { return this._item; }
+};
+
+//#endregion
+
+//#endregion
+
+//#endregion

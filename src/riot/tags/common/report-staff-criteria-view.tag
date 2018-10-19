@@ -1,54 +1,64 @@
 <report-staff-criteria-view>
-    <virtual if={(criteria !== null && criteria.member !== null && criteria.member.selectedItems != null && criteria.member.selectedItems.length > 0)}>
-        <div class="tag-box">
-            <div class="row">
-                <div class="tag-r-col mr-0 pr-0">
-                    <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a>
-                    <span class="tag-caption">{caption}</span>
-                </div>
-                <div class="tag-c-col ml-0 pl-0">
-                    <virtual each={item in criteria.member.selectedItems}>
-                        <span class="tag-item">{item.FullName}<span class="tag-close" onclick="{removeTagItem}"></span></span>
-                    </virtual>
-                </div>
-            </div>
-        </div>
-    </virtual>
+    <div ref="tag-staff"></div>
     <style>
         :scope {
             margin: 0 auto;
-            padding: 0;
         }
     </style>
     <script>
         let self = this;
+
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
+        let elem, tagbox;
 
-        let memberchanged = (sender, evt) => {
-            //console.log('member changed.');
-            self.update();
+        let changed = (sender, evt) => {
+            //console.log('qset changed.');
+            tagbox.items = getItems();
         };
 
+        let getItems = () => {
+            if (!self.criteria) return [];
+            if (!self.criteria.member) return [];
+            return self.criteria.member.selectedItems;
+        };
+
+        let clearItems = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.member) return;
+            self.criteria.member.clear();
+        };
+        let removeItem = (sender, evtData) => {
+            let target = sender;
+            let id = target.MemberId;
+            let removeIndex = self.criteria.member.indexOf(id);
+            self.criteria.member.remove(removeIndex);
+        };
+
+        // riot handlers.
         this.on('mount', () => {
-            //console.log('mount: add handers.');
-            self.criteria.member.changed.add(memberchanged);
+            self.criteria.member.changed.add(changed);
+
+            elem = this.refs["tag-staff"];
+            tagbox = new NGui.TagBox(elem);
+            // binding
+            tagbox.caption = 'Staffs';
+            tagbox.valueMember = 'FullName';
+            // setup handlers
+            tagbox.clearItems.add(clearItems);
+            tagbox.removeItem.add(removeItem);
         });
 
         this.on('unmount', () => {
-            //console.log('unmount: remove handers.');
-            self.criteria.member.changed.remove(memberchanged);
-        });
-        
-        this.clearTagItems = (e) => {
-            self.criteria.member.clear();
-        };
+            self.criteria.member.changed.remove(changed);
 
-        this.removeTagItem = (e) => {
-            let target = e.item;
-            let memberid = target.item.MemberId;
-            let removeIndex = self.criteria.member.indexOf(memberid);
-            self.criteria.member.remove(removeIndex);
-        };
+            if (tagbox) {
+                // cleanup.
+                tagbox.clearItems.remove(clearItems);
+                tagbox.removeItem.remove(removeItem);
+            }
+            tagbox = null;
+            elem = null;
+        });
     </script>
 </report-staff-criteria-view>

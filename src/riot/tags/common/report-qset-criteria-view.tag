@@ -1,21 +1,8 @@
 <report-qset-criteria-view>
-    <virtual if={(criteria !== null && criteria.qset !== null && criteria.qset.QSet !== null)}>
-        <div class="tag-box">
-            <div class="row">
-                <div class="tag-r-col mr-0 pr-0">
-                    <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a>
-                    <span class="tag-caption">{caption}</span>
-                </div>
-                <div class="tag-c-col ml-0 pl-0">
-                    <span class="tag-item">{criteria.qset.QSet.QSetDescription}<span class="tag-close" onclick="{removeTagItem}"></span></span>
-                </div>
-            </div>
-        </div>
-    </virtual>
+    <div ref="tag-qset"></div>
     <style>
         :scope {
             margin: 0 auto;
-            padding: 0;
         }
     </style>
     <script>
@@ -23,28 +10,55 @@
 
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
+        let elem, tagbox;
 
-        let qsetchanged = (sender, evt) => {
+        let changed = (sender, evt) => {
             //console.log('qset changed.');
-            self.update();
+            tagbox.items = getItems();
         };
 
+        let getItems = () => {
+            if (!self.criteria) return [];
+            if (!self.criteria.qset) return [];
+            if (!self.criteria.qset.QSet) return [];
+            return [ self.criteria.qset.QSet ];
+        };
+
+        let clearItems = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.qset) return;
+            self.criteria.qset.QSetId = '';
+        };
+        let removeItem = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.qset) return;
+            self.criteria.qset.QSetId = '';
+        };
+
+        // riot handlers.
         this.on('mount', () => {
-            //console.log('mount: add handers.');
-            self.criteria.qset.changed.add(qsetchanged);
+            self.criteria.qset.changed.add(changed);
+
+            elem = this.refs["tag-qset"];
+            tagbox = new NGui.TagBox(elem);
+            // binding
+            tagbox.caption = 'QSets';
+            tagbox.valueMember = 'QSetDescription';
+            // setup handlers
+            tagbox.clearItems.add(clearItems);
+            tagbox.removeItem.add(removeItem);
         });
 
         this.on('unmount', () => {
-            //console.log('unmount: remove handers.');
-            self.criteria.qset.changed.remove(qsetchanged);
+            self.criteria.qset.changed.remove(changed);
+
+            if (tagbox) {
+                // cleanup.
+                tagbox.clearItems.remove(clearItems);
+                tagbox.removeItem.remove(removeItem);
+            }
+            tagbox = null;
+            elem = null;
         });
-
-        this.clearTagItems = (e) => {
-            self.criteria.qset.QSetId = null;            
-        };
-
-        this.removeTagItem = (e) => {
-            self.criteria.qset.QSetId = null;
-        };
     </script>
 </report-qset-criteria-view>

@@ -41,210 +41,769 @@ riot.tag2('page-nav-bar', '<div class="navbar navbar-expand-sm fixed-top navbar-
             e.preventUpdate = true;
         };
 });
-riot.tag2('report-branch-criteria-view', '<virtual if="{(criteria !== null && criteria.branch !== null && criteria.branch.selectedItems != null && criteria.branch.selectedItems.length > 0)}"> <div class="tag-box"> <div class="row"> <div class="tag-r-col mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="tag-c-col ml-0 pl-0"> <virtual each="{item in criteria.branch.selectedItems}"> <span class="tag-item">{item.BranchName}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-branch-criteria-view,[data-is="report-branch-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+riot.tag2('report-branch-criteria-view', '<div ref="tag-branch"></div>', 'report-branch-criteria-view,[data-is="report-branch-criteria-view"]{ margin: 0 auto; }', '', function(opts) {
         let self = this;
+
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
+        let elem, tagbox;
 
-        let branchchanged = (sender, evt) => {
+        let changed = (sender, evt) => {
 
-            self.update();
+            tagbox.items = getItems();
         };
 
-        this.on('mount', () => {
+        let getItems = () => {
+            if (!self.criteria) return [];
+            if (!self.criteria.branch) return [];
+            return self.criteria.branch.selectedItems;
+        };
 
-            self.criteria.branch.changed.add(branchchanged);
-        });
-
-        this.on('unmount', () => {
-
-            self.criteria.branch.changed.remove(branchchanged);
-        });
-
-        this.clearTagItems = (e) => {
+        let clearItems = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.branch) return;
             self.criteria.branch.clear();
+
+        };
+        let removeItem = (sender, evtData) => {
+            let target = sender;
+            let id = target.BranchId;
+            let removeIndex = self.criteria.branch.indexOf(id);
+            self.criteria.branch.remove(removeIndex);
+
         };
 
-        this.removeTagItem = (e) => {
-            let target = e.item;
-            let branchid = target.item.BranchId;
-            let removeIndex = self.criteria.branch.indexOf(branchid);
-            self.criteria.branch.remove(removeIndex);
-        };
+        this.on('mount', () => {
+            self.criteria.branch.changed.add(changed);
+
+            elem = this.refs["tag-branch"];
+            tagbox = new NGui.TagBox(elem);
+
+            tagbox.caption = 'Branchs';
+            tagbox.valueMember = 'BranchName';
+
+            tagbox.clearItems.add(clearItems);
+            tagbox.removeItem.add(removeItem);
+        });
+
+        this.on('unmount', () => {
+            self.criteria.branch.changed.remove(changed);
+
+            if (tagbox) {
+
+                tagbox.clearItems.remove(clearItems);
+                tagbox.removeItem.remove(removeItem);
+            }
+            tagbox = null;
+            elem = null;
+        });
 });
-riot.tag2('report-date-criteria-view', '<virtual if="{(criteria !== null && criteria.date !== null && (criteria.date.beginDate !== null || criteria.date.endDate !== null))}"> <div class="tag-box"> <div class="row"> <div class="tag-r-col mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="tag-c-col ml-0 pl-0"> <virtual if="{criteria.date.beginDate !== null && criteria.date.endDate === null}"> <span class="tag-item">{criteria.date.beginDate}<span class="tag-close" onclick="{removeBeginDate}"></span></span> </virtual> <virtual if="{criteria.date.beginDate === null && criteria.date.endDate !== null}"> <span class="tag-item">{criteria.date.endDate}<span class="tag-close" onclick="{removeEndDate}"></span></span> </virtual> <virtual if="{criteria.date.beginDate !== null && criteria.date.endDate !== null}"> <span class="tag-item">{criteria.date.beginDate}<span class="tag-close" onclick="{removeBeginDate}"></span></span> <span>-</span> <span class="tag-item">{criteria.date.endDate}<span class="tag-close" onclick="{removeEndDate}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-date-criteria-view,[data-is="report-date-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+riot.tag2('report-date-criteria-view', '<div ref="tag-date"></div>', 'report-date-criteria-view,[data-is="report-date-criteria-view"]{ margin: 0 auto; }', '', function(opts) {
         let self = this;
 
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
+        let elem, tagbox;
 
-        let datechanged = (sender, evt) => {
+        let changed = (sender, evt) => {
 
-            self.update();
+            tagbox.items = getItems();
         };
 
-        this.on('mount', () => {
+        let getItems = () => {
+            if (!self.criteria) return [];
+            if (!self.criteria.date) return [];
+            let results = [];
+            let dobj = self.criteria.date;
+            if (dobj.beginDate) {
+                results.push({ id: 1, text: dobj.beginDate })
+                if (dobj.endDate) {
+                    results.push({ id: 2, text: dobj.endDate })
+                }
+            }
+            return results;
+        };
 
-            self.criteria.date.changed.add(datechanged);
-        });
-
-        this.on('unmount', () => {
-
-            self.criteria.date.changed.remove(datechanged);
-        });
-
-        this.clearTagItems = (e) => {
+        let clearItems = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.date) return;
             self.criteria.date.clear();
         };
-
-        this.removeBeginDate = (e) => {
-            self.criteria.date.beginDate = null;
-        };
-
-        this.removeEndDate = (e) => {
-            self.criteria.date.endDate = null;
-        };
-});
-riot.tag2('report-org-criteria-view', '<virtual if="{(criteria !== null && criteria.org !== null && criteria.org.selectedItems != null && criteria.org.selectedItems.length > 0)}"> <div class="tag-box"> <div class="row"> <div class="tag-r-col mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="tag-c-col ml-0 pl-0"> <virtual each="{item in criteria.org.selectedItems}"> <span class="tag-item {item.Invalid}">{item.OrgName}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-org-criteria-view,[data-is="report-org-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
-        let self = this;
-        this.caption = this.opts.caption;
-        this.criteria = report.search.current;
-
-        let orgchanged = (sender, evt) => {
-
-            self.update();
+        let removeItem = (sender, evtData) => {
+            let target = sender;
+            let id = target.id;
+            if (id === 1)
+                self.criteria.date.clear();
+            else {
+                self.criteria.date.endDate = null;
+            }
         };
 
         this.on('mount', () => {
+            self.criteria.date.changed.add(changed);
 
-            self.criteria.org.changed.add(orgchanged);
+            elem = this.refs["tag-date"];
+            tagbox = new NGui.TagBox(elem);
+
+            tagbox.caption = 'Date';
+            tagbox.valueMember = 'text';
+
+            tagbox.clearItems.add(clearItems);
+            tagbox.removeItem.add(removeItem);
         });
 
         this.on('unmount', () => {
+            self.criteria.date.changed.remove(changed);
 
-            self.criteria.org.changed.remove(orgchanged);
+            if (tagbox) {
+
+                tagbox.clearItems.remove(clearItems);
+                tagbox.removeItem.remove(removeItem);
+            }
+            tagbox = null;
+            elem = null;
         });
+});
+riot.tag2('report-org-criteria-view', '<div ref="tag-org"></div>', 'report-org-criteria-view,[data-is="report-org-criteria-view"]{ margin: 0 auto; }', '', function(opts) {
+        let self = this;
 
-        this.clearTagItems = (e) => {
+        this.caption = this.opts.caption;
+        this.criteria = report.search.current;
+        let elem, tagbox;
+
+        let changed = (sender, evt) => {
+
+            tagbox.items = getItems();
+        };
+
+        let getItems = () => {
+            if (!self.criteria) return [];
+            if (!self.criteria.org) return [];
+            return self.criteria.org.selectedItems;
+        };
+
+        let clearItems = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.member) return;
             self.criteria.org.clear();
         };
-
-        this.removeTagItem = (e) => {
-            let target = e.item;
-            let orgid = target.item.OrgId;
-            let removeIndex = self.criteria.org.indexOf(orgid);
+        let removeItem = (sender, evtData) => {
+            let target = sender;
+            let id = target.OrgId;
+            let removeIndex = self.criteria.org.indexOf(id);
             self.criteria.org.remove(removeIndex);
         };
+
+        this.on('mount', () => {
+            self.criteria.org.changed.add(changed);
+
+            elem = this.refs["tag-org"];
+            tagbox = new NGui.TagBox(elem);
+
+            tagbox.caption = 'Organizations';
+            tagbox.valueMember = 'OrgName';
+
+            tagbox.clearItems.add(clearItems);
+            tagbox.removeItem.add(removeItem);
+        });
+
+        this.on('unmount', () => {
+            self.criteria.org.changed.remove(changed);
+
+            if (tagbox) {
+
+                tagbox.clearItems.remove(clearItems);
+                tagbox.removeItem.remove(removeItem);
+            }
+            tagbox = null;
+            elem = null;
+        });
 });
-riot.tag2('report-qset-criteria-view', '<virtual if="{(criteria !== null && criteria.qset !== null && criteria.qset.QSet !== null)}"> <div class="tag-box"> <div class="row"> <div class="tag-r-col mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="tag-c-col ml-0 pl-0"> <span class="tag-item">{criteria.qset.QSet.QSetDescription}<span class="tag-close" onclick="{removeTagItem}"></span></span> </div> </div> </div> </virtual>', 'report-qset-criteria-view,[data-is="report-qset-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+riot.tag2('report-qset-criteria-view', '<div ref="tag-qset"></div>', 'report-qset-criteria-view,[data-is="report-qset-criteria-view"]{ margin: 0 auto; }', '', function(opts) {
         let self = this;
 
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
+        let elem, tagbox;
 
-        let qsetchanged = (sender, evt) => {
+        let changed = (sender, evt) => {
 
-            self.update();
+            tagbox.items = getItems();
+        };
+
+        let getItems = () => {
+            if (!self.criteria) return [];
+            if (!self.criteria.qset) return [];
+            if (!self.criteria.qset.QSet) return [];
+            return [ self.criteria.qset.QSet ];
+        };
+
+        let clearItems = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.qset) return;
+            self.criteria.qset.QSetId = '';
+        };
+        let removeItem = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.qset) return;
+            self.criteria.qset.QSetId = '';
         };
 
         this.on('mount', () => {
+            self.criteria.qset.changed.add(changed);
 
-            self.criteria.qset.changed.add(qsetchanged);
+            elem = this.refs["tag-qset"];
+            tagbox = new NGui.TagBox(elem);
+
+            tagbox.caption = 'QSets';
+            tagbox.valueMember = 'QSetDescription';
+
+            tagbox.clearItems.add(clearItems);
+            tagbox.removeItem.add(removeItem);
         });
 
         this.on('unmount', () => {
+            self.criteria.qset.changed.remove(changed);
 
-            self.criteria.qset.changed.remove(qsetchanged);
+            if (tagbox) {
+
+                tagbox.clearItems.remove(clearItems);
+                tagbox.removeItem.remove(removeItem);
+            }
+            tagbox = null;
+            elem = null;
         });
-
-        this.clearTagItems = (e) => {
-            self.criteria.qset.QSetId = null;
-        };
-
-        this.removeTagItem = (e) => {
-            self.criteria.qset.QSetId = null;
-        };
 });
-riot.tag2('report-question-criteria-view', '<virtual if="{(criteria !== null && criteria.question !== null && criteria.question.selectedItems != null && criteria.question.selectedItems.length > 0)}"> <div class="tag-box"> <div class="row"> <div class="tag-r-col mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="tag-c-col ml-0 pl-0"> <virtual each="{item in criteria.question.selectedItems}"> <span class="tag-item">{item.QSlideText}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-question-criteria-view,[data-is="report-question-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+riot.tag2('report-question-criteria-view', '<div ref="tag-ques"></div>', 'report-question-criteria-view,[data-is="report-question-criteria-view"]{ margin: 0 auto; }', '', function(opts) {
         let self = this;
+
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
+        let elem, tagbox;
 
-        let quesionchanged = (sender, evt) => {
+        let changed = (sender, evt) => {
 
-            self.update();
+            tagbox.items = getItems();
         };
 
-        this.on('mount', () => {
+        let getItems = () => {
+            if (!self.criteria) return [];
+            if (!self.criteria.question) return [];
+            return self.criteria.question.selectedItems;
+        };
 
-            self.criteria.question.changed.add(quesionchanged);
-        });
-
-        this.on('unmount', () => {
-
-            self.criteria.question.changed.remove(quesionchanged);
-        });
-
-        this.clearTagItems = (e) => {
+        let clearItems = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.question) return;
             self.criteria.question.clear();
         };
-
-        this.removeTagItem = (e) => {
-            let target = e.item;
-            let qseq = target.item.QSeq;
-            let removeIndex = self.criteria.question.indexOf(qseq);
+        let removeItem = (sender, evtData) => {
+            let target = sender;
+            let id = target.QSeq;
+            let removeIndex = self.criteria.question.indexOf(id);
             self.criteria.question.remove(removeIndex);
         };
+
+        this.on('mount', () => {
+            self.criteria.question.changed.add(changed);
+
+            elem = this.refs["tag-ques"];
+            tagbox = new NGui.TagBox(elem);
+
+            tagbox.caption = 'Questions';
+            tagbox.valueMember = 'QSlideText';
+
+            tagbox.clearItems.add(clearItems);
+            tagbox.removeItem.add(removeItem);
+        });
+
+        this.on('unmount', () => {
+            self.criteria.question.changed.remove(changed);
+
+            if (tagbox) {
+
+                tagbox.clearItems.remove(clearItems);
+                tagbox.removeItem.remove(removeItem);
+            }
+            tagbox = null;
+            elem = null;
+        });
 });
-riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" caption="QSets"></div> <div data-is="report-date-criteria-view" caption="Date"></div> <div data-is="report-question-criteria-view" caption="Questions"></div> <div data-is="report-branch-criteria-view" caption="Branchs"></div> <div data-is="report-org-criteria-view" caption="Orgs"></div> <div data-is="report-staff-criteria-view" caption="Staffs"></div> <div ref="tag-input"></div> </div>', 'report-search-box,[data-is="report-search-box"]{ margin: 0 auto; padding: 15px; font-size: 14px; }', '', function(opts) {
+riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" caption="QSets"></div> <div data-is="report-question-criteria-view" caption="Questions"></div> <div data-is="report-date-criteria-view" caption="Date"></div> <div data-is="report-branch-criteria-view" caption="Branchs"></div> <div data-is="report-org-criteria-view" caption="Orgs"></div> <div data-is="report-staff-criteria-view" caption="Staffs"></div> <div ref="tag-input"></div> <button style="display: inline-block; margin: 0 auto; padding: 0; width: 10%;">Search</button> </div>', 'report-search-box,[data-is="report-search-box"]{ margin: 0 auto; font-size: 14px; padding-left: 5%; }', '', function(opts) {
         let self = this;
+        this.criteria = report.search.current;
 
         let taginput = null;
         let autofill = null;
 
+        let cmd = '';
+        let subCmd = '';
+        let dateVal = { year: '', month: '', day: '' };
+        let clearDate = () => {
+            dateVal.year = '';
+            dateVal.month = '';
+            dateVal.day = '';
+        };
+        let commands = [
+            { id: 1, text: '1.Quetion Set' },
+            { id: 2, text: '2.Questions' },
+            { id: 3, text: '3.Date' },
+            { id: 4, text: '4.Branchs' },
+            { id: 5, text: '5.Organizations' },
+            { id: 6, text: '6.Staffs' }
+        ];
+
+        let hasQSet = () => (self.criteria.qset && self.criteria.qset.QSet) ? true : false;
+
+        let getCommands = () => {
+            autofill.datasource = commands;
+            autofill.valueMember = 'text';
+        }
+
+        let getQSets = () => {
+            if (!report.qset) return;
+            if (!report.qset.model) return;
+            if (!report.qset.model.qsets) return;
+            let member = 'QSetDescription';
+            let src = report.qset.model.qsets;
+            let selects = (hasQSet()) ? [ self.criteria.qset.QSet ] : [];
+            let items = NArray.exclude(src, selects, member, true);
+            autofill.datasource = items;
+            autofill.valueMember = member;
+        };
+
+        let getQuestions = () => {
+            let qset = self.criteria.qset;
+            let ques = self.criteria.question;
+            let items = [];
+            let member = 'QSlideText';
+
+            if (!ques || !ques.selectedItems || ques.selectedItems.length <= 0) {
+                if (qset && qset.QSet) {
+                    items = qset.QSet.slides;
+                }
+            }
+            else {
+                if (qset && qset.QSet) {
+                    let src = qset.QSet.slides;
+                    let selects = ques.selectedItems;
+                    items = NArray.exclude(src, selects, member, true);
+                }
+            }
+            autofill.datasource = items;
+            autofill.valueMember = member;
+        };
+
+        let getDates = () => {
+            let member = 'text';
+            if (subCmd === '') {
+                clearDate();
+                subCmd = 'year';
+                let items = NArray.Date.getYears(5, true);
+                autofill.datasource = items;
+                autofill.valueMember = member;
+            }
+            else if (subCmd === 'year' && dateVal.year.length === 4) {
+                subCmd = 'month';
+                let items = NArray.Date.getMonths(Number(dateVal.year), true);
+                autofill.datasource = items;
+                autofill.valueMember = member;
+            }
+            else  if (subCmd === 'month' && dateVal.month.length > 0) {
+                subCmd = 'day';
+                let items = NArray.Date.getDays(Number(dateVal.year), Number(dateVal.month), true);
+                autofill.datasource = items;
+                autofill.valueMember = member;
+            }
+        };
+
+        let getBranchs = () => {
+            if (!report.org) return;
+            if (!report.org.model) return;
+            if (!report.org.model.branchs) return;
+            let member = 'BranchName';
+            let src = report.org.model.branchs;
+            let selects = self.criteria.branch.selectedItems;
+            let items = NArray.exclude(src, selects, member, true);
+            autofill.datasource = items;
+            autofill.valueMember = member;
+        };
+
+        let getOrgs = () => {
+            let branch = report.search.current.branch;
+            let selectedBranchs = (branch) ? branch.selectedItems : null;
+            let org = report.search.current.org;
+            let selectedOrgs = (org) ? org.selectedItems : null;
+            let items = [];
+            let member = 'OrgName';
+
+            let bmaps, omaps;
+            let ibrn, iorg;
+
+            if (!selectedBranchs || selectedBranchs.length <= 0) {
+                if (!selectedOrgs || selectedOrgs.length <= 0) {
+
+                    report.org.model.branchs.forEach((brh) => {
+                        items.push(...brh.orgs);
+                    });
+                }
+                else {
+
+                    omaps = selectedOrgs.map(sel => { return sel.OrgId; })
+
+                    report.org.model.branchs.forEach((brh) => {
+                        brh.orgs.forEach((org) => {
+                            iorg = omaps.indexOf(org.OrgId);
+                            if (iorg === -1) {
+
+                                items.push(org);
+                            }
+                        });
+                    });
+                }
+            }
+            else {
+                bmaps = selectedBranchs.map(sel => { return sel.BranchId; });
+                if (!selectedOrgs || selectedOrgs.length <= 0) {
+
+                    report.org.model.branchs.forEach((brh) => {
+                        ibrn = bmaps.indexOf(brh.BranchId);
+                        if (ibrn !== -1) {
+                            items.push(...brh.orgs);
+                        }
+                    });
+                }
+                else {
+
+                    omaps = selectedOrgs.map(sel => { return sel.OrgId; })
+                    selectedBranchs.forEach((brh) => {
+                        brh.orgs.forEach((org) => {
+                            iorg = omaps.indexOf(org.OrgId);
+                            if (iorg === -1) {
+
+                                items.push(org);
+                            }
+                        });
+                    });
+                }
+            }
+
+            autofill.datasource = items;
+            autofill.valueMember = member;
+        };
+
+        let getStaffs = () => {
+            if (!report.member) return;
+            if (!report.member.model) return;
+            if (!report.member.model.members) return;
+            let member = 'FullName';
+            let src = report.member.model.members;
+            let selects = self.criteria.member.selectedItems;
+            let items = NArray.exclude(src, selects, member, true);
+            autofill.datasource = items;
+            autofill.valueMember = member;
+        };
+
+        this.refreshDataSource = () => {
+            if (!hasQSet()) {
+                cmd = 'qset'
+                getQSets();
+            }
+            else {
+                if (cmd === '') {
+                    getCommands();
+                }
+                else if (cmd === 'qset') {
+                    getQSets();
+                }
+                else if (cmd === 'question') {
+                    getQuestions();
+                }
+                else if (cmd === 'date') {
+                    getDates();
+                }
+                else if (cmd === 'branch') {
+                    getBranchs();
+                }
+                else if (cmd === 'org') {
+                    getOrgs();
+                }
+                else if (cmd === 'staff') {
+                    getStaffs();
+                }
+                else {
+
+                }
+            }
+            autofill.refresh();
+        };
+
+        this.selectItem = (sender, evtData) => {
+            if (cmd === '') {
+                let id = evtData.item.id;
+                switch (id) {
+                    case 1:
+                        cmd = 'qset';
+                        break;
+                    case 2:
+                        cmd = 'question';
+                        break;
+                    case 3:
+                        cmd = 'date';
+                        break;
+                    case 4:
+                        cmd = 'branch';
+                        break;
+                    case 5:
+                        cmd = 'org';
+                        break;
+                    case 6:
+                        cmd = 'staff';
+                        break;
+                    default:
+                        break;
+                }
+                this.refreshDataSource();
+            }
+            else if (cmd === 'qset') {
+                if (self.criteria) {
+                    self.criteria.qset.QSetId = evtData.item.QSetId;
+                    cmd = '';
+                    this.refreshDataSource();
+                }
+            }
+            else if (cmd === 'question') {
+                if (self.criteria) {
+                    let id = evtData.item.QSeq;
+                    self.criteria.question.add(id);
+                    this.refreshDataSource();
+                }
+            }
+            else if (cmd === 'date') {
+                let item = evtData.item;
+
+                if (subCmd === 'year') {
+                    dateVal.year = item.text;
+
+                }
+                else if (subCmd === 'month') {
+                    dateVal.month = item.text.split('-')[1];
+
+                }
+                else  if (subCmd === 'day') {
+                    dateVal.day = item.text.split('-')[2];
+                    subCmd = '';
+
+                    let dobj = self.criteria.date;
+                    if (!dobj.beginDate) {
+                        dobj.beginDate = dateVal.year + '-' + dateVal.month + '-' + dateVal.day;
+                    }
+                    else if (!dobj.endDate) {
+                        dobj.endDate = dateVal.year + '-' + dateVal.month + '-' + dateVal.day;
+                    }
+                    else {
+
+                        dobj.endDate = dateVal.year + '-' + dateVal.month + '-' + dateVal.day;
+                    }
+                }
+                this.refreshDataSource();
+            }
+            else if (cmd === 'branch') {
+                if (self.criteria) {
+                    let id = evtData.item.BranchId;
+                    self.criteria.branch.add(id);
+                    this.refreshDataSource();
+                }
+            }
+            else if (cmd === 'org') {
+                if (self.criteria) {
+                    let id = evtData.item.OrgId;
+                    self.criteria.org.add(id);
+                    this.refreshDataSource();
+                }
+            }
+            else if (cmd === 'staff') {
+                if (self.criteria) {
+                    let id = evtData.item.MemberId;
+                    self.criteria.member.add(id);
+                    this.refreshDataSource();
+                }
+            }
+            else {
+
+            }
+        };
+
+        this.modelChanged = (sender, evtData) => {
+            this.refreshDataSource();
+        };
+
+        this.selectionChanged = (sender, evtData) => {
+            this.refreshDataSource();
+        };
+
+        this.showCommands = () => {
+            cmd = '';
+            subCmd = '';
+            clearDate();
+            this.refreshDataSource();
+            autofill.focus();
+        };
+
+        this.selectAll = () => {
+            if (cmd === 'question') {
+                cmd = '';
+
+                let maps = NArray.map(self.criteria.question.slides, 'QSeq', false);
+                maps.forEach(id => {
+                    self.criteria.question.add(id);
+                });
+                this.refreshDataSource();
+            }
+            else if (cmd === 'branch') {
+                cmd = '';
+
+                let maps = NArray.map(report.org.model.branchs, 'BranchId', false);
+                maps.forEach(id => {
+                    self.criteria.branch.add(id);
+                });
+                this.refreshDataSource();
+            }
+            else if (cmd === 'org') {
+                cmd = '';
+
+                let bmaps = NArray.map(self.criteria.branch.getItems(), 'BranchId', false);
+                let items = self.criteria.org.getItems();
+
+                items.forEach(item => {
+                    if (bmaps.indexOf(item.BranchId) === -1)
+                        self.criteria.org.add(item.OrgId);
+                });
+                this.refreshDataSource();
+            }
+            else if (cmd === 'staff') {
+                cmd = '';
+
+                let maps = NArray.map(report.member.model.members, 'MemberId', false);
+                maps.forEach(id => {
+                    self.criteria.member.add(id);
+                });
+                this.refreshDataSource();
+            }
+        };
+
         this.on('mount', () => {
+
+            report.qset.ModelChanged.add(this.modelChanged);
+            report.org.ModelChanged.add(this.modelChanged);
+            report.member.ModelChanged.add(this.modelChanged);
+
+            self.criteria.qset.changed.add(this.selectionChanged)
+            self.criteria.question.changed.add(this.selectionChanged)
+            self.criteria.branch.changed.add(this.selectionChanged)
+            self.criteria.org.changed.add(this.selectionChanged);
+            self.criteria.member.changed.add(this.selectionChanged)
+
+            let opts = {
+                buttons: [{
+                    name: 'main-menu',
+                    align: 'left',
+                    css: { class: 'fas fa-caret-square-down' },
+                    tooltip: 'Main Menu',
+                    click: function (evt, autofill, button) {
+                        self.showCommands();
+                    }
+                }, {
+                    name: 'select-all',
+                    align: 'right',
+                    css: { class: 'fas fa-bars' },
+                    tooltip: 'Select all',
+                    click: function (evt, autofill, button) {
+                        self.selectAll();
+                    }
+                }]
+            };
+
             taginput = this.refs["tag-input"];
-            autofill = new AutoFill(taginput);
+            autofill = new NGui.AutoFill(taginput, opts);
+            autofill.onSelectItem.add(this.selectItem);
         });
 
         this.on('unmount', () => {
+
+            report.qset.ModelChanged.remove(this.modelChanged);
+            report.org.ModelChanged.remove(this.modelChanged);
+            report.member.ModelChanged.remove(this.modelChanged);
+
+            self.criteria.qset.changed.remove(this.selectionChanged)
+            self.criteria.question.changed.remove(this.selectionChanged)
+            self.criteria.branch.changed.remove(this.selectionChanged)
+            self.criteria.org.changed.remove(this.selectionChanged);
+            self.criteria.member.changed.remove(this.selectionChanged)
+
             if (autofill) {
 
+                autofill.onSelectItem.remove(this.selectItem);
             }
             autofill = null;
             taginput = null;
         });
 });
-riot.tag2('report-staff-criteria-view', '<virtual if="{(criteria !== null && criteria.member !== null && criteria.member.selectedItems != null && criteria.member.selectedItems.length > 0)}"> <div class="tag-box"> <div class="row"> <div class="tag-r-col mr-0 pr-0"> <a href="#"><span class="tag-clear" onclick="{clearTagItems}"></span></a> <span class="tag-caption">{caption}</span> </div> <div class="tag-c-col ml-0 pl-0"> <virtual each="{item in criteria.member.selectedItems}"> <span class="tag-item">{item.FullName}<span class="tag-close" onclick="{removeTagItem}"></span></span> </virtual> </div> </div> </div> </virtual>', 'report-staff-criteria-view,[data-is="report-staff-criteria-view"]{ margin: 0 auto; padding: 0; }', '', function(opts) {
+
+riot.tag2('report-staff-criteria-view', '<div ref="tag-staff"></div>', 'report-staff-criteria-view,[data-is="report-staff-criteria-view"]{ margin: 0 auto; }', '', function(opts) {
         let self = this;
+
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
+        let elem, tagbox;
 
-        let memberchanged = (sender, evt) => {
+        let changed = (sender, evt) => {
 
-            self.update();
+            tagbox.items = getItems();
+        };
+
+        let getItems = () => {
+            if (!self.criteria) return [];
+            if (!self.criteria.member) return [];
+            return self.criteria.member.selectedItems;
+        };
+
+        let clearItems = (sender, evtData) => {
+            if (!self.criteria) return;
+            if (!self.criteria.member) return;
+            self.criteria.member.clear();
+        };
+        let removeItem = (sender, evtData) => {
+            let target = sender;
+            let id = target.MemberId;
+            let removeIndex = self.criteria.member.indexOf(id);
+            self.criteria.member.remove(removeIndex);
         };
 
         this.on('mount', () => {
+            self.criteria.member.changed.add(changed);
 
-            self.criteria.member.changed.add(memberchanged);
+            elem = this.refs["tag-staff"];
+            tagbox = new NGui.TagBox(elem);
+
+            tagbox.caption = 'Staffs';
+            tagbox.valueMember = 'FullName';
+
+            tagbox.clearItems.add(clearItems);
+            tagbox.removeItem.add(removeItem);
         });
 
         this.on('unmount', () => {
+            self.criteria.member.changed.remove(changed);
 
-            self.criteria.member.changed.remove(memberchanged);
+            if (tagbox) {
+
+                tagbox.clearItems.remove(clearItems);
+                tagbox.removeItem.remove(removeItem);
+            }
+            tagbox = null;
+            elem = null;
         });
-
-        this.clearTagItems = (e) => {
-            self.criteria.member.clear();
-        };
-
-        this.removeTagItem = (e) => {
-            let target = e.item;
-            let memberid = target.item.MemberId;
-            let removeIndex = self.criteria.member.indexOf(memberid);
-            self.criteria.member.remove(removeIndex);
-        };
 });
 riot.tag2('search-content', '<yield></yield>', '', 'class="search-content"', function(opts) {
 });
