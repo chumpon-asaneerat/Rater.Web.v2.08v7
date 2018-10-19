@@ -35,6 +35,6 @@
     <script>
         let self = this;
         this.data = opts.data;
-        console.log(this.data);
+        //console.log(this.data);
     </script>
 </votesummary-result-panel>
