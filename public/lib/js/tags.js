@@ -48,6 +48,23 @@ riot.tag2('report-branch-criteria-view', '<div ref="tag-branch"></div>', 'report
         this.criteria = report.search.current;
         let elem, tagbox;
 
+        let bindEvents = () => {
+            self.criteria.branch.changed.add(changed);
+        };
+
+        let unbindEvents = () => {
+            self.criteria.branch.changed.remove(changed);
+        };
+
+        let newCriteria = (sender, evt) => {
+
+            unbindEvents();
+            self.criteria = report.search.current;
+            bindEvents();
+            tagbox.items = getItems();
+        };
+        report.search.newCriteriaCreated.add(newCriteria);
+
         let changed = (sender, evt) => {
 
             tagbox.items = getItems();
@@ -74,7 +91,7 @@ riot.tag2('report-branch-criteria-view', '<div ref="tag-branch"></div>', 'report
         };
 
         this.on('mount', () => {
-            self.criteria.branch.changed.add(changed);
+            bindEvents();
 
             elem = this.refs["tag-branch"];
             tagbox = new NGui.TagBox(elem);
@@ -87,7 +104,7 @@ riot.tag2('report-branch-criteria-view', '<div ref="tag-branch"></div>', 'report
         });
 
         this.on('unmount', () => {
-            self.criteria.branch.changed.remove(changed);
+            unbindEvents();
 
             if (tagbox) {
 
@@ -104,6 +121,23 @@ riot.tag2('report-date-criteria-view', '<div ref="tag-date"></div>', 'report-dat
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
         let elem, tagbox;
+
+        let bindEvents = () => {
+            self.criteria.date.changed.add(changed);
+        };
+
+        let unbindEvents = () => {
+            self.criteria.date.changed.remove(changed);
+        };
+
+        let newCriteria = (sender, evt) => {
+
+            unbindEvents();
+            self.criteria = report.search.current;
+            bindEvents();
+            tagbox.items = getItems();
+        };
+        report.search.newCriteriaCreated.add(newCriteria);
 
         let changed = (sender, evt) => {
 
@@ -140,7 +174,7 @@ riot.tag2('report-date-criteria-view', '<div ref="tag-date"></div>', 'report-dat
         };
 
         this.on('mount', () => {
-            self.criteria.date.changed.add(changed);
+            bindEvents();
 
             elem = this.refs["tag-date"];
             tagbox = new NGui.TagBox(elem);
@@ -153,7 +187,7 @@ riot.tag2('report-date-criteria-view', '<div ref="tag-date"></div>', 'report-dat
         });
 
         this.on('unmount', () => {
-            self.criteria.date.changed.remove(changed);
+            unbindEvents();
 
             if (tagbox) {
 
@@ -170,6 +204,23 @@ riot.tag2('report-org-criteria-view', '<div ref="tag-org"></div>', 'report-org-c
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
         let elem, tagbox;
+
+        let bindEvents = () => {
+            self.criteria.org.changed.add(changed);
+        };
+
+        let unbindEvents = () => {
+            self.criteria.org.changed.remove(changed);
+        };
+
+        let newCriteria = (sender, evt) => {
+
+            unbindEvents();
+            self.criteria = report.search.current;
+            bindEvents();
+            tagbox.items = getItems();
+        };
+        report.search.newCriteriaCreated.add(newCriteria);
 
         let changed = (sender, evt) => {
 
@@ -195,7 +246,7 @@ riot.tag2('report-org-criteria-view', '<div ref="tag-org"></div>', 'report-org-c
         };
 
         this.on('mount', () => {
-            self.criteria.org.changed.add(changed);
+            bindEvents();
 
             elem = this.refs["tag-org"];
             tagbox = new NGui.TagBox(elem);
@@ -208,7 +259,7 @@ riot.tag2('report-org-criteria-view', '<div ref="tag-org"></div>', 'report-org-c
         });
 
         this.on('unmount', () => {
-            self.criteria.org.changed.remove(changed);
+            unbindEvents();
 
             if (tagbox) {
 
@@ -225,6 +276,23 @@ riot.tag2('report-qset-criteria-view', '<div ref="tag-qset"></div>', 'report-qse
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
         let elem, tagbox;
+
+        let bindEvents = () => {
+            self.criteria.qset.changed.add(changed);
+        };
+
+        let unbindEvents = () => {
+            self.criteria.qset.changed.remove(changed);
+        };
+
+        let newCriteria = (sender, evt) => {
+
+            unbindEvents();
+            self.criteria = report.search.current;
+            bindEvents();
+            tagbox.items = getItems();
+        };
+        report.search.newCriteriaCreated.add(newCriteria);
 
         let changed = (sender, evt) => {
 
@@ -250,7 +318,7 @@ riot.tag2('report-qset-criteria-view', '<div ref="tag-qset"></div>', 'report-qse
         };
 
         this.on('mount', () => {
-            self.criteria.qset.changed.add(changed);
+            bindEvents();
 
             elem = this.refs["tag-qset"];
             tagbox = new NGui.TagBox(elem);
@@ -263,7 +331,7 @@ riot.tag2('report-qset-criteria-view', '<div ref="tag-qset"></div>', 'report-qse
         });
 
         this.on('unmount', () => {
-            self.criteria.qset.changed.remove(changed);
+            unbindEvents();
 
             if (tagbox) {
 
@@ -280,6 +348,23 @@ riot.tag2('report-question-criteria-view', '<div ref="tag-ques"></div>', 'report
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
         let elem, tagbox;
+
+        let bindEvents = () => {
+            self.criteria.question.changed.add(changed);
+        };
+
+        let unbindEvents = () => {
+            self.criteria.question.changed.remove(changed);
+        };
+
+        let newCriteria = (sender, evt) => {
+
+            unbindEvents();
+            self.criteria = report.search.current;
+            bindEvents();
+            tagbox.items = getItems();
+        };
+        report.search.newCriteriaCreated.add(newCriteria);
 
         let changed = (sender, evt) => {
 
@@ -305,7 +390,7 @@ riot.tag2('report-question-criteria-view', '<div ref="tag-ques"></div>', 'report
         };
 
         this.on('mount', () => {
-            self.criteria.question.changed.add(changed);
+            bindEvents();
 
             elem = this.refs["tag-ques"];
             tagbox = new NGui.TagBox(elem);
@@ -318,7 +403,7 @@ riot.tag2('report-question-criteria-view', '<div ref="tag-ques"></div>', 'report
         });
 
         this.on('unmount', () => {
-            self.criteria.question.changed.remove(changed);
+            unbindEvents();
 
             if (tagbox) {
 
@@ -329,12 +414,13 @@ riot.tag2('report-question-criteria-view', '<div ref="tag-ques"></div>', 'report
             elem = null;
         });
 });
-riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" caption="QSets"></div> <div data-is="report-question-criteria-view" caption="Questions"></div> <div data-is="report-date-criteria-view" caption="Date"></div> <div data-is="report-branch-criteria-view" caption="Branchs"></div> <div data-is="report-org-criteria-view" caption="Orgs"></div> <div data-is="report-staff-criteria-view" caption="Staffs"></div> <div ref="tag-input"></div> <button style="display: inline-block; margin: 0 auto; padding: 0; width: 10%;">Search</button> </div>', 'report-search-box,[data-is="report-search-box"]{ margin: 0 auto; font-size: 14px; padding-left: 5%; }', '', function(opts) {
+riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" caption="QSets"></div> <div data-is="report-question-criteria-view" caption="Questions"></div> <div data-is="report-date-criteria-view" caption="Date"></div> <div data-is="report-branch-criteria-view" caption="Branchs"></div> <div data-is="report-org-criteria-view" caption="Orgs"></div> <div data-is="report-staff-criteria-view" caption="Staffs"></div> <div ref="tag-input"></div> <button ref="search-btn" style="display: inline-block; margin: 0 auto; padding: 0; width: 10%;">Search</button> </div>', 'report-search-box,[data-is="report-search-box"]{ margin: 0 auto; font-size: 14px; padding-left: 5%; }', '', function(opts) {
         let self = this;
         this.criteria = report.search.current;
 
         let taginput = null;
         let autofill = null;
+        let searchButton = null;
 
         let cmd = '';
         let subCmd = '';
@@ -344,6 +430,37 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
             dateVal.month = '';
             dateVal.day = '';
         };
+
+        let bindEvents = () => {
+
+            self.criteria.qset.changed.add(this.selectionChanged)
+            self.criteria.question.changed.add(this.selectionChanged)
+            self.criteria.branch.changed.add(this.selectionChanged)
+            self.criteria.org.changed.add(this.selectionChanged);
+            self.criteria.member.changed.add(this.selectionChanged)
+        };
+
+        let unbindEvents = () => {
+
+            self.criteria.qset.changed.remove(this.selectionChanged)
+            self.criteria.question.changed.remove(this.selectionChanged)
+            self.criteria.branch.changed.remove(this.selectionChanged)
+            self.criteria.org.changed.remove(this.selectionChanged);
+            self.criteria.member.changed.remove(this.selectionChanged)
+        };
+
+        let newCriteria = (sender, evt) => {
+
+            unbindEvents();
+            self.criteria = report.search.current;
+            bindEvents();
+            cmd = '';
+            subCmd = '';
+            clearDate();
+            self.refreshDataSource();
+        };
+        report.search.newCriteriaCreated.add(newCriteria);
+
         let commands = [
             { id: 1, text: '1.Quetion Set' },
             { id: 2, text: '2.Questions' },
@@ -692,17 +809,19 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
             }
         };
 
+        this.runSearch = (evt) => {
+
+            report.search.execute();
+            this.criteria = report.search.current;
+        };
+
         this.on('mount', () => {
 
             report.qset.ModelChanged.add(this.modelChanged);
             report.org.ModelChanged.add(this.modelChanged);
             report.member.ModelChanged.add(this.modelChanged);
 
-            self.criteria.qset.changed.add(this.selectionChanged)
-            self.criteria.question.changed.add(this.selectionChanged)
-            self.criteria.branch.changed.add(this.selectionChanged)
-            self.criteria.org.changed.add(this.selectionChanged);
-            self.criteria.member.changed.add(this.selectionChanged)
+            bindEvents();
 
             let opts = {
                 buttons: [{
@@ -727,19 +846,19 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
             taginput = this.refs["tag-input"];
             autofill = new NGui.AutoFill(taginput, opts);
             autofill.onSelectItem.add(this.selectItem);
+
+            searchButton = new NDOM(this.refs["search-btn"]);
+            searchButton.event.add('click', this.runSearch);
         });
 
         this.on('unmount', () => {
+            searchButton.event.remove('click', this.runSearch);
 
             report.qset.ModelChanged.remove(this.modelChanged);
             report.org.ModelChanged.remove(this.modelChanged);
             report.member.ModelChanged.remove(this.modelChanged);
 
-            self.criteria.qset.changed.remove(this.selectionChanged)
-            self.criteria.question.changed.remove(this.selectionChanged)
-            self.criteria.branch.changed.remove(this.selectionChanged)
-            self.criteria.org.changed.remove(this.selectionChanged);
-            self.criteria.member.changed.remove(this.selectionChanged)
+            unbindEvents();
 
             if (autofill) {
 
@@ -756,6 +875,23 @@ riot.tag2('report-staff-criteria-view', '<div ref="tag-staff"></div>', 'report-s
         this.caption = this.opts.caption;
         this.criteria = report.search.current;
         let elem, tagbox;
+
+        let bindEvents = () => {
+            self.criteria.member.changed.add(changed);
+        };
+
+        let unbindEvents = () => {
+            self.criteria.member.changed.remove(changed);
+        };
+
+        let newCriteria = (sender, evt) => {
+
+            unbindEvents();
+            self.criteria = report.search.current;
+            bindEvents();
+            tagbox.items = getItems();
+        };
+        report.search.newCriteriaCreated.add(newCriteria);
 
         let changed = (sender, evt) => {
 
@@ -781,7 +917,7 @@ riot.tag2('report-staff-criteria-view', '<div ref="tag-staff"></div>', 'report-s
         };
 
         this.on('mount', () => {
-            self.criteria.member.changed.add(changed);
+            bindEvents();
 
             elem = this.refs["tag-staff"];
             tagbox = new NGui.TagBox(elem);
@@ -794,7 +930,7 @@ riot.tag2('report-staff-criteria-view', '<div ref="tag-staff"></div>', 'report-s
         });
 
         this.on('unmount', () => {
-            self.criteria.member.changed.remove(changed);
+            unbindEvents();
 
             if (tagbox) {
 
@@ -815,6 +951,31 @@ riot.tag2('sidebars', '<virtual if="{(page.model.sidebar && page.model.sidebar.i
         page.modelLoaded.add(onModelLoaded);
 });
 
+riot.tag2('votesummary-pie-chart', '<div class="v-space"> <div class="m-1 p-1 m-auto r-border"> <div ref="output-chart" class="pie-chart"></div> </div> <div class="v-space">', 'votesummary-pie-chart .r-border,[data-is="votesummary-pie-chart"] .r-border{ border: 1px solid cornflowerblue; border-radius: 5px; } votesummary-pie-chart .v-space,[data-is="votesummary-pie-chart"] .v-space{ min-height: 5px; height: 5px; }', 'class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12"', function(opts) {
+});
+riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row"> <yield></yield> </div> <script>', '', 'class="container-fluid"', function(opts) {
+        let self = this;
+        this.tags = [];
+
+        let onSearchCompleted = (sender, evtData) => {
+
+            let data = evtData.data;
+
+            let $container = $(this.refs['chart-container']);
+            let elPanelDiv = document.createElement('div');
+            elPanelDiv.setAttribute(`data-is`, `votesummary-result-panel`);
+
+            $container.append(elPanelDiv);
+
+            let panel = riot.mount(elPanelDiv, `votesummary-result-panel`, { data: data});
+        };
+        report.search.searchCompleted.add(onSearchCompleted);
+});
+riot.tag2('votesummary-result-panel', '<div class="row m-0 m-auto p-0"> <virtual if="{data !== null}"> <div class="col-12"> <label class="QText"><b>{data.criteria.QSeq}. {data.criteria.QSlideText}</b></label> </div> <virtual if="{data.results !== null}"> <virtual each="{item in data.results}"> <div class="col-5 offset-1 m-0 m-auto p-0"> <label class="CText">{item.Choice}. {item.QItemText} ({item.Pct}%)</label> </div> </virtual> </virtual> </virtual> </div>', 'votesummary-result-panel,[data-is="votesummary-result-panel"]{ width: 95%; font-size: 1rem; } votesummary-result-panel .QText,[data-is="votesummary-result-panel"] .QText{ display: block; padding-left: 5px; padding-right: 5px; border: 1px solid cornflowerblue; border-radius: 5px; color: whitesmoke; background-color: cornflowerblue; } votesummary-result-panel .CText,[data-is="votesummary-result-panel"] .CText{ margin: 0; padding: 0; }', 'class="container-fluid mt-1"', function(opts) {
+        let self = this;
+        this.data = opts.data;
+        console.log(this.data);
+});
 riot.tag2('admin-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
 });
 riot.tag2('votesummary-search-page', '<div data-is="sidebars" data-simplebar></div> <div data-is="search-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {

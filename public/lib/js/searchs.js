@@ -520,12 +520,117 @@ class SearchManager {
     constructor(srv) {
         this._service = srv; // report service.
         this._current = new ReportCriteria(this._service);
+        this._searchCompleted = new EventHandler();
+        this._newCriteriaCreated = new EventHandler();
     };
-    newSearch() { this._current = new ReportCriteria(this._service); };
+    newSearch() { 
+        this._current = new ReportCriteria(this._service);
+        this._newCriteriaCreated.invoke(self, EventArgs.Empty);
+    };
     get current() { return this._current; };
+    callAPI(param) {
+        //console.log(param);
+        let self = this;
+        let result = {};
+        let fn = api.report.getVoteSummary(param);
+        $.when(fn).then((r) => {
+            if (!r || !r.errors) {
+                //console.log('No data returns.');
+                result = null;
+            }
+            if (r.errors.hasError) {
+                //console.log(r.errors); 
+                result = null;
+            }
+            if (!r.data || r.data.length <= 0) {
+                //console.log('No data found.'); 
+                result = null;
+            }
+            //console.log(r.data);
+            result = r.data;
+
+            let rept = new SearchResult(self._service, param, result);
+            rept.refresh();
+            self._searchCompleted.invoke(self, { data: rept });
+        });
+    };
+    execute() {
+        let self = this;
+        let curr = this.current;
+        let questions = curr.question.selectedItems;
+        let slides = (questions && questions.length > 0) ? questions : curr.qset.QSet.slides;
+        let slidesMap = slides.map(slide => slide.QSeq);
+        let bdate = (curr.date.BeginDate) ? curr.date.BeginDate : NArray.Date.today;
+        let edate = (curr.date.EndDate) ? curr.date.EndDate : NArray.Date.today;
+        slidesMap.forEach(qseq => {
+            let orgs = curr.org.selectedItems;
+            let orgMaps = (orgs && orgs.length > 0) ? orgs.map(org => org.OrgId) : [null]
+            orgMaps.forEach(orgId => {
+                let param = {
+                    "LangId": lang.langId,
+                    "CustomerID": secure.current.CustomerId,
+                    "QSetId": curr.qset.QSetId,
+                    "QSeq": qseq,
+                    "OrgId": orgId,
+                    "BeginDate": bdate,
+                    "EndDate": edate
+                };
+                // call the api.
+                self.callAPI(param);
+            })
+        });
+        
+        this.newSearch();
+    };
+
+    get searchCompleted() { return this._searchCompleted; }
+    get newCriteriaCreated() { return this._newCriteriaCreated; }
 };
 
 //#endregion
+
+class SearchResult {
+    constructor(srv, criteria, results) {
+        this._service = srv; // report service.
+        this._criteria = criteria;
+        this._results = results;
+    };
+
+    refresh() {
+        if (!this._criteria) return;
+        if (!this._results) return;
+        
+        let qsetId = this._criteria.QSetId;
+        let qsets = report.qset.model.qsets;
+        let qsetsMap = qsets.map(qset => qset.QSetId);
+        let qset = qsets[qsetsMap.indexOf(qsetId)];
+        this._criteria.QSetDescription = qset.QSetDescription;
+
+        let slides = qset.slides;
+        let slidesMap = slides.map(slide => slide.QSeq);
+        let qseq = this._criteria.QSeq;
+        let slide = slides[slidesMap.indexOf(qseq)];
+        this._criteria.QSlideText = slide.QSlideText;
+
+        let choices = slide.items;
+        let choicesMap = choices.map(choice => choice.QSSeq);
+
+        let branchs = report.org.model.branchs;
+        let orgs = [];
+        branchs.forEach(branch => { orgs.push(...branch.orgs); });
+        let bMaps = branchs.map(branch => branch.BranchId);
+        let oMaps = orgs.map(org => org.OrgId);
+        
+        this._results.forEach(result => {
+            result.BranchName = branchs[bMaps.indexOf(result.BranchId)].BranchName;
+            result.OrgName = orgs[oMaps.indexOf(result.OrgId)].OrgName;
+            result.QItemText = choices[choicesMap.indexOf(result.Choice)].QItemText;
+        });
+    };
+
+    get criteria() { return this._criteria; };
+    get results() { return this._results; }
+}
 
 //#region ReportService
 

@@ -12,6 +12,23 @@
         this.criteria = report.search.current;
         let elem, tagbox;
 
+        let bindEvents = () => {
+            self.criteria.date.changed.add(changed);
+        };
+
+        let unbindEvents = () => {
+            self.criteria.date.changed.remove(changed);
+        };
+
+        let newCriteria = (sender, evt) => {
+            //console.log('detected new criteria created.');
+            unbindEvents();
+            self.criteria = report.search.current;
+            bindEvents();
+            tagbox.items = getItems();
+        };
+        report.search.newCriteriaCreated.add(newCriteria);
+
         let changed = (sender, evt) => {
             //console.log('qset changed.');
             tagbox.items = getItems();
@@ -48,7 +65,7 @@
 
         // riot handlers.
         this.on('mount', () => {
-            self.criteria.date.changed.add(changed);
+            bindEvents();
 
             elem = this.refs["tag-date"];
             tagbox = new NGui.TagBox(elem);
@@ -61,7 +78,7 @@
         });
 
         this.on('unmount', () => {
-            self.criteria.date.changed.remove(changed);
+            unbindEvents();
 
             if (tagbox) {
                 // cleanup.

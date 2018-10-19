@@ -7,7 +7,7 @@
         <div data-is="report-org-criteria-view" caption="Orgs"></div>
         <div data-is="report-staff-criteria-view" caption="Staffs"></div>
         <div ref="tag-input"></div>
-        <button style="display: inline-block; margin: 0 auto; padding: 0; width: 10%;">Search</button>
+        <button ref="search-btn" style="display: inline-block; margin: 0 auto; padding: 0; width: 10%;">Search</button>
     </div>
     <style>
         :scope {
@@ -22,6 +22,7 @@
 
         let taginput = null;
         let autofill = null;
+        let searchButton = null;
 
         let cmd = '';
         let subCmd = '';
@@ -31,6 +32,37 @@
             dateVal.month = '';
             dateVal.day = '';
         };
+
+        let bindEvents = () => {
+            // event listener for criteria selection Changed.
+            self.criteria.qset.changed.add(this.selectionChanged)
+            self.criteria.question.changed.add(this.selectionChanged)
+            self.criteria.branch.changed.add(this.selectionChanged)
+            self.criteria.org.changed.add(this.selectionChanged);
+            self.criteria.member.changed.add(this.selectionChanged)
+        };
+
+        let unbindEvents = () => {
+            // event listener for criteria selection Changed.
+            self.criteria.qset.changed.remove(this.selectionChanged)
+            self.criteria.question.changed.remove(this.selectionChanged)
+            self.criteria.branch.changed.remove(this.selectionChanged)
+            self.criteria.org.changed.remove(this.selectionChanged);
+            self.criteria.member.changed.remove(this.selectionChanged)
+        };
+
+        let newCriteria = (sender, evt) => {
+            //console.log('detected new criteria created.');
+            unbindEvents();
+            self.criteria = report.search.current;
+            bindEvents();
+            cmd = '';
+            subCmd = '';
+            clearDate();
+            self.refreshDataSource();
+        };
+        report.search.newCriteriaCreated.add(newCriteria);
+
         let commands = [
             { id: 1, text: '1.Quetion Set' },
             { id: 2, text: '2.Questions' },
@@ -379,6 +411,12 @@
             }            
         };
 
+        this.runSearch = (evt) => {
+            //console.log('searching...');
+            report.search.execute();
+            this.criteria = report.search.current;
+        };
+
         // riot handlers.
         this.on('mount', () => {
             // event listener for model changed.
@@ -386,12 +424,7 @@
             report.org.ModelChanged.add(this.modelChanged);
             report.member.ModelChanged.add(this.modelChanged);
 
-            // event listener for criteria selection Changed.
-            self.criteria.qset.changed.add(this.selectionChanged)
-            self.criteria.question.changed.add(this.selectionChanged)
-            self.criteria.branch.changed.add(this.selectionChanged)
-            self.criteria.org.changed.add(this.selectionChanged);
-            self.criteria.member.changed.add(this.selectionChanged)
+            bindEvents();
 
             let opts = {
                 buttons: [{
@@ -416,20 +449,20 @@
             taginput = this.refs["tag-input"];
             autofill = new NGui.AutoFill(taginput, opts);
             autofill.onSelectItem.add(this.selectItem);
+
+            searchButton = new NDOM(this.refs["search-btn"]);
+            searchButton.event.add('click', this.runSearch);
         });
 
         this.on('unmount', () => {
+            searchButton.event.remove('click', this.runSearch);
+
             // event listener for model changed.
             report.qset.ModelChanged.remove(this.modelChanged);
             report.org.ModelChanged.remove(this.modelChanged);
             report.member.ModelChanged.remove(this.modelChanged);
 
-            // event listener for criteria selection Changed.
-            self.criteria.qset.changed.remove(this.selectionChanged)
-            self.criteria.question.changed.remove(this.selectionChanged)
-            self.criteria.branch.changed.remove(this.selectionChanged)
-            self.criteria.org.changed.remove(this.selectionChanged);
-            self.criteria.member.changed.remove(this.selectionChanged)
+            unbindEvents();
 
             if (autofill) {
                 // cleanup.

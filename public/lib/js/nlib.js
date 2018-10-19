@@ -2122,6 +2122,23 @@ NArray.Date = class {
         }
         return results;
     };
+
+    static get today() { 
+        let d = new Date();
+        let result = d.getFullYear().toString() + '-';
+        result = result + d.getMonth().toString() + '-'
+        result = result + d.getDate().toString();
+        return result;
+    }
+
+    static get yesterday() { 
+        let d = new Date();  
+        d.setDate(d.getDate() - 1);
+        let result = d.getFullYear().toString() + '-';
+        result = result + d.getMonth().toString() + '-'
+        result = result + d.getDate().toString();
+        return result;
+    }
 };
 
 //#endregion

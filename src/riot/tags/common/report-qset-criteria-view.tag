@@ -12,6 +12,23 @@
         this.criteria = report.search.current;
         let elem, tagbox;
 
+        let bindEvents = () => {
+            self.criteria.qset.changed.add(changed);
+        };
+
+        let unbindEvents = () => {
+            self.criteria.qset.changed.remove(changed);
+        };
+
+        let newCriteria = (sender, evt) => {
+            //console.log('detected new criteria created.');
+            unbindEvents();
+            self.criteria = report.search.current;
+            bindEvents();
+            tagbox.items = getItems();
+        };
+        report.search.newCriteriaCreated.add(newCriteria);
+
         let changed = (sender, evt) => {
             //console.log('qset changed.');
             tagbox.items = getItems();
@@ -37,7 +54,7 @@
 
         // riot handlers.
         this.on('mount', () => {
-            self.criteria.qset.changed.add(changed);
+            bindEvents();
 
             elem = this.refs["tag-qset"];
             tagbox = new NGui.TagBox(elem);
@@ -50,7 +67,7 @@
         });
 
         this.on('unmount', () => {
-            self.criteria.qset.changed.remove(changed);
+            unbindEvents();
 
             if (tagbox) {
                 // cleanup.
