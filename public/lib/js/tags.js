@@ -180,6 +180,7 @@ riot.tag2('report-date-criteria-view', '<div ref="tag-date"></div>', 'report-dat
             tagbox = new NGui.TagBox(elem);
 
             tagbox.caption = 'Date';
+            tagbox.itemSeparator = '-';
             tagbox.valueMember = 'text';
 
             tagbox.clearItems.add(clearItems);
@@ -467,7 +468,11 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
             { id: 3, text: '3.Date' },
             { id: 4, text: '4.Branchs' },
             { id: 5, text: '5.Organizations' },
-            { id: 6, text: '6.Staffs' }
+            { id: 6, text: '6.Staffs' },
+            { id: 7, text: '7.Apple' },
+            { id: 8, text: '8.Ant' },
+            { id: 9, text: '9.Cat' },
+            { id: 10, text: '10.Ent' },
         ];
 
         let hasQSet = () => (self.criteria.qset && self.criteria.qset.QSet) ? true : false;
@@ -698,19 +703,18 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
             }
             else if (cmd === 'date') {
                 let item = evtData.item;
-
                 if (subCmd === 'year') {
                     dateVal.year = item.text;
-
+                    autofill.filter = dateVal.year + '-';
                 }
                 else if (subCmd === 'month') {
                     dateVal.month = item.text.split('-')[1];
-
+                    autofill.filter = dateVal.year + '-' + dateVal.month + '-';
                 }
                 else  if (subCmd === 'day') {
                     dateVal.day = item.text.split('-')[2];
                     subCmd = '';
-
+                    autofill.filter = '';
                     let dobj = self.criteria.date;
                     if (!dobj.beginDate) {
                         dobj.beginDate = dateVal.year + '-' + dateVal.month + '-' + dateVal.day;
@@ -747,7 +751,34 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
                 }
             }
             else {
+            }
+        };
 
+        this.inputChanged = (sender, evtData) => {
+            if (cmd === 'date') {
+                let text = evtData.text;
+                let dateparts = text.split('-');
+                if (dateparts.length === 1) {
+                    subCmd = '';
+                    dateVal.year = '';
+                    dateVal.month = '';
+                    dateVal.day = '';
+                    this.refreshDataSource();
+                }
+                else if (dateparts.length === 2) {
+                    subCmd = 'year';
+                    dateVal.year = dateparts[0];
+                    dateVal.month = '';
+                    dateVal.day = '';
+                    this.refreshDataSource();
+                }
+                else if (dateparts.length === 3) {
+                    subCmd = 'month';
+                    dateVal.year = dateparts[0];
+                    dateVal.month = dateparts[1];
+                    dateVal.day = '';
+                    this.refreshDataSource();
+                }
             }
         };
 
@@ -846,6 +877,7 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
             taginput = this.refs["tag-input"];
             autofill = new NGui.AutoFill(taginput, opts);
             autofill.onSelectItem.add(this.selectItem);
+            autofill.onInputChanged.add(this.inputChanged);
 
             searchButton = new NDOM(this.refs["search-btn"]);
             searchButton.event.add('click', this.runSearch);
@@ -863,6 +895,7 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
             if (autofill) {
 
                 autofill.onSelectItem.remove(this.selectItem);
+                autofill.onInputChanged.remove(this.inputChanged);
             }
             autofill = null;
             taginput = null;
@@ -974,7 +1007,7 @@ riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row">
 riot.tag2('votesummary-result-panel', '<div class="row m-0 m-auto p-0"> <virtual if="{data !== null}"> <div class="col-12"> <label class="QText"><b>{data.criteria.QSeq}. {data.criteria.QSlideText}</b></label> </div> <virtual if="{data.results !== null}"> <virtual each="{item in data.results}"> <div class="col-5 offset-1 m-0 m-auto p-0"> <label class="CText">{item.Choice}. {item.QItemText} ({item.Pct}%)</label> </div> </virtual> </virtual> </virtual> </div>', 'votesummary-result-panel,[data-is="votesummary-result-panel"]{ width: 95%; font-size: 1rem; } votesummary-result-panel .QText,[data-is="votesummary-result-panel"] .QText{ display: block; padding-left: 5px; padding-right: 5px; border: 1px solid cornflowerblue; border-radius: 5px; color: whitesmoke; background-color: cornflowerblue; } votesummary-result-panel .CText,[data-is="votesummary-result-panel"] .CText{ margin: 0; padding: 0; }', 'class="container-fluid mt-1"', function(opts) {
         let self = this;
         this.data = opts.data;
-        console.log(this.data);
+
 });
 riot.tag2('admin-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
 });

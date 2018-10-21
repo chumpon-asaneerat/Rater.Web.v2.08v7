@@ -2586,6 +2586,7 @@ NGui.AutoFill = class {
         let opts = (options) ? options : {};
 
         this._onSelectItem = new EventHandler();
+        this._onInputChanged = new EventHandler();
 
         this.init(opts);
     };
@@ -2628,6 +2629,9 @@ NGui.AutoFill = class {
     };
     raiseOnSelectItem(item) {
         if (this._onSelectItem) this._onSelectItem.invoke(this,  { 'item': item });
+    };
+    raiseOnInputChanged(text) {
+        if (this._onInputChanged) this._onInputChanged.invoke(this,  { 'text': text });
     };
     // HTML Element Events
     click(evt) {
@@ -2683,28 +2687,29 @@ NGui.AutoFill = class {
         if (!this._gui) return undefined;
         if (!this._gui.input) return undefined;
         if (!this._gui.input.filter) return undefined;
-        if (!this._gui.input.filter.dom) return undefined;
-        return this._gui.input.filter.dom.text;
+        return this._gui.input.filter.text;
     }
     set filter(value) {
         if (!this._gui) return;
         if (!this._gui.input) return;
         if (!this._gui.input.filter) return;
-        if (!this._gui.input.filter.dom) return;
         if (this._gui.input.filter.text != value) {
             this._gui.input.filter.text = value;
-            if (this._gui.drop && this._gui.drop.panel)
-                this._gui.drop.panel.refresh();
         }
     }
     // datasource related properties.
     get datasource() {
         if (!this._filterDS) return null;
-        return this._filterDS.datasource; 
+        return this._filterDS.datasource;
     }
     set datasource(value) {
         if (!this._filterDS) return;
-        this._filterDS.datasource = value;        
+        this._filterDS.datasource = value;
+        if (!this._gui) return;
+        if (!this._gui.input) return;
+        if (!this._gui.input.suggest) return;
+        // clear suggest text.
+        this._gui.input.suggest.text = '';
     }
     get valueMember() {
         if (!this._filterDS) return '';
@@ -2734,10 +2739,12 @@ NGui.AutoFill = class {
         return this._filterDS.items;
     }
     get currentParts() {
+        if (!this._filterDS) return null;
         return this._filterDS.parts;
     }
     // public event
     get onSelectItem() { return this._onSelectItem; }
+    get onInputChanged() { return this._onInputChanged; }
 };
 
 //#endregion
@@ -2885,6 +2892,7 @@ NGui.AutoFill.Container = class extends NGui.AutoFill.Element {
 NGui.AutoFill.Input = class extends NGui.AutoFill.Element {
     // override methods.
     create(options) {
+        this._current = null; // init the current text variable.
         if (!this.parent || !this.parent.dom) return null;
         let parent = this.parent.dom;
         let dom = NDOM.create('span');
@@ -2920,17 +2928,31 @@ NGui.AutoFill.Input = class extends NGui.AutoFill.Element {
             range.select();
         }
     };
+    syncupdate(raiseInputEvent = false) {
+        let autofill = this.autofill;
+        if (!autofill) return;
+        if (!autofill.gui) return;
+        if (!autofill.gui.drop) return;
+        if (!autofill.gui.drop.panel) return;
+        let val = this.dom.text;
+        if (this._current != val) {
+            this._current = val; // update last value.
+            autofill.gui.drop.panel.refresh();
+            if (raiseInputEvent) {
+                // raise event.
+                autofill.raiseOnInputChanged(this._current);
+            }
+        }
+    };
     updateSuggestion() {
         if (!this.autofill) return;
         if (!this.autofill.gui) return;
         if (!this.autofill.gui.input) return;
         if (!this.autofill.gui.input.filter) return;
-        if (!this.autofill.gui.input.filter.dom) return;
         if (!this.autofill.gui.input.suggest) return;
-        if (!this.autofill.gui.input.suggest.dom) return;
 
-        let input = this.autofill.gui.input.filter.dom;
-        let suggest = this.autofill.gui.input.suggest.dom;
+        let input = this.autofill.gui.input.filter;
+        let suggest = this.autofill.gui.input.suggest;
 
         let curritems = this.autofill.currentItems;
         if (!curritems) {
@@ -2999,7 +3021,7 @@ NGui.AutoFill.Input = class extends NGui.AutoFill.Element {
         let autofill = this.autofill;
         if (!autofill.isdroped) autofill.dropdown();
         this.updateSuggestion();
-        autofill.filter = this.dom.text;
+        this.syncupdate(true);
     };
     keydown(evt) {
         let afill = this.autofill;        
@@ -3011,14 +3033,17 @@ NGui.AutoFill.Input = class extends NGui.AutoFill.Element {
                 if (items && items.length > 0) {
                     let item = items[0];
                     if (item) {
-                        afill.selectItem(item);
                         if (!afill.gui.input) return;
                         if (!afill.gui.input.filter) return;
-                        if (!afill.gui.input.filter.dom) return;
-                        let input = afill.gui.input.filter.dom;
-                        let suggest = this.autofill.gui.input.suggest.dom;
+                        if (!afill.gui.input.suggest) return;
+                        let input = afill.gui.input.filter;
+                        let suggest = afill.gui.input.suggest;
+                        // in some case like nested selection (year->month-date)
+                        // required to clear exists input and suggestion text
+                        // before call selectItem method to raise select item event.                        
                         input.text = '';
                         suggest.text = '';
+                        afill.selectItem(item);
                     }
                 }
                 break;
@@ -3054,7 +3079,6 @@ NGui.AutoFill.Input = class extends NGui.AutoFill.Element {
             self.dom.focus();
         }, 0);
     };
-
     get text() {
         if (!this.dom || !this.dom.elem) return null;
         return this.dom.text;
@@ -3063,6 +3087,9 @@ NGui.AutoFill.Input = class extends NGui.AutoFill.Element {
         if (!this.dom || !this.dom.elem) return;
         if (this.dom.text != value) {
             this.dom.text = value;
+            // move selection to last character.
+            this.setEndOfContenteditable(this.dom.elem);
+            this.syncupdate();
         }        
     }
 };
@@ -3084,7 +3111,6 @@ NGui.AutoFill.Suggest = class extends NGui.AutoFill.Element {
 
         return dom;
     };
-
     get text() {
         if (!this.dom || !this.dom.elem) return null;
         return this.dom.text;

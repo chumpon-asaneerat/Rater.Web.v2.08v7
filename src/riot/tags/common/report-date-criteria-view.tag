@@ -71,6 +71,7 @@
             tagbox = new NGui.TagBox(elem);
             // binding
             tagbox.caption = 'Date';
+            tagbox.itemSeparator = '-';
             tagbox.valueMember = 'text';
             // setup handlers
             tagbox.clearItems.add(clearItems);

@@ -145,7 +145,7 @@ class RaterCriteria { };
 
 //#endregion
 
-//#region RaterCriteria
+//#region RaterCriteria.BaseCriteria
 
 RaterCriteria.BaseCriteria = class {
     constructor(p_parent) {
@@ -160,6 +160,9 @@ RaterCriteria.BaseCriteria = class {
     };
     // virtual methods.
     clear() { };
+    refresh() {
+        this.raiseChangedEvent();
+    };
     // public properties.
     get parent() { return this._parent; };
     get report() { return (this._parent) ? this._parent.report : null; };
@@ -169,7 +172,7 @@ RaterCriteria.BaseCriteria = class {
 
 //#endregion
 
-//#region MultiValueCriteria
+//#region RaterCriteria.MultiValueCriteria
 
 RaterCriteria.MultiValueCriteria = class extends RaterCriteria.BaseCriteria {
     constructor(parent) {
@@ -203,6 +206,10 @@ RaterCriteria.MultiValueCriteria = class extends RaterCriteria.BaseCriteria {
                 }
             });
         }
+    };
+    refresh() {
+        this.loadItems();
+        this.raiseChangedEvent();
     };
     getItems() { return null; };
     indexOf(id) {
@@ -246,7 +253,7 @@ RaterCriteria.MultiValueCriteria = class extends RaterCriteria.BaseCriteria {
 
 //#endregion
 
-//#region QSetCriteria
+//#region RaterCriteria.QSetCriteria
 
 RaterCriteria.QSetCriteria = class extends RaterCriteria.BaseCriteria {
     constructor(parent) {
@@ -254,10 +261,7 @@ RaterCriteria.QSetCriteria = class extends RaterCriteria.BaseCriteria {
         this._qsetId = ''; // selected qsetid
 
         let self = this;
-        let modelchanged = (sender, evt) => {
-            //console.log('qset model changed.');
-            self.raiseChangedEvent();
-        };
+        let modelchanged = () => { self.refresh(); };
         this.report.qset.ModelChanged.add(modelchanged);
     };
     get QSetId() { return this._qsetId; };
@@ -283,7 +287,7 @@ RaterCriteria.QSetCriteria = class extends RaterCriteria.BaseCriteria {
 
 //#endregion
 
-//#region QuestionCriteria
+//#region RaterCriteria.QuestionCriteria
 
 RaterCriteria.QuestionCriteria = class extends RaterCriteria.MultiValueCriteria {
     constructor(parent) {
@@ -292,11 +296,7 @@ RaterCriteria.QuestionCriteria = class extends RaterCriteria.MultiValueCriteria 
         this.idPropertyName = 'QSeq';
 
         let self = this;
-        let qsetchanged = (sender, evt) => {
-            //console.log('qsetid changed.');
-            self.loadItems();
-            self.raiseChangedEvent();
-        };
+        let qsetchanged = () => { self.refresh(); };
         this.parent.qset.changed.add(qsetchanged);
     };
     getItems() {
@@ -311,7 +311,7 @@ RaterCriteria.QuestionCriteria = class extends RaterCriteria.MultiValueCriteria 
 
 //#endregion
 
-//#region DateCriteria
+//#region RaterCriteria.DateCriteria
 
 RaterCriteria.DateCriteria = class extends RaterCriteria.BaseCriteria {
     constructor(parent) {
@@ -364,7 +364,7 @@ RaterCriteria.DateCriteria = class extends RaterCriteria.BaseCriteria {
 
 //#endregion
 
-//#region BranchCriteria
+//#region RaterCriteria.BranchCriteria
 
 RaterCriteria.BranchCriteria = class extends RaterCriteria.MultiValueCriteria {
     constructor(parent) {
@@ -373,11 +373,7 @@ RaterCriteria.BranchCriteria = class extends RaterCriteria.MultiValueCriteria {
         this.idPropertyName = 'BranchId';
 
         let self = this;
-        let modelchanged = (sender, evt) => {
-            //console.log('org model changed.');
-            self.loadItems();
-            self.raiseChangedEvent();
-        };
+        let modelchanged = () => { self.refresh(); };
         this.report.org.ModelChanged.add(modelchanged);
     };
     getItems() {
@@ -389,7 +385,7 @@ RaterCriteria.BranchCriteria = class extends RaterCriteria.MultiValueCriteria {
 
 //#endregion
 
-//#region OrgCriteria
+//#region RaterCriteria.OrgCriteria
 
 RaterCriteria.OrgCriteria = class extends RaterCriteria.MultiValueCriteria {
     constructor(parent) {
@@ -398,17 +394,10 @@ RaterCriteria.OrgCriteria = class extends RaterCriteria.MultiValueCriteria {
         this.idPropertyName = 'OrgId';
 
         let self = this;
-        let modelchanged = (sender, evt) => {
-            //console.log('Org Model changed.');
-            self.loadItems();
-            self.raiseChangedEvent();
-        };
+        let modelchanged = () => { self.refresh(); };
         this.report.org.ModelChanged.add(modelchanged);
 
-        let branchchanged = (sender, evt) => {
-            self.loadItems();
-            self.raiseChangedEvent();
-        };
+        let branchchanged = () => { self.refresh(); };
         this.parent.branch.changed.add(branchchanged);
     };
     getItems() {
@@ -454,7 +443,7 @@ RaterCriteria.OrgCriteria = class extends RaterCriteria.MultiValueCriteria {
 
 //#endregion
 
-//#region MemberCriteria
+//#region RaterCriteria.MemberCriteria
 
 RaterCriteria.MemberCriteria = class extends RaterCriteria.MultiValueCriteria {
     constructor(parent) {
@@ -463,11 +452,7 @@ RaterCriteria.MemberCriteria = class extends RaterCriteria.MultiValueCriteria {
         this.idPropertyName = 'MemberId';
 
         let self = this;
-        let modelchanged = (sender, evt) => {
-            //console.log('org model changed.');
-            self.loadItems();
-            self.raiseChangedEvent();
-        };
+        let modelchanged = () => { self.refresh(); };
         this.report.member.ModelChanged.add(modelchanged);
     };
     getItems() {
@@ -494,12 +479,21 @@ class ReportCriteria {
         this._org = new RaterCriteria.OrgCriteria(this);
         this._member = new RaterCriteria.MemberCriteria(this);
     };
-    clear() {
+    clear(clearQSet = false) {
         this._member.clear();
         this._org.clear();
         this._branch.clear();
         this._date.clear();
         this._question.clear();
+        if (clearQSet) this._qset.clear();
+    };
+    refresh() {
+        this._member.refresh();
+        this._org.refresh();
+        this._branch.refresh();
+        this._date.refresh();
+        this._question.refresh();
+        this._qset.refresh();
     };
     // get report service.
     get report() { return this._service; };
@@ -525,6 +519,7 @@ class SearchManager {
     };
     newSearch() { 
         this._current = new ReportCriteria(this._service);
+        this._current.refresh();
         this._newCriteriaCreated.invoke(self, EventArgs.Empty);
     };
     get current() { return this._current; };

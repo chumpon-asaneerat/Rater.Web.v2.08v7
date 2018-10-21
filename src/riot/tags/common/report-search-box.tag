@@ -69,7 +69,11 @@
             { id: 3, text: '3.Date' },
             { id: 4, text: '4.Branchs' },
             { id: 5, text: '5.Organizations' },
-            { id: 6, text: '6.Staffs' }
+            { id: 6, text: '6.Staffs' },
+            { id: 7, text: '7.Apple' },
+            { id: 8, text: '8.Ant' },
+            { id: 9, text: '9.Cat' },
+            { id: 10, text: '10.Ent' },
         ];
 
         let hasQSet = () => (self.criteria.qset && self.criteria.qset.QSet) ? true : false;
@@ -118,7 +122,7 @@
             if (subCmd === '') {
                 clearDate();
                 subCmd = 'year';
-                let items = NArray.Date.getYears(5, true);                
+                let items = NArray.Date.getYears(5, true);
                 autofill.datasource = items;
                 autofill.valueMember = member;
             }
@@ -298,21 +302,20 @@
                     this.refreshDataSource();
                 }
             }
-            else if (cmd === 'date') {                
+            else if (cmd === 'date') {
                 let item = evtData.item;
-
                 if (subCmd === 'year') {
                     dateVal.year = item.text;
-                    //autofill.gui.input.suggest.text = dateVal.year + '-';
+                    autofill.filter = dateVal.year + '-';
                 }
                 else if (subCmd === 'month') {
                     dateVal.month = item.text.split('-')[1];
-                    //autofill.gui.input.suggest.text = dateVal.year + '-' + dateVal.month + '-';
+                    autofill.filter = dateVal.year + '-' + dateVal.month + '-';
                 }
                 else  if (subCmd === 'day') {
                     dateVal.day = item.text.split('-')[2];
                     subCmd = ''; // clear sub command.
-                    //autofill.gui.input.suggest.text = '';
+                    autofill.filter = '';
                     let dobj = self.criteria.date;
                     if (!dobj.beginDate) {
                         dobj.beginDate = dateVal.year + '-' + dateVal.month + '-' + dateVal.day;
@@ -348,8 +351,35 @@
                     this.refreshDataSource();
                 }
             }
-            else {
+            else {                
+            }
+        };
 
+        this.inputChanged = (sender, evtData) => {
+            if (cmd === 'date') {
+                let text = evtData.text;
+                let dateparts = text.split('-');
+                if (dateparts.length === 1) {
+                    subCmd = '';
+                    dateVal.year = '';
+                    dateVal.month = '';
+                    dateVal.day = '';
+                    this.refreshDataSource();
+                }
+                else if (dateparts.length === 2) {
+                    subCmd = 'year';
+                    dateVal.year = dateparts[0];
+                    dateVal.month = '';
+                    dateVal.day = '';
+                    this.refreshDataSource();
+                }
+                else if (dateparts.length === 3) {
+                    subCmd = 'month';
+                    dateVal.year = dateparts[0];
+                    dateVal.month = dateparts[1];
+                    dateVal.day = '';
+                    this.refreshDataSource();
+                }
             }
         };
 
@@ -449,6 +479,7 @@
             taginput = this.refs["tag-input"];
             autofill = new NGui.AutoFill(taginput, opts);
             autofill.onSelectItem.add(this.selectItem);
+            autofill.onInputChanged.add(this.inputChanged);
 
             searchButton = new NDOM(this.refs["search-btn"]);
             searchButton.event.add('click', this.runSearch);
@@ -467,6 +498,7 @@
             if (autofill) {
                 // cleanup.
                 autofill.onSelectItem.remove(this.selectItem);
+                autofill.onInputChanged.remove(this.inputChanged);
             }
             autofill = null;
             taginput = null;
