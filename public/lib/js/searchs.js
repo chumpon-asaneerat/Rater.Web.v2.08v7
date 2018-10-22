@@ -524,10 +524,10 @@ class SearchManager {
     };
     get current() { return this._current; };
     callAPI(param) {
-        //console.log(param);
+        //console.log('call api:', JSON.stringify(param));
         let self = this;
         let result = {};
-        let fn = api.report.getVoteSummary(param);
+        let fn = api.report.getSummaryReport(param);
         $.when(fn).then((r) => {
             if (!r || !r.errors) {
                 //console.log('No data returns.');
@@ -542,39 +542,49 @@ class SearchManager {
                 result = null;
             }
             //console.log(r.data);
-            result = r.data;
+            result = r.data[0];
+            //console.log('result:', r.data);
 
-            let rept = new SearchResult(self._service, param, result);
+            let rept = new SearchResult(self._service, result);
             rept.refresh();
             self._searchCompleted.invoke(self, { data: rept });
         });
     };
     execute() {
         let self = this;
-        let curr = this.current;
+        let curr = self.current;
         let questions = curr.question.selectedItems;
         let slides = (questions && questions.length > 0) ? questions : curr.qset.QSet.slides;
         let slidesMap = slides.map(slide => slide.QSeq);
         let bdate = (curr.date.BeginDate) ? curr.date.BeginDate : NArray.Date.today;
         let edate = (curr.date.EndDate) ? curr.date.EndDate : NArray.Date.today;
-        slidesMap.forEach(qseq => {
-            let orgs = curr.org.selectedItems;
-            let orgMaps = (orgs && orgs.length > 0) ? orgs.map(org => org.OrgId) : [null]
-            orgMaps.forEach(orgId => {
-                let param = {
-                    "LangId": lang.langId,
-                    "CustomerID": secure.current.CustomerId,
-                    "QSetId": curr.qset.QSetId,
-                    "QSeq": qseq,
-                    "OrgId": orgId,
-                    "BeginDate": bdate,
-                    "EndDate": edate
-                };
-                // call the api.
-                self.callAPI(param);
-            })
-        });
+        let orgs = curr.org.selectedItems;
+        let orgMaps;
+        if (orgs && orgs.length > 0) {
+            orgMaps = orgs.map(org => org.OrgId)
+        }
+        else {
+            let allorgs = [];
+            report.org.model.branchs.forEach(branch => {
+                allorgs.push(...branch.orgs);
+            });
+            let root = allorgs.filter(org => !org.parent)[0];
+            orgMaps = [ root.OrgId ];
+        }
+
+        let param = {
+            //"LangId": lang.langId,
+            "CustomerID": secure.current.CustomerId,
+            "QSetId": curr.qset.QSetId,
+            "QSeq": slidesMap,
+            "OrgId": orgMaps,
+            "BeginDate": bdate,
+            "EndDate": edate
+        };
         
+        // call the api.
+        self.callAPI(param);
+
         this.newSearch();
     };
 
@@ -585,46 +595,56 @@ class SearchManager {
 //#endregion
 
 class SearchResult {
-    constructor(srv, criteria, results) {
+    constructor(srv, result) {
         this._service = srv; // report service.
-        this._criteria = criteria;
-        this._results = results;
+        this._result = result;
     };
 
     refresh() {
-        if (!this._criteria) return;
-        if (!this._results) return;
-        
-        let qsetId = this._criteria.QSetId;
+        if (!this._result) return;
+        let r = this._result;
+
         let qsets = report.qset.model.qsets;
         let qsetsMap = qsets.map(qset => qset.QSetId);
-        let qset = qsets[qsetsMap.indexOf(qsetId)];
-        this._criteria.QSetDescription = qset.QSetDescription;
+        let qset = qsets[qsetsMap.indexOf(r.QSetId)];
+        // assign description
+        r.QSetDescription = qset.QSetDescription;
 
-        let slides = qset.slides;
-        let slidesMap = slides.map(slide => slide.QSeq);
-        let qseq = this._criteria.QSeq;
-        let slide = slides[slidesMap.indexOf(qseq)];
-        this._criteria.QSlideText = slide.QSlideText;
-
-        let choices = slide.items;
-        let choicesMap = choices.map(choice => choice.QSSeq);
-
+        // organize maps.
         let branchs = report.org.model.branchs;
         let orgs = [];
         branchs.forEach(branch => { orgs.push(...branch.orgs); });
         let bMaps = branchs.map(branch => branch.BranchId);
         let oMaps = orgs.map(org => org.OrgId);
-        
-        this._results.forEach(result => {
-            result.BranchName = branchs[bMaps.indexOf(result.BranchId)].BranchName;
-            result.OrgName = orgs[oMaps.indexOf(result.OrgId)].OrgName;
-            result.QItemText = choices[choicesMap.indexOf(result.Choice)].QItemText;
+        // question/choice maps.
+        let slides = qset.slides;
+        let slidesMap = slides.map(slide => slide.QSeq);
+
+        r.questions.forEach(ques => {
+            // question slide.
+            let qseq = Number(ques.QSeq);
+            let slide = slides[slidesMap.indexOf(qseq)];
+            // load choice on slide.
+            let choices = slide.items;
+            let choicesMap = choices.map(choice => choice.QSSeq);
+            // assign description and choices.
+            ques.QSlideText = slide.QSlideText;
+            ques.choices = choices;
+
+            ques.orgs.forEach(qorg => {
+                // org
+                qorg.BranchName = branchs[bMaps.indexOf(qorg.BranchId)].BranchName;
+                qorg.OrgName = orgs[oMaps.indexOf(qorg.OrgId)].OrgName;
+    
+                qorg.items.forEach(qitem => {
+                    // choice
+                    qitem.QItemText = choices[choicesMap.indexOf(qitem.Choice)].QItemText;
+                })
+            });
         });
     };
 
-    get criteria() { return this._criteria; };
-    get results() { return this._results; }
+    get result() { return this._result; }
 }
 
 //#region ReportService

@@ -2588,6 +2588,8 @@ NGui.AutoFill = class {
         this._onSelectItem = new EventHandler();
         this._onInputChanged = new EventHandler();
 
+        this._onESC = new EventHandler();
+
         this.init(opts);
     };
     // private methods.
@@ -2632,6 +2634,9 @@ NGui.AutoFill = class {
     };
     raiseOnInputChanged(text) {
         if (this._onInputChanged) this._onInputChanged.invoke(this,  { 'text': text });
+    };
+    raiseOnESC() {
+        if (this._onESC) this._onESC.invoke(this,  EventArgs.Empty);
     };
     // HTML Element Events
     click(evt) {
@@ -2745,6 +2750,7 @@ NGui.AutoFill = class {
     // public event
     get onSelectItem() { return this._onSelectItem; }
     get onInputChanged() { return this._onInputChanged; }
+    get onESC() { return this._onESC; }
 };
 
 //#endregion
@@ -3024,7 +3030,7 @@ NGui.AutoFill.Input = class extends NGui.AutoFill.Element {
         this.syncupdate(true);
     };
     keydown(evt) {
-        let afill = this.autofill;        
+        let afill = this.autofill;
         switch (evt.key) {
             case 'Enter':
                 evt.preventDefault();
@@ -3052,6 +3058,7 @@ NGui.AutoFill.Input = class extends NGui.AutoFill.Element {
             case '@':
                 evt.preventDefault();
                 evt.stopPropagation();
+                afill.raiseOnESC();
                 break;
             case 'ArrowUp':
                 evt.preventDefault();

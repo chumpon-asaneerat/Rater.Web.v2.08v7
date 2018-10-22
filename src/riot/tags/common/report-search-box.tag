@@ -69,11 +69,7 @@
             { id: 3, text: '3.Date' },
             { id: 4, text: '4.Branchs' },
             { id: 5, text: '5.Organizations' },
-            { id: 6, text: '6.Staffs' },
-            { id: 7, text: '7.Apple' },
-            { id: 8, text: '8.Ant' },
-            { id: 9, text: '9.Cat' },
-            { id: 10, text: '10.Ent' },
+            { id: 6, text: '6.Staffs' }
         ];
 
         let hasQSet = () => (self.criteria.qset && self.criteria.qset.QSet) ? true : false;
@@ -383,6 +379,10 @@
             }
         };
 
+        this.escPress = (sender, evtData) => {
+            self.showCommands();
+        };
+
         this.modelChanged = (sender, evtData) => {
             this.refreshDataSource();
         };
@@ -392,9 +392,10 @@
         };
 
         this.showCommands = () => {
+            autofill.filter = '';
             cmd = ''; // reset command
             subCmd = ''; // reset sub command.
-            clearDate();            
+            clearDate();
             this.refreshDataSource();
             autofill.focus();
         };
@@ -460,7 +461,7 @@
                 buttons: [{
                     name: 'main-menu',
                     align: 'left',
-                    css: { class: 'fas fa-caret-square-down' },
+                    css: { class: 'fas fa-arrow-up' },
                     tooltip: 'Main Menu',
                     click: function (evt, autofill, button) {
                         self.showCommands();                        
@@ -480,6 +481,7 @@
             autofill = new NGui.AutoFill(taginput, opts);
             autofill.onSelectItem.add(this.selectItem);
             autofill.onInputChanged.add(this.inputChanged);
+            autofill.onESC.add(this.escPress);
 
             searchButton = new NDOM(this.refs["search-btn"]);
             searchButton.event.add('click', this.runSearch);
@@ -499,6 +501,7 @@
                 // cleanup.
                 autofill.onSelectItem.remove(this.selectItem);
                 autofill.onInputChanged.remove(this.inputChanged);
+                autofill.onESC.remove(this.escPress);
             }
             autofill = null;
             taginput = null;

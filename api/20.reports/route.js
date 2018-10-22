@@ -232,9 +232,142 @@ function __GetVoteSummaries(req, res) {
     });
 };
 
+//- Create New object with clone all properties with supports ignore case sensitive.
+function clone(o, caseSensitive) {
+    var oRet = {}
+    var ignoreCase = (caseSensitive) ? false : true;
+    var keys = Object.keys(o);
+    keys.forEach((key) => {
+        oRet[(ignoreCase) ? key.toLowerCase() : key] = o[key];
+    });
+    return oRet;
+};
+
+function __promiseGetVoteSummaries(param) {
+    return new Promise((resolve) => {
+        raterdb.GetVoteSummaries(param, function (dbResult) {
+            resolve(dbResult);
+        });
+    });
+};
+
 function __GetSummaryReport(req, res) {
-    var reqModel = nlib.parseReq(req);
-    console.log(reqModel);
+    let result = new nlib.NResult();
+    result.data = []; // prepare data array.
+    let reqModel = nlib.parseReq(req);
+    if (!reqModel || !reqModel.data) {
+        result.error('parameter is null.');
+        nlib.sendJson(req, res, result);
+    }
+    else {
+        let pData = clone(reqModel.data);
+        let hasError = false;
+        if (!hasError && !pData.customerid) {
+            result.error('CustomerId is null or empty.');
+            hasError = true;
+        }
+        if (!hasError && !pData.begindate) {
+            result.error('BeginDate is null or empty.');
+            hasError = true;
+        }
+        if (!hasError && !pData.enddate) {
+            result.error('EndDate is null or empty.');
+            hasError = true;
+        }
+        if (!hasError && !pData.qsetid) {
+            result.error('QSetId is null or empty.');
+            hasError = true;
+        }
+        if (!hasError && (!pData.qseq || pData.qseq.length === 0)) {
+            result.error('QSeq is null or empty array.');
+            hasError = true;
+        }
+        if (!hasError && (!pData.orgid || pData.orgid.length === 0)) {
+            result.error('OrgId is null or empty array.');
+            hasError = true;
+        }
+        if (hasError) nlib.sendJson(req, res, result);
+        else {
+            let oRet = {};
+            oRet.CustomerId = pData.customerid;
+            oRet.BeginDate = pData.begindate;
+            oRet.EndDate = pData.enddate;
+            oRet.QSetId = pData.qsetid;
+            oRet.questions = [];
+
+            let functions = [];
+            pData.qseq.forEach(qNo => {
+                // init output for each question
+                let question = { 
+                    QSeq: qNo, 
+                    orgs: []
+                };
+                oRet.questions.push(question);
+                pData.orgid.forEach(oId => { 
+                    // init output for each org
+                    let org = {
+                        OrgId: oId,
+                        BranchId: '',
+                        UserId: '',
+                        TotalCnt: 0,
+                        Average: 0,
+                        MaxChoice: 0,
+                        items: []
+                    }
+                    question.orgs.push(org);
+
+                    // create parameter for call sp.
+                    let spParam = {};
+                    spParam.customerid = pData.customerid;
+                    spParam.begindate = pData.begindate;
+                    spParam.enddate = pData.enddate;
+                    spParam.qsetid = pData.qsetid;
+                    spParam.qseq = qNo;
+                    spParam.orgid = oId;
+                    let fn = __promiseGetVoteSummaries(spParam);
+                    functions.push(fn);
+                });
+            });
+            // create map for qseq
+            let quesMaps = oRet.questions.map(q => Number(q.QSeq));
+
+            Promise.all(functions).then(results => {
+                if (results) {
+                    results.forEach(rObj => {
+                        if (rObj && rObj.data && rObj.data.length > 0) {
+                            let rows = rObj.data;
+                            rows.forEach(row => {
+                                //console.log(row)
+                                let qidx = quesMaps.indexOf(row.QSeq);
+                                let question = (qidx !== -1) ? oRet.questions[qidx] : null;
+                                if (question) {
+                                    let orgMaps = question.orgs.map(q => q.OrgId );
+                                    let oidx = orgMaps.indexOf(row.OrgId);
+                                    let org = (oidx !== -1) ? question.orgs[oidx] : null;
+                                    if (org) {
+                                        org.BranchId = row.BranchId;
+                                        org.UserId = row.UserId;
+                                        org.TotalCnt = row.TotCnt;
+                                        org.Average = row.AvgTot;
+                                        org.MaxChoice = row.MaxChoice;
+                                        let item = {
+                                            Choice: row.Choice,
+                                            Cnt: row.Cnt,
+                                            Pct: row.Pct,
+                                            RemarkCnt: row.RemarkCnt
+                                        };
+                                        org.items.push(item);
+                                    }
+                                }
+                            })
+                        }
+                    });
+                }
+                result.data.push(oRet);
+                nlib.sendJson(req, res, result);
+            });
+        }
+    }
 };
 
 /**

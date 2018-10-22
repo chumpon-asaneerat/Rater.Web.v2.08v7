@@ -468,11 +468,7 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
             { id: 3, text: '3.Date' },
             { id: 4, text: '4.Branchs' },
             { id: 5, text: '5.Organizations' },
-            { id: 6, text: '6.Staffs' },
-            { id: 7, text: '7.Apple' },
-            { id: 8, text: '8.Ant' },
-            { id: 9, text: '9.Cat' },
-            { id: 10, text: '10.Ent' },
+            { id: 6, text: '6.Staffs' }
         ];
 
         let hasQSet = () => (self.criteria.qset && self.criteria.qset.QSet) ? true : false;
@@ -782,6 +778,10 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
             }
         };
 
+        this.escPress = (sender, evtData) => {
+            self.showCommands();
+        };
+
         this.modelChanged = (sender, evtData) => {
             this.refreshDataSource();
         };
@@ -791,6 +791,7 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
         };
 
         this.showCommands = () => {
+            autofill.filter = '';
             cmd = '';
             subCmd = '';
             clearDate();
@@ -858,7 +859,7 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
                 buttons: [{
                     name: 'main-menu',
                     align: 'left',
-                    css: { class: 'fas fa-caret-square-down' },
+                    css: { class: 'fas fa-arrow-up' },
                     tooltip: 'Main Menu',
                     click: function (evt, autofill, button) {
                         self.showCommands();
@@ -878,6 +879,7 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
             autofill = new NGui.AutoFill(taginput, opts);
             autofill.onSelectItem.add(this.selectItem);
             autofill.onInputChanged.add(this.inputChanged);
+            autofill.onESC.add(this.escPress);
 
             searchButton = new NDOM(this.refs["search-btn"]);
             searchButton.event.add('click', this.runSearch);
@@ -896,6 +898,7 @@ riot.tag2('report-search-box', '<div> <div data-is="report-qset-criteria-view" c
 
                 autofill.onSelectItem.remove(this.selectItem);
                 autofill.onInputChanged.remove(this.inputChanged);
+                autofill.onESC.remove(this.escPress);
             }
             autofill = null;
             taginput = null;
@@ -984,7 +987,97 @@ riot.tag2('sidebars', '<virtual if="{(page.model.sidebar && page.model.sidebar.i
         page.modelLoaded.add(onModelLoaded);
 });
 
-riot.tag2('votesummary-pie-chart', '<div class="v-space"> <div class="m-1 p-1 m-auto r-border"> <div ref="output-chart" class="pie-chart"></div> </div> <div class="v-space">', 'votesummary-pie-chart .r-border,[data-is="votesummary-pie-chart"] .r-border{ border: 1px solid cornflowerblue; border-radius: 5px; } votesummary-pie-chart .v-space,[data-is="votesummary-pie-chart"] .v-space{ min-height: 5px; height: 5px; }', 'class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-12"', function(opts) {
+riot.tag2('votesummary-pie-chart', '<div class="v-space"> <div class="m-1 p-1 m-auto r-border"> <div ref="output-chart" class="pie-chart"></div> </div> <div class="v-space">', 'votesummary-pie-chart,[data-is="votesummary-pie-chart"]{ min-height: 200px; height: 240px; } votesummary-pie-chart .r-border,[data-is="votesummary-pie-chart"] .r-border{ border: 1px solid cornflowerblue; border-radius: 5px; } votesummary-pie-chart .v-space,[data-is="votesummary-pie-chart"] .v-space{ min-height: 5px; height: 5px; }', '', function(opts) {
+        let self = this;
+
+        let renderChart = (result) => {
+            if (!result) return;
+            let $elems = $(self.refs['output-chart']);
+            if (!$elems || $elems.length === 0) return;
+            let $outChart = $elems[0];
+            if (!$outChart) return;
+
+            let org = result;
+            let orgName = org.OrgName;
+            let branchName = org.BranchName;
+
+            let chartSetup = {
+                backgroundColor: '#FCFFC5',
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie',
+                height: 210
+            };
+            let chartCredits = { enabled: false };
+            let chartTitle = {
+                useHTML: true,
+                text: '<div class="lhsTitle">' + orgName + ' (' + branchName + ')' + '</div>',
+                align: 'left',
+                x: 10
+            };
+            let chartSubTitle = { };
+            let chartToolTip = {
+
+                pointFormat: '<b>{point.percentage:.2f}%</b>',
+                shared: true
+            };
+
+            let chartPlotOpts = {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b><br/>{point.percentage:.2f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            };
+
+            let items = [];
+            if (result) {
+                org.items.forEach(row => {
+                    let item = { name: row.QItemText, y: row.Pct };
+                    items.push(item);
+                });
+            }
+
+            let chartSeries = [{ name: orgName, data: items }];
+
+            let chartInfo = {
+                chart: chartSetup,
+                credits: chartCredits,
+                title: chartTitle,
+                subtitle: chartSubTitle,
+                plotOptions: chartPlotOpts,
+                tooltip: chartToolTip,
+                series: chartSeries
+            };
+
+            Highcharts.chart($outChart, chartInfo);
+            self.update();
+        };
+
+        let refresh = () => {
+            self.org = (opts.data) ? opts.data : null;
+            renderChart(self.org);
+        };
+
+        let onModelLoaded = (sender, evtData) => {
+            refresh();
+        };
+
+        this.on('mount', () => {
+            refresh();
+            page.modelLoaded.add(onModelLoaded);
+        });
+
+        this.on('unmount', () => {
+            page.modelLoaded.remove(onModelLoaded);
+        });
 });
 riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row"> <yield></yield> </div> <script>', '', 'class="container-fluid"', function(opts) {
         let self = this;
@@ -1004,10 +1097,29 @@ riot.tag2('votesummary-result-content', '<div ref="chart-container" class="row">
         };
         report.search.searchCompleted.add(onSearchCompleted);
 });
-riot.tag2('votesummary-result-panel', '<div class="row m-0 m-auto p-0"> <virtual if="{data !== null}"> <div class="col-12"> <label class="QText"><b>{data.criteria.QSeq}. {data.criteria.QSlideText}</b></label> </div> <virtual if="{data.results !== null}"> <virtual each="{item in data.results}"> <div class="col-5 offset-1 m-0 m-auto p-0"> <label class="CText">{item.Choice}. {item.QItemText} ({item.Pct}%)</label> </div> </virtual> </virtual> </virtual> </div>', 'votesummary-result-panel,[data-is="votesummary-result-panel"]{ width: 95%; font-size: 1rem; } votesummary-result-panel .QText,[data-is="votesummary-result-panel"] .QText{ display: block; padding-left: 5px; padding-right: 5px; border: 1px solid cornflowerblue; border-radius: 5px; color: whitesmoke; background-color: cornflowerblue; } votesummary-result-panel .CText,[data-is="votesummary-result-panel"] .CText{ margin: 0; padding: 0; }', 'class="container-fluid mt-1"', function(opts) {
+riot.tag2('votesummary-result-panel', '<div class="row"> <div class="col-12 QSetBorder"> <label class="QSetText"> <b>{qset.QSetDescription}</b> <b>({qset.BeginDate}</b> - <b>{qset.EndDate})</b> </label> <virtual each="{ques in questions}"> <div class="col-12 QBorder"> <div class="container-fluid"> <div class="row"> <div class="col-12"> <label class="QText"><b>{ques.QSeq}. {ques.QSlideText}</b></label> </div> </div> <div class="row mb-2"> <virtual each="{item in ques.choices}"> <div class="col-5 offset-1 m-0 m-auto p-0"> <label class="CText">{item.QSSeq}. {item.QItemText}</label> </div> </virtual> </div> <div class="container-fluid"> <div class="row"> <virtual each="{org in ques.orgs}"> <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-xs-12"> <div data-is="votesummary-pie-chart" opts data="{org}"> </div> </div> </virtual> </div> </div> </div> <br> </div> </virtual> </div> </div>', 'votesummary-result-panel,[data-is="votesummary-result-panel"]{ width: 95%; font-size: 1rem; } votesummary-result-panel .QSetBorder,[data-is="votesummary-result-panel"] .QSetBorder{ display: block; margin: 0 auto; padding: 0; border: 1px solid silver; background-color: whitesmoke; } votesummary-result-panel .QSetText,[data-is="votesummary-result-panel"] .QSetText{ display: block; margin: 0 auto; padding-left: 5px; padding-right: 5px; margin-bottom: 2px; border: 1px solid darkorange; color: whitesmoke; background-color: darkorange; } votesummary-result-panel .QBorder,[data-is="votesummary-result-panel"] .QBorder{ display: block; margin: 0 auto; padding: 2px; border: 0px; } votesummary-result-panel .QText,[data-is="votesummary-result-panel"] .QText{ display: block; margin: 5px auto; margin-bottom: 3px; padding-left: 5px; padding-right: 5px; border: 1px solid cornflowerblue; border-radius: 5px; color: whitesmoke; background-color: cornflowerblue; } votesummary-result-panel .CText,[data-is="votesummary-result-panel"] .CText{ margin: 0 auto; padding: 0; }', 'class="container-fluid mt-1"', function(opts) {
         let self = this;
-        this.data = opts.data;
 
+        let refresh = () => {
+            self.data = opts.data;
+            self.qset = (self.data && self.data.result) ? self.data.result : null;
+            self.questions = (self.qset) ? self.qset.questions : null;
+
+            self.update();
+        };
+
+        let onModelLoaded = (sender, evtData) => {
+            refresh();
+        };
+
+        this.on('mount', () => {
+            refresh();
+            page.modelLoaded.add(onModelLoaded);
+        });
+
+        this.on('unmount', () => {
+            page.modelLoaded.remove(onModelLoaded);
+        });
 });
 riot.tag2('admin-home-dashboard', '<div data-is="sidebars" data-simplebar></div> <div data-is="dashboard-content" data-simplebar> <yield></yield> </div>', '', '', function(opts) {
 });
