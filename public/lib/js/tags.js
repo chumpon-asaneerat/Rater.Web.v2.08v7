@@ -1001,7 +1001,7 @@ riot.tag2('sidebars', '<virtual if="{(page.model.sidebar && page.model.sidebar.i
         page.modelLoaded.add(onModelLoaded);
 });
 
-riot.tag2('votesummary-pie-chart', '<div class="v-space"> <div class="m-1 p-1 m-auto r-border"> <div ref="output-chart" class="pie-chart"></div> </div> <div class="v-space">', 'votesummary-pie-chart,[data-is="votesummary-pie-chart"]{ min-height: 200px; height: 250px; } votesummary-pie-chart .r-border,[data-is="votesummary-pie-chart"] .r-border{ border: 1px solid cornflowerblue; border-radius: 5px; } votesummary-pie-chart .v-space,[data-is="votesummary-pie-chart"] .v-space{ min-height: 5px; height: 5px; }', '', function(opts) {
+riot.tag2('votesummary-pie-chart', '<div class="v-space"> <div class="m-1 p-1 m-auto r-border"> <div ref="output-chart" class="pie-chart"></div> </div> <div class="v-space">', 'votesummary-pie-chart,[data-is="votesummary-pie-chart"]{ min-height: 200px; height: 320px; } votesummary-pie-chart .r-border,[data-is="votesummary-pie-chart"] .r-border{ border: 1px solid cornflowerblue; border-radius: 5px; } votesummary-pie-chart .v-space,[data-is="votesummary-pie-chart"] .v-space{ min-height: 5px; height: 5px; }', '', function(opts) {
         let self = this;
 
         let renderChart = (result) => {
@@ -1021,7 +1021,7 @@ riot.tag2('votesummary-pie-chart', '<div class="v-space"> <div class="m-1 p-1 m-
                 plotBorderWidth: null,
                 plotShadow: false,
                 type: 'pie',
-                height: 250
+                height: 300
             };
             let chartCredits = { enabled: false };
             let chartTitle = {

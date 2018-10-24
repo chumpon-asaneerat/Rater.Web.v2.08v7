@@ -7,7 +7,7 @@
     <style>
         :scope {
             min-height: 200px;
-            height: 250px;
+            height: 320px;
         }
         .r-border {
             border: 1px solid cornflowerblue;
@@ -38,7 +38,7 @@
                 plotBorderWidth: null,
                 plotShadow: false,
                 type: 'pie',
-                height: 250
+                height: 300
             };
             let chartCredits = { enabled: false };
             let chartTitle = {
