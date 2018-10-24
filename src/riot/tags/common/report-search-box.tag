@@ -75,6 +75,7 @@
         let hasQSet = () => (self.criteria.qset && self.criteria.qset.QSet) ? true : false;
 
         let getCommands = () => {
+            autofill.hint = 'Command';
             autofill.datasource = commands;
             autofill.valueMember = 'text';
         }
@@ -87,6 +88,8 @@
             let src = report.qset.model.qsets;
             let selects = (hasQSet()) ? [ self.criteria.qset.QSet ] : [];
             let items = NArray.exclude(src, selects, member, true);
+
+            autofill.hint = 'Question Set';
             autofill.datasource = items;
             autofill.valueMember = member;
         };
@@ -109,12 +112,18 @@
                     items = NArray.exclude(src, selects, member, true);
                 }
             }
+
+            autofill.hint = 'Question';
             autofill.datasource = items;
             autofill.valueMember = member;
         };
 
         let getDates = () => {
             let member = 'text';
+
+            let dobj = self.criteria.date;
+            autofill.hint = (!dobj.beginDate) ? 'From Date' : 'To Date';
+
             if (subCmd === '') {
                 clearDate();
                 subCmd = 'year';
@@ -130,7 +139,7 @@
             }
             else  if (subCmd === 'month' && dateVal.month.length > 0) {
                 subCmd = 'day';
-                let items = NArray.Date.getDays(Number(dateVal.year), Number(dateVal.month), true);
+                let items = NArray.Date.getDays(Number(dateVal.year), Number(dateVal.month), true);                
                 autofill.datasource = items;
                 autofill.valueMember = member;
             }
@@ -144,6 +153,8 @@
             let src = report.org.model.branchs;
             let selects = self.criteria.branch.selectedItems;
             let items = NArray.exclude(src, selects, member, true);
+
+            autofill.hint = 'Branch';
             autofill.datasource = items;
             autofill.valueMember = member;
         };
@@ -206,7 +217,8 @@
                     });
                 }
             }
-                        
+
+            autofill.hint = 'Organization';
             autofill.datasource = items;
             autofill.valueMember = member;
         };
@@ -219,6 +231,8 @@
             let src = report.member.model.members;
             let selects = self.criteria.member.selectedItems;
             let items = NArray.exclude(src, selects, member, true);
+
+            autofill.hint = 'Staff';
             autofill.datasource = items;
             autofill.valueMember = member;
         };

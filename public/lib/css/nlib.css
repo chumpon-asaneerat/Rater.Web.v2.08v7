@@ -76,6 +76,7 @@
     width: 1em;
     top: 1px;
     left: 0px;
+    transform: translate(0, -1px);
 }
 
 .auto-fill-button:hover {
@@ -90,6 +91,25 @@
     cursor: text;
     width: 100%;
     max-width: 100%;
+}
+
+.auto-fill-container span.hint-text {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 0;
+    margin-left: 1px;
+    margin-right: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-size: 0.7em;
+    color: white;
+    background: silver;
+    outline: none;
+    white-space: pre;
+    border: 1px solid silver;
+    border-radius: 3px;
+    cursor: pointer;
+    transform: translate(0, -1px);
 }
 
 .auto-fill-container span.input-text {

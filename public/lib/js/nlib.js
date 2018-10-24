@@ -2095,8 +2095,11 @@ NArray.Date = class {
         let results = [];
         let sYear = (year) ? year.toString() + '-' : '';
         for(var i = 1; i <= 12; i++) {
-            if (asObj)
-                results.push({ id: i, text: sYear + String(i) });
+            if (asObj) {
+                let m = String(i);
+                let mm = (m.length === 1) ? '0' + m : m;
+                results.push({ id: i, text: sYear +  mm});
+            }
             else results.push(i);
         }
         return results;
@@ -2113,30 +2116,49 @@ NArray.Date = class {
         if (!year) return results;
         if (!month) return results;
         let sYear = year.toString() + '-';
-        let sMonth = month.toString() + '-';
+        let m = String(month);
+        let mm = (m.length === 1) ? '0' + m : m;
+        let sMonth = mm + '-';
         let maxDays = new Date(year, month, 0).getDate();
         for(var i = 1; i <= maxDays; i++) {
-            if (asObj)
-                results.push({ id: i, text: sYear + sMonth + String(i) });
+            if (asObj) {
+                let d = String(i);
+                let dd = (d.length === 1) ? '0' + d : d;
+                results.push({ id: i, text: sYear + sMonth + dd });
+            }
             else results.push(i);
         }
         return results;
     };
 
     static get today() { 
-        let d = new Date();
-        let result = d.getFullYear().toString() + '-';
-        result = result + d.getMonth().toString() + '-'
-        result = result + d.getDate().toString();
+        let dt = new Date();
+        let y = String(dt.getFullYear());
+        let m = String(dt.getMonth() + 1); // month is zero based.
+        let d = String(dt.getDate());
+        let yy = y;
+        let mm = (m.length === 1) ? '0' + m : m;
+        let dd = (d.length === 1) ? '0' + d : d;
+        //console.log('y:', yy, 'm:', mm, 'd:', dd);
+        let result = yy.toString() + '-';
+        result = result + mm.toString() + '-'
+        result = result + dd.toString();
         return result;
     }
 
     static get yesterday() { 
-        let d = new Date();  
-        d.setDate(d.getDate() - 1);
-        let result = d.getFullYear().toString() + '-';
-        result = result + d.getMonth().toString() + '-'
-        result = result + d.getDate().toString();
+        let dt = new Date();  
+        dt.setDate(d.getDate() - 1);
+        let y = String(dt.getFullYear());
+        let m = String(dt.getMonth() + 1); // month is zero based.
+        let d = String(dt.getDate());
+        let yy = y;
+        let mm = (m.length === 1) ? '0' + m : m;
+        let dd = (d.length === 1) ? '0' + d : d;
+        //console.log('y:', yy, 'm:', mm, 'd:', dd);
+        let result = yy.toString() + '-';
+        result = result + mm.toString() + '-'
+        result = result + dd.toString();
         return result;
     }
 };
@@ -2620,6 +2642,7 @@ NGui.AutoFill = class {
             }
 
             gui.input = {};
+            gui.input.hint = new NGui.AutoFill.Hint(this, gui.container);
             gui.input.filter = new NGui.AutoFill.Input(this, gui.container);
             gui.input.suggest = new NGui.AutoFill.Suggest(this, gui.container);
 
@@ -2700,6 +2723,20 @@ NGui.AutoFill = class {
         if (!this._gui.input.filter) return;
         if (this._gui.input.filter.text != value) {
             this._gui.input.filter.text = value;
+        }
+    }
+    get hint() {
+        if (!this._gui) return undefined;
+        if (!this._gui.input) return undefined;
+        if (!this._gui.input.hint) return undefined;
+        return this._gui.input.hint.text;
+    }
+    set hint(value) {
+        if (!this._gui) return;
+        if (!this._gui.input) return;
+        if (!this._gui.input.hint) return;
+        if (this._gui.input.hint.text != value) {
+            this._gui.input.hint.text = value;
         }
     }
     // datasource related properties.
@@ -2889,6 +2926,35 @@ NGui.AutoFill.Container = class extends NGui.AutoFill.Element {
         this.autofill.focus();
         return false;
     };
+};
+
+//#endregion
+
+//#region NGui.AutoFill.Hint
+
+NGui.AutoFill.Hint = class extends NGui.AutoFill.Element {
+    // override methods.
+    create(options) {
+        if (!this.parent || !this.parent.dom) return null;
+        let parent = this.parent.dom;
+        let dom = NDOM.create('span');
+        // set css class.
+        dom.class.add('hint-text');
+        // add to parent element.
+        parent.addChild(dom);
+
+        return dom;
+    };
+    get text() {
+        if (!this.dom || !this.dom.elem) return null;
+        return this.dom.text;
+    }
+    set text(value) {
+        if (!this.dom || !this.dom.elem) return;
+        if (this.dom.text != value) {
+            this.dom.text = value;
+        }        
+    }
 };
 
 //#endregion

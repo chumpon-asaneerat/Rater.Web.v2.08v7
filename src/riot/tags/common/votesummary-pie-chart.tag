@@ -7,7 +7,7 @@
     <style>
         :scope {
             min-height: 200px;
-            height: 240px;
+            height: 250px;
         }
         .r-border {
             border: 1px solid cornflowerblue;
@@ -38,12 +38,13 @@
                 plotBorderWidth: null,
                 plotShadow: false,
                 type: 'pie',
-                height: 210
+                height: 250
             };
             let chartCredits = { enabled: false };
             let chartTitle = {
                 useHTML: true,
-                text: '<div class="lhsTitle">' + orgName + ' (' + branchName + ')' + '</div>',
+                //text: '<div class="lhsTitle">' + orgName + ' (' + branchName + ')' + '</div>',
+                text: '<div class="lhsTitle">' + orgName + '</div>',
                 align: 'left',
                 x: 10
             };

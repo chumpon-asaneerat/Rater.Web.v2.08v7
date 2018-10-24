@@ -340,6 +340,7 @@ RaterCriteria.DateCriteria = class extends RaterCriteria.BaseCriteria {
         }
     };
     clear() {
+        //console.log('date clear.');
         this._beginDate = null;
         this._endDate = null;
         this.raiseChangedEvent();
@@ -556,8 +557,8 @@ class SearchManager {
         let questions = curr.question.selectedItems;
         let slides = (questions && questions.length > 0) ? questions : curr.qset.QSet.slides;
         let slidesMap = slides.map(slide => slide.QSeq);
-        let bdate = (curr.date.BeginDate) ? curr.date.BeginDate : NArray.Date.today;
-        let edate = (curr.date.EndDate) ? curr.date.EndDate : NArray.Date.today;
+        let bdate = (curr.date.beginDate) ? curr.date.beginDate : NArray.Date.today;
+        let edate = (curr.date.endDate) ? curr.date.endDate : NArray.Date.today;
         let orgs = curr.org.selectedItems;
         let orgMaps;
         if (orgs && orgs.length > 0) {
@@ -598,6 +599,16 @@ class SearchResult {
     constructor(srv, result) {
         this._service = srv; // report service.
         this._result = result;
+        this._no = ++SearchResult.ResultCounter;
+
+        let self = this;
+        let modelchanged = (sender, evtData) => {
+            self.refresh();
+        };
+
+        this.report.qset.ModelChanged.add(modelchanged);
+        this.report.org.ModelChanged.add(modelchanged);
+        this.report.member.ModelChanged.add(modelchanged);
     };
 
     refresh() {
@@ -645,7 +656,11 @@ class SearchResult {
     };
 
     get result() { return this._result; }
+    get report() { return this._service; }
+    get No() { return this._no; }
 }
+
+SearchResult.ResultCounter = 0;
 
 //#region ReportService
 
